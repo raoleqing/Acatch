@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Match</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="main_host1">比分</string>
+    <string name="main_host2">首页</string>
+    <string name="main_host3">我</string>
+</resources>
