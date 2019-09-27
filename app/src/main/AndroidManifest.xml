@@ -3,12 +3,31 @@
     package="catc.tiandao.com.match">
 
     <application
+        android:name=".MatchApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".score.MatchSelection"></activity>
+        <activity android:name=".ui.event.SelectActivity" />
+        <activity android:name=".ui.news.NewsDetailsActivity" />
+        <activity android:name=".my.ForgetPassword" />
+        <activity android:name=".my.SetPassword" />
+        <activity android:name=".my.RegisteredActivity" />
+        <activity android:name=".score.ScoreDetailsActivity" />
+        <activity android:name=".ui.event.MatchDetailsActivity" />
+        <activity android:name=".ui.news.NewsActivity" />
+        <activity android:name=".ui.expert.ExpertActivity" />
+        <activity android:name=".ui.event.PopularActivity" />
+        <activity android:name=".my.AboutActivity" />
+        <activity android:name=".my.SuggestActivity" />
+        <activity android:name=".my.MySetActivity" />
+        <activity android:name=".my.NoticeActivity" />
+        <activity android:name=".my.AttentionActivity" />
+        <activity android:name=".my.CollectionActivity" />
+        <activity android:name=".my.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -20,5 +39,10 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

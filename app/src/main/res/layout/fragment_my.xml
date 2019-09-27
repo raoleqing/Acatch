@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".my.MyFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="26dp"
+        android:background="@mipmap/user_bg1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="80dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/user_icon"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/icon_def_avatar" />
+
+
+            <Button
+                android:id="@+id/login_but"
+                style="@style/activity_text2_type2"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/bg_search_normal3"
+                android:text="登录/注册" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/but_type1"
+            style="@style/activity_text1_type5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="我的收藏" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
+
+
+        <TextView
+            android:id="@+id/but_type2"
+            style="@style/activity_text1_type5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="我的关注" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
+
+
+        <TextView
+            android:id="@+id/but_type3"
+            style="@style/activity_text1_type5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="通知" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
+
+
+        <TextView
+            android:id="@+id/but_type4"
+            style="@style/activity_text1_type5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="设置" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/line_01" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/but_type5"
+            style="@style/activity_text1_type5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="投诉与建议" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
+
+
+        <TextView
+            android:id="@+id/but_type6"
+            style="@style/activity_text1_type5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="关于" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

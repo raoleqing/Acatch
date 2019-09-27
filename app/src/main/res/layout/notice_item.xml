@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/activity_text8_type3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="标题标题标题标题"/>
+
+
+    <TextView
+        style="@style/activity_text6_type2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="1.2"
+        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            style="@style/activity_text6_type2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="by 系统管理员"/>
+
+
+        <TextView
+            style="@style/activity_text6_type2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2019-09-05"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:theme="@style/AppBaseTheme.AppBarOverlay">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                android:background="@mipmap/event_basketball_bg"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    style="@style/activity_text2_type2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="11:30 NBA常规赛"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@color/text1"
+                            />
+
+
+                        <TextView
+                            style="@style/activity_text2_type2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="广州恒大" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/activity_text2_type2"
+                                android:layout_width="40dp"
+                                android:layout_height="36dp"
+                                android:textSize="20sp"
+                                android:gravity="center"
+                                android:layout_marginRight="9dp"
+                                android:background="@drawable/bg_search_normal16"
+                                android:text="0"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/icon_score_symbol"/>
+
+
+                            <TextView
+                                style="@style/activity_text2_type2"
+                                android:layout_width="40dp"
+                                android:layout_height="36dp"
+                                android:textSize="20sp"
+                                android:layout_marginLeft="9dp"
+                                android:gravity="center"
+                                android:background="@drawable/bg_search_normal16"
+                                android:text="0"/>
+
+
+
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            style="@style/activity_text2_type2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:text="未开始"/>
+
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@color/text1"
+                            />
+
+
+                        <TextView
+                            style="@style/activity_text2_type2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="广州恒大" />
+
+
+                    </LinearLayout>
+
+
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_search_normal6">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/game_type1"
+                        style="@style/activity_text7_type2"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:background="@drawable/button_background_selector"
+                        android:text="情报分析" />
+
+
+                    <View
+                        android:id="@+id/game_type1_view"
+                        android:layout_width="20dp"
+                        android:layout_height="2dp"
+                        android:background="@color/text1" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        style="@style/activity_text6_type3"
+                        android:id="@+id/game_type2"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:background="@drawable/button_background_selector"
+                        android:text="指数"/>
+
+
+                    <View
+                        android:id="@+id/game_type2_view"
+                        android:layout_width="20dp"
+                        android:layout_height="2dp"
+                        android:visibility="gone"
+                        android:background="@color/text1" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        style="@style/activity_text6_type3"
+                        android:id="@+id/game_type3"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:background="@drawable/button_background_selector"
+                        android:text="阵容"/>
+
+
+                    <View
+                        android:id="@+id/game_type3_view"
+                        android:layout_width="20dp"
+                        android:layout_height="2dp"
+                        android:visibility="gone"
+                        android:background="@color/text1" />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    style="@style/activity_text6_type3"
+                    android:id="@+id/game_type4"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/button_background_selector"
+                    android:text="数据"/>
+
+
+                <View
+                    android:id="@+id/game_type4_view"
+                    android:layout_width="20dp"
+                    android:layout_height="2dp"
+                    android:visibility="gone"
+                    android:background="@color/text1" />
+
+            </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        style="@style/activity_text6_type3"
+                        android:id="@+id/game_type5"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:background="@drawable/button_background_selector"
+                        android:text="会员情报"/>
+
+
+                    <View
+                        android:id="@+id/game_type5_view"
+                        android:layout_width="20dp"
+                        android:layout_height="2dp"
+                        android:visibility="gone"
+                        android:background="@color/text1" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/content_scrolling" />
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+
+
+</RelativeLayout>

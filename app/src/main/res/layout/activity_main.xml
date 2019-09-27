@@ -24,13 +24,15 @@
 
             <ImageView
                 android:id="@+id/main_host_image01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/tabbar_icon_match_default"
                 android:scaleType="centerCrop" />
 
 
 
             <TextView
+                style="@style/activity_text4_type1"
                 android:id="@+id/main_host_text01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,13 +51,15 @@
 
             <ImageView
                 android:id="@+id/main_host_image02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/tabbar_icon_home"
                 android:scaleType="centerCrop" />
 
 
 
             <TextView
+                style="@style/activity_text3_type1"
                 android:id="@+id/main_host_text02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,13 +78,15 @@
 
             <ImageView
                 android:id="@+id/main_host_image03"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop" />
+                android:layout_width="15dp"
+                android:layout_height="17dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/tabbar_icon_me_default" />
 
 
 
             <TextView
+                style="@style/activity_text4_type1"
                 android:id="@+id/main_host_text03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

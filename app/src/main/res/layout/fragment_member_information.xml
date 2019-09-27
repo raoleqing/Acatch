@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="15dp"
+    tools:context=".ui.event.MemberInformation">
+
+
+    <TextView
+        style="@style/activity_text1_type3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.4"
+        android:text="巴西状态稳定，忽而塔斯、巴博萨这些球员的发挥一如既往的稳定。他们的经验会是他们最大的法宝，尤其是将进攻拖入到阵地节奏中时，有高大内线中锋的存在是美国队长所惧怕的。忽而塔斯、巴博萨这些球员的发挥一如既往的稳定。他们的经验会是他们最大的法宝，尤其是将进攻拖入到阵地节奏中时，有高大内线中锋的存在是美国队长所惧怕的。忽而塔斯、巴博萨这些球员的发挥一如既往的稳定。他们的经验会是他们最大的法宝，尤其是将进攻拖入到阵地节奏中时，有高大内线中锋的存在是美国队长所惧怕的。忽而塔斯、巴博萨这些球员的发挥一如既往的稳定。"/>
+
+
+
+</FrameLayout>

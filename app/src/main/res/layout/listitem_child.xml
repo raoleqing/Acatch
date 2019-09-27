@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+
+
+        <ImageView
+            android:id="@+id/item_icon"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginRight="8dp"
+            android:background="@mipmap/list_iocn1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_name"
+                style="@style/activity_text1_type3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="中国VS韩国"/>
+
+
+            <TextView
+                android:id="@+id/item_title"
+                style="@style/activity_text4_type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:maxLines="2"
+                android:text="说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明"/>
+
+        </LinearLayout>
+
+
+
+
+
+</LinearLayout>
