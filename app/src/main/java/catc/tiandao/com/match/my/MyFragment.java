@@ -148,7 +148,11 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             }
             login_but.setVisibility( View.GONE );
             user_name.setVisibility( View.VISIBLE );
-            user_name.setText( UserUtils.getNickName( getActivity() ) );
+            String name = UserUtils.getNickName( getActivity() );
+            if(name == null || name.equals( "" ) ||  name.equals( "null" )){
+                name = "未设置";
+            }
+            user_name.setText( name);
         }else {
             ImageLoader.getInstance().displayImage( "drawable://" + R.mipmap.icon_def_avatar, user_icon );
             login_but.setVisibility( View.VISIBLE );

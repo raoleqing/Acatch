@@ -248,7 +248,7 @@ public class ForgetPassword extends BaseActivity implements View.OnClickListener
 
         @Override
         public void run(){
-            HttpUtil.getDatasync(ForgetPassword.this,HttpUtil.GET_PASSWORD_SMS + phone,new HttpUtil.HttpUtilInterface(){
+            HttpUtil.getDatasync(ForgetPassword.this,HttpUtil.GET_PASSWORD_SMS +  DES.encode(DES.KEY,phone),new HttpUtil.HttpUtilInterface(){
 
                 @Override
                 public void onResponse(String result) {
@@ -367,7 +367,7 @@ public class ForgetPassword extends BaseActivity implements View.OnClickListener
 
                 //url：http:// 域名/LSQB/ SaveChangePsw? phone=手机号& psw=密码& code=验证码
                 HashMap<String, String> param = new HashMap<>(  );
-                param.put("phone", DES.encode(DES.KEY,phone) );
+                param.put("phone",phone );
                 param.put( "psw",DES.encode(DES.KEY,paw1) );
                 param.put( "code",code );
 

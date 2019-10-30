@@ -499,6 +499,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 setProgressVisibility( View.VISIBLE );
 
                 HashMap<String, String> param = new HashMap<>(  );
+                param.put("uid",uid );
                 param.put("phoneKey",phoneKey );
                 param.put( "name", name);
                 param.put( "sex", sex + "");
