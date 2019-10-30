@@ -1,6 +1,7 @@
 package catc.tiandao.com.match.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,38 +14,36 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.BallFragmentBen;
+import catc.tiandao.com.match.ben.NewsBen;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
-import catc.tiandao.com.match.score.BallFragment;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Administrator on 2017/12/7 0007.
  */
-public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
 
     private Context mContext;
-    private List<BallFragmentBen> mList;
+    private List<NewsBen> mList;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
 
     private static final int TYPE_ITEM =0;  //普通Item View
     private static final int TYPE_FOOTER = 1;  //顶部FootView
+
     private int load_more_status=0;  //上拉加载更多状态-默认为0
     private LayoutInflater mInflater;
 
-    DisplayImageOptions options;
+    private DisplayImageOptions options;
 
 
     //没有数据了
@@ -55,26 +54,19 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final int  LOADING_MORE=1;
 
 
-
-
-    public BasketballAdapter(Context mContext, List<BallFragmentBen> mList,int showType) {
+    public CollectionAdapter(Context mContext, List<NewsBen> mList) {
         this.mContext = mContext;
         this.mList = mList;
-        this.showType = showType;
         this.mInflater=LayoutInflater.from(mContext);
 
-        int radius = UnitConverterUtils.dip2px(mContext,11 );
-
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
-                .showImageForEmptyUri(R.mipmap.mall_cbg)  // 设置图片Uri为空或是错误的时候显示的图片
-                .showImageOnFail(R.mipmap.mall_cbg)       // 设置图片加载或解码过程中发生错误显示的图片
+                .showImageOnLoading( R.mipmap.mall_cbg )          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.mall_cbg )  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.mall_cbg )       // 设置图片加载或解码过程中发生错误显示的图片
                 .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
                 .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
-                .displayer(new RoundedBitmapDisplayer(radius))  // 设置成圆角图片
+                .displayer(new RoundedBitmapDisplayer( UnitConverterUtils.dip2px( mContext,6 )))  // 设置成圆角图片
                 .build();
-
-
     }
 
     @Override
@@ -82,14 +74,17 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         //进行判断显示类型，来创建返回不同的View
         if(viewType==TYPE_ITEM){
-            View itemView =mInflater.inflate( R.layout.basketball_item,parent,false);
+
+            View itemView =mInflater.inflate( R.layout.news_item,parent,false);
             MyViewHolder viewHolder = new MyViewHolder(itemView, mItemClickListener, mItemLongClickListener);
             return viewHolder;
+
         }else if(viewType==TYPE_FOOTER){
             View foot_view = mInflater.inflate(R.layout.xlistview_footer,parent,false);
             FootViewHolder footViewHolder=new FootViewHolder(foot_view,mItemClickListener, mItemLongClickListener);
             return footViewHolder;
         }
+
 
         return null;
 
@@ -101,39 +96,28 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if(holder instanceof MyViewHolder) {
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
+            NewsBen mNewsBen = mList.get( position );
 
-            BallFragmentBen mBallBen = mList.get( position );
-            mMyViewHolder.match_event_name.setText( mBallBen.getMatchEventName() + " " +  mBallBen.getMatchTime());
-            //"matchStatusId": 4, //1-未开赛，2-7都是进行中， 8结束，大于8都是中断、取消类的
-            mMyViewHolder.match_status.setText(  mBallBen.getMatchStatus() );
-            /*if(mBallBen.getMatchStatusId() >= 2 && mBallBen.getMatchStatusId() <= 9){
-                mMyViewHolder.match_status.setText(  mBallBen.getMatchBeginTime() );
+            if(showType == 0){
+                mMyViewHolder.select_type.setVisibility( View.GONE );
             }else {
+                mMyViewHolder.select_type.setVisibility( View.VISIBLE );
+                if(mNewsBen.getIsSelet() == 0){
+                    mMyViewHolder.select_type.setBackgroundResource( R.mipmap.icon_pay_switch_off_location );
+                }else {
+                    mMyViewHolder.select_type.setBackgroundResource( R.mipmap.icon_pay_switch_on_location );
+                }
 
-            }*/
-
-            if(showType == 0 || showType == 3){
-                mMyViewHolder.tv_score1.setVisibility( View.GONE );
-                mMyViewHolder.tv_score2.setVisibility( View.VISIBLE );
-                mMyViewHolder.tv_score2.setText( mBallBen.getTeam1ScoreAll() + " - " +  mBallBen.getTeam2ScoreAll());
-            }else {
-                mMyViewHolder.tv_score1.setVisibility( View.VISIBLE );
-                mMyViewHolder.tv_score2.setVisibility( View.GONE );
-            }
-
-            if(mBallBen.getIsCollection() == 0){
-                mMyViewHolder.is_collection.setBackgroundResource( R.mipmap.icon_collect_default );
-            }else {
-                mMyViewHolder.is_collection.setBackgroundResource( R.mipmap.icon_collect );
             }
 
 
-            mMyViewHolder.home_team_name.setText( mBallBen.getTeam1Name() );
-            ImageLoader.getInstance().displayImage(mBallBen.getTeam1LogoUrl(), mMyViewHolder.home_team_logoUrl,options);
+            mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
 
+            mMyViewHolder.zhuanfa.setText( mNewsBen.getiZhuanFaCount() + "" );
+            mMyViewHolder.comment.setText( mNewsBen.getcCommentCount() + "" );
+            mMyViewHolder.dianzan.setText( mNewsBen.getiDianZanCount() + "" );
 
-            ImageLoader.getInstance().displayImage(mBallBen.getTeam2LogoUrl(), mMyViewHolder.away_team_logoUrl,options);
-            mMyViewHolder.away_teamName.setText( mBallBen.getTeam2Name() );
+            ImageLoader.getInstance().displayImage(mNewsBen.getTitleImageUrl(), mMyViewHolder.item_image,options);
 
         }else if(holder instanceof FootViewHolder){
             //上拉加载
@@ -160,7 +144,7 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return mList == null || mList.size() == 0 ? 0 : mList.size() + 1;
+        return mList.size() + 1;
     }
 
     @Override
@@ -169,7 +153,8 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
        if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         } else {
-            return TYPE_ITEM;
+           return TYPE_ITEM;
+
         }
 
 
@@ -178,35 +163,23 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
-        private TextView tv_score1,tv_score2;
-        private TextView match_event_name;
-        private TextView match_status;
-        private ImageView is_collection;
-        private TextView home_team_name;
-        private ImageView home_team_logoUrl;
-        private ImageView away_team_logoUrl;
-        private TextView away_teamName;
-
+        private ImageView select_type;
+        private TextView item_title;
+        private TextView zhuanfa,comment,dianzan;
+        private ImageView item_image;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
         public MyViewHolder(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
-
-            tv_score1 = ViewUtls.find( view,R.id.tv_score1 );
-            tv_score2 = ViewUtls.find( view,R.id.tv_score2 );
-            match_event_name = ViewUtls.find( view,R.id.match_event_name );
-            match_status = ViewUtls.find( view,R.id.match_status );
-            is_collection = ViewUtls.find( view,R.id.is_collection );
-            home_team_name = ViewUtls.find( view,R.id.home_team_name );
-            home_team_logoUrl = ViewUtls.find( view,R.id.home_team_logoUrl );
-            away_team_logoUrl = ViewUtls.find( view,R.id.away_team_logoUrl );
-            away_teamName = ViewUtls.find( view,R.id.away_teamName );
-
+            this.select_type = ViewUtls.find( view,R.id.select_type);
+            this.item_title = ViewUtls.find( view,R.id.item_title);
+            this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
+            this.comment = ViewUtls.find( view,R.id.comment);
+            this.dianzan = ViewUtls.find( view,R.id.dianzan);
+            this.item_image = ViewUtls.find( view,R.id.item_image);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
-            is_collection.setOnClickListener( this );
-            view.setOnClickListener( this );
 
         }
 
@@ -233,8 +206,9 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
 
-    class FootViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
+
+    class FootViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private RelativeLayout mContentView;
         private ProgressBar mProgressBar;
@@ -292,7 +266,7 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     //添加数据
-    public void addItem(List<BallFragmentBen> newDatas) {
+    public void addItem(List<NewsBen> newDatas) {
         //mTitles.add(position, data);
         //notifyItemInserted(position);
         newDatas.addAll(mList);
@@ -301,7 +275,7 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public void addMoreItem(List<BallFragmentBen> newDatas) {
+    public void addMoreItem(List<NewsBen> newDatas) {
         mList.addAll(newDatas);
         notifyDataSetChanged();
     }

@@ -4,156 +4,98 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.adapter.BasketballAdapter;
+import catc.tiandao.com.match.adapter.CollectionAdapter;
+import catc.tiandao.com.match.ben.BallFragmentBen;
+import catc.tiandao.com.match.ben.DateBen;
+import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.score.ScoreDetailsActivity;
+import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
+import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
 import catc.tiandao.com.match.utils.ViewUtls;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-public class AttentionActivity extends BaseActivity implements View.OnClickListener, OnFragmentInteractionListener {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Button football,blueBall;
-    private Fragment fragment01;
-    private Fragment fragment02;
-    private Fragment mContent;
+public class AttentionActivity extends BaseActivity implements View.OnClickListener {
 
+    private RecyclerView myRecyclerView;
+    private BasketballAdapter mAdapter;
 
-    private FragmentManager manager;
-    private FragmentTransaction transaction;
-    private int onPosition = 0;
-
+    private List<BallFragmentBen> mList = new ArrayList(  );
+    private TextView no_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_collection );
+        setContentView( R.layout.activity_attention );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
 
-        setTitleVisibility( View.GONE );
+        setTitleText( "我的收藏" );
         viewInfo();
-        ContentInfo();
+        no_data.setVisibility( View.VISIBLE );
         setProgressVisibility( View.GONE );
+
     }
 
     private void viewInfo() {
-        manager = getSupportFragmentManager();
-
         ImageView image = ViewUtls.find( this,R.id.activity_return );
+        no_data = ViewUtls.find( this,R.id.no_data );
+        myRecyclerView = ViewUtls.find( this,R.id.myRecyclerView );
+
+
         image.setOnClickListener( this);
 
 
-        football = ViewUtls.find( this,R.id.football );
-        blueBall = ViewUtls.find( this,R.id.blueBall );
+        // 设置布局管理器
+        myRecyclerView.setLayoutManager(new LinearLayoutManager( this ));
+        mAdapter = new BasketballAdapter(AttentionActivity.this,mList,0);
+        mAdapter.setOnItemClickListener(new MyItemClickListener(){
+            @Override
+            public void onItemClick(View view, int postion, int type) {
 
-        football.setOnClickListener( this );
-        blueBall.setOnClickListener( this );
+
+            }
+        });
+        // 设置adapter
+        myRecyclerView.setAdapter(mAdapter);
+        // 设置Item增加、移除动画
+        myRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //添加Android自带的分割线
+        myRecyclerView.addItemDecoration(new DividerItemDecoration(AttentionActivity.this, DividerItemDecoration.VERTICAL));
+
 
     }
-
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.football:
-                if (onPosition != 0) {
-                    setContontView( 0 );
-                }
-                break;
-            case R.id.blueBall:
-                if (onPosition != 1) {
-                    setContontView( 1 );
-                }
-                break;
-
-        }
-    }
-
-
-    /*
-     * 修改中间的内容 *
-     */
-    private void setContontView(int i) {
-        onPosition = i;
-        // TODO Auto-generated method stub
-        transaction = manager.beginTransaction();
-
-        int color01 = ContextCompat.getColor( this,R.color.text1);
-        int color02 = ContextCompat.getColor(this,R.color.white);
-
-        switch (i) {
-            case 0:
-
-                football.setBackgroundResource( R.drawable.bg_search_normal1 );
-                blueBall.setBackgroundResource( R.drawable.bg_search_normal2_host );
-                football.setTextColor( color02 );
-                blueBall.setTextColor( color01 );
-
-
-                if (fragment01 == null) {
-                    fragment01 = CollectionFragment.newInstance(0,"");
-                }
-                switchContent(fragment01, "fragment01");
-                break;
-            case 1:
-                football.setBackgroundResource( R.drawable.bg_search_normal1_host );
-                blueBall.setBackgroundResource( R.drawable.bg_search_normal2 );
-                football.setTextColor( color01 );
-                blueBall.setTextColor( color02 );
-
-                if (fragment02 == null) {
-                    fragment02 =  CollectionFragment.newInstance(1,"");
-                }
-                switchContent(fragment02, "fragment02");
-                break;
-
-            default:
+        switch (v.getId()){
+            case R.id.activity_return:
+                AttentionActivity.this.onBackPressed();
                 break;
         }
-    }
-
-
-
-
-    private void ContentInfo() {
-        if(fragment01 == null)
-            fragment01 = CollectionFragment.newInstance(0,"");
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.score_content, fragment01,"fragment01").show(fragment01);
-        mContent = fragment01;
-        transaction.commit();
-    }
-
-    /** 修改显示的内容 不会重新加载 **/
-    public void switchContent(Fragment to, String tag) {
-        if (mContent != to) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            if (!to.isAdded()) {
-                transaction.hide(mContent).add(R.id.score_content, to, tag).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else {
-                transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-            mContent = to;
-        }
-    }
-
-
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-        if(uri.toString().equals( OnFragmentInteractionListener.PROGRESS_SHOW)){
-            setProgressVisibility(View.VISIBLE);
-        }else if(uri.toString().equals(OnFragmentInteractionListener.PROGRESS_HIDE)){
-            setProgressVisibility(View.GONE);
-        }
 
     }
+
+
 
     // 返回
     @Override
@@ -163,4 +105,6 @@ public class AttentionActivity extends BaseActivity implements View.OnClickListe
         overridePendingTransition(R.anim.day_push_right_in01, R.anim.day_push_right_out);
         AttentionActivity.this.finish();
     }
+
+
 }

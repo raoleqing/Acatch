@@ -1,38 +1,53 @@
 package catc.tiandao.com.match.my;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.adapter.SelectAdapter;
+import catc.tiandao.com.match.adapter.SelectAvatarAdapter;
+import catc.tiandao.com.match.ben.FootballEvent;
+import catc.tiandao.com.match.ben.NewsBen;
+import catc.tiandao.com.match.ben.UserBen;
 import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.SharedPreferencesUtil;
+import catc.tiandao.com.match.common.GridSpacingItemDecoration;
+import catc.tiandao.com.match.common.MyGridLayoutManager;
+import catc.tiandao.com.match.common.MyItemClickListener;
+import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
-
-public class SetSexActivity extends BaseActivity implements View.OnClickListener {
-
-
-    private LinearLayout male_layout,female_layout;
-    private ImageView iv_male,iv_female;
+import java.util.List;
 
 
-    private String sex;
-    private UpdateSexRun run;
+public class SelectAvatarActivity extends BaseActivity implements View.OnClickListener {
+
+    private int[] icon = {R.mipmap.icon_def_avatar01,R.mipmap.icon_def_avatar02,R.mipmap.icon_def_avatar03,R.mipmap.icon_def_avatar04};
+
+    private SelectAvatarAdapter mAdapter;
+    private int onPostion;
+
+    private GetHeads run;
 
     Handler myHandler = new Handler() {
         @Override
@@ -53,50 +68,63 @@ public class SetSexActivity extends BaseActivity implements View.OnClickListener
 
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_set_sex );
+        setContentView( R.layout.activity_select_avatar );
 
         setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
         setStatusBarMode(true);
-        setTitleText( "性别" );
+
+        setTitleText( "选择头像" );
+
         viewInfo();
+        getData();
+
         setProgressVisibility( View.GONE );
     }
+
 
     private void viewInfo() {
 
         ImageView image = ViewUtls.find( this,R.id.activity_return );
         TextView activity_text = ViewUtls.find( this,R.id.activity_text );
 
-        male_layout = ViewUtls.find( this,R.id.male_layout );
-        female_layout = ViewUtls.find( this,R.id.female_layout );
-        iv_male = ViewUtls.find( this,R.id.iv_male );
-        iv_female = ViewUtls.find( this,R.id.iv_female );
-
-
         activity_text.setText( "保存" );
         image.setOnClickListener( this);
         activity_text.setOnClickListener( this);
-        male_layout.setOnClickListener( this);
-        female_layout.setOnClickListener( this);
 
-        sex = SharedPreferencesUtil.getString( this,UserUtils.SEX );
-        if(sex == null || sex.equals( "" )){
-            sex = "1";
-        }
+        RecyclerView myRecyclerView = ViewUtls.find( this,R.id.myRecyclerView );
+        RecyclerView.LayoutManager mLayoutManager = new MyGridLayoutManager(this, 3);
+        myRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new SelectAvatarAdapter( this,icon );
 
-        if(sex.equals( "1" )){
-            iv_male.setVisibility( View.VISIBLE );
-            iv_female.setVisibility( View.GONE );
-        }else {
-            iv_male.setVisibility( View.GONE );
-            iv_female.setVisibility( View.VISIBLE );
-        }
+        // 设置adapter
+        myRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener( new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion, int type) {
+
+                if(postion != onPostion){
+                    onPostion = postion;
+                    mAdapter.setShowType(  postion );
+                    mAdapter.notifyDataSetChanged();
+                }
+
+
+            }
+        } );
+
+        int space = UnitConverterUtils.dip2px(this, 15);
+        myRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3,space,space,false));
+
 
 
     }
+
+
 
 
     @Override
@@ -104,53 +132,38 @@ public class SetSexActivity extends BaseActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.activity_return:
-                SetSexActivity.this.onBackPressed();
+        SelectAvatarActivity.this.onBackPressed();
                 break;
             case R.id.activity_text:
-                UpdateSex(sex);
-                break;
-            case R.id.male_layout:
-                if(!sex.equals( "1" )){
-                    sex = "1";
-                    iv_male.setVisibility( View.VISIBLE );
-                    iv_female.setVisibility( View.GONE );
-                }
+
 
                 break;
-            case R.id.female_layout:
-                if(!sex.equals( "0" )){
-                    sex = "0";
-                    iv_male.setVisibility( View.GONE );
-                    iv_female.setVisibility( View.VISIBLE );
-                }
-                break;
-
         }
     }
 
 
-
-    private void UpdateSex(String sex) {
-
+    private void getData() {
+        //http:// 域名/LSQB/ UpdateName? GetHeads=***& name=新用户名
 
         try{
 
-            if (CheckNet.isNetworkConnected(SetSexActivity.this)) {
+            if (CheckNet.isNetworkConnected( SelectAvatarActivity.this)) {
 
                 setProgressVisibility( View.VISIBLE );
 
-                //token=***& name=新用户名
+                //token=***& pageSize=每页多少条& page=第几页
                 HashMap<String, String> param = new HashMap<>(  );
-                param.put("token", UserUtils.getToken( SetSexActivity.this ) );
-                param.put( "sex",sex );
+                param.put("token", UserUtils.getToken( SelectAvatarActivity.this ) );
 
-                run = new UpdateSexRun(param);
+                run = new GetHeads(param);
                 ThreadPoolManager.getsInstance().execute(run);
+
 
             } else {
 
-                Toast.makeText(SetSexActivity.this, "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SelectAvatarActivity.this, "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
                 setProgressVisibility( View.GONE );
+
             }
 
 
@@ -158,26 +171,25 @@ public class SetSexActivity extends BaseActivity implements View.OnClickListener
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
     }
-
 
 
     /**
      *
      * */
-    class UpdateSexRun implements Runnable{
+    class GetHeads implements Runnable{
         private HashMap<String, String> param;
 
-        UpdateSexRun(HashMap<String, String> param){
+        GetHeads(HashMap<String, String> param){
             this.param =param;
         }
 
         @Override
         public void run() {
-            HttpUtil.post( SetSexActivity.this,HttpUtil.UPDATE_SEX ,param,new HttpUtil.HttpUtilInterface(){
+
+
+
+            HttpUtil.post( SelectAvatarActivity.this,HttpUtil.GET_HEADS ,param,new HttpUtil.HttpUtilInterface(){
                 @Override
                 public void onResponse(String result) {
 
@@ -213,13 +225,10 @@ public class SetSexActivity extends BaseActivity implements View.OnClickListener
             String message = obj.optString( "message" );
 
 
-            //{"code":1,"message":"验证码错误","data":null}
             if(code == 0) {
-                SetSexActivity.this.onBackPressed();
-                SharedPreferencesUtil.putString( SetSexActivity.this,UserUtils.SEX,sex );
-            }
 
-            Toast.makeText( SetSexActivity.this,message ,Toast.LENGTH_SHORT).show();
+
+            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -231,13 +240,16 @@ public class SetSexActivity extends BaseActivity implements View.OnClickListener
 
 
 
+
+
     // 返回
     @Override
     public void onBackPressed() {
         // TODO Auto-generated method stub
         super.onBackPressed();
         overridePendingTransition(R.anim.day_push_right_in01, R.anim.day_push_right_out);
-        SetSexActivity.this.finish();
+        SelectAvatarActivity.this.finish();
     }
+
 
 }

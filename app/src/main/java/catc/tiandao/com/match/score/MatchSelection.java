@@ -39,7 +39,7 @@ public class MatchSelection  extends BaseActivity implements View.OnClickListene
     private MyAdapter adapter;
 
     private int onPosition;
-    private int areaId;
+    private int areaId = 0;
 
 
 

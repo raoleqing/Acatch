@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -71,7 +72,7 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename and change types of parameters
     private int areaId;
     private int ballType;
-    private int type;
+    private int onType;
 
     private int number;
 
@@ -113,16 +114,16 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
      * this fragment using the provided parameters.
      *
      * @param areaId Parameter 1.
-     * @param type Parameter 2.
+     * @param onType Parameter 2.
      * @return A new instance of fragment SelectFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SelectFragment newInstance(int areaId, int ballType,int type) {
+    public static SelectFragment newInstance(int areaId, int ballType,int onType) {
         SelectFragment fragment = new SelectFragment();
         Bundle args = new Bundle();
         args.putInt( ARG_PARAM1, areaId );
         args.putInt( ARG_PARAM2, ballType );
-        args.putInt( ARG_PARAM3, type );
+        args.putInt( ARG_PARAM3, onType );
         fragment.setArguments( args );
         return fragment;
     }
@@ -133,8 +134,10 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
         if (getArguments() != null) {
             areaId = getArguments().getInt( ARG_PARAM1 );
             ballType = getArguments().getInt( ARG_PARAM2 );
-            type = getArguments().getInt( ARG_PARAM3 );
+            onType = getArguments().getInt( ARG_PARAM3 );
         }
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -180,6 +183,11 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
                 mAdapter.notifyDataSetChanged();
 
+                FootballEvent sedFootballEvent =  mList.get( postion );
+                sedFootballEvent.setType(onType);
+
+                EventBus.getDefault().post(sedFootballEvent);
+
             }
         } );
 
@@ -194,14 +202,33 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
         switch (v.getId()){
             case R.id.select_all:
+
+                if(onType == 0){
+                    EventBus.getDefault().post( Constant.SELECT_ALL0);
+                }
                 selectAll();
+
+
                 break;
             case R.id.Inverse_selection:
+
+                if(onType == 0){
+                    EventBus.getDefault().post( Constant.SELECT_INVERSE0);
+                }
+
                 InverseSselection();
+
+
                 break;
             case R.id.submit:
 
-                SetUser2Event();
+                if(onType == 0){
+                    SetUser2Event();
+                }else {
+                    EventBus.getDefault().post( Constant.SUBMIT_SELECT);
+                }
+
+
                 break;
         }
 
@@ -349,7 +376,12 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
         for(int i = 0; i< mList.size(); i++){
 
-            mList.get( i ).setiUserChoose( 1 );
+            FootballEvent mFootballEvent =  mList.get( i );
+            mFootballEvent.setiUserChoose( 1 );
+            if(onType == 1){
+                mFootballEvent.setType( onType );
+                EventBus.getDefault().post( mFootballEvent);
+            }
 
         }
 
@@ -372,10 +404,15 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
         for(int i = 0; i< mList.size(); i++){
             FootballEvent mFootballEvent = mList.get( i );
             if(mFootballEvent.getiUserChoose() == 0){
-                mList.get( i ).setiUserChoose( 1 );
+                mFootballEvent.setiUserChoose( 1 );
             }else {
-                mList.get( i ).setiUserChoose( 0 );
+                mFootballEvent.setiUserChoose( 0 );
                 number ++;
+            }
+
+            if(onType == 1){
+                mFootballEvent.setType( onType );
+                EventBus.getDefault().post( mFootballEvent);
             }
 
         }
@@ -386,6 +423,19 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
         myHandler.sendEmptyMessage( 0x003 );
 
 
+    }
+
+    private void upList(FootballEvent footballEvent) {
+
+        for(int i = 0; i< mList.size(); i++){
+            FootballEvent mFootballEvent = mList.get( i );
+            if(mFootballEvent.getId() == footballEvent.getId()){
+                mFootballEvent.setiUserChoose( footballEvent.getiUserChoose() );
+                mAdapter.notifyDataSetChanged();
+                return;
+            }
+
+        }
     }
 
 
@@ -455,13 +505,13 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
             String methodName;
             if(ballType == 0){
 
-                if(type == 0){
+                if(onType == 0){
                     methodName = HttpUtil.GET_ALL_FOOTBALL_EVENT;
                 }else {
                     methodName = HttpUtil.GET_HOT_FOOTBALL_EVENT;
                 }
             }else {
-                if(type == 0){
+                if(onType == 0){
                     methodName = HttpUtil.GET_ALL_BASKETBALL_EVENT;
                 }else {
                     methodName = HttpUtil.GET_HOT_BASKETBALL_EVENT;
@@ -533,6 +583,42 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    @Subscribe
+    public void onEvent(Object event) {
+        if(event instanceof FootballEvent){
+            FootballEvent mFootballEvent = (FootballEvent)event;
+
+            if(onType == 0){
+                if(mFootballEvent.getType() == 1){
+
+                    upList(mFootballEvent);
+                }
+            }else {
+                if(mFootballEvent.getType() == 0){
+
+                    upList(mFootballEvent);
+                }
+            }
+
+
+        }else if(event instanceof String){
+
+            if(event.equals( Constant.SUBMIT_SELECT ) && onType == 0){
+
+                SetUser2Event();
+            }else if(event.equals( Constant.SELECT_ALL0 ) && onType == 1){
+                selectAll();
+            }else if(event.equals( Constant.SELECT_ALL1 ) && onType == 0){
+                selectAll();
+            }else if(event.equals( Constant.SELECT_INVERSE0 ) && onType == 1){
+                InverseSselection();
+            }else if(event.equals( Constant.SELECT_INVERSE1 ) && onType == 0){
+                InverseSselection();
+            }
+        }
+    }
+
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -555,6 +641,8 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
+        EventBus.getDefault().unregister(this);
     }
 
 }

@@ -9,8 +9,10 @@ import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.BallBen;
 import catc.tiandao.com.match.ben.BallFragmentBen;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
 import catc.tiandao.com.match.ui.event.SelectFragment;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 
 import android.net.Uri;
@@ -119,6 +121,7 @@ public class ScoreDetailsActivity extends BaseActivity implements View.OnClickLi
                 if (onPosition != 1) {
                     setContontView( 1 );
                 }
+
                 break;
 
         }

@@ -1,6 +1,7 @@
 package catc.tiandao.com.match.my;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.common.CheckNet;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class SetNameActivity extends BaseActivity implements View.OnClickListener {
+
 
 
     private EditText input_name;
@@ -57,7 +59,8 @@ public class SetNameActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_set_name );
-
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
         setTitleText( "修改姓名" );
         viewInfo();
         setProgressVisibility( View.GONE );

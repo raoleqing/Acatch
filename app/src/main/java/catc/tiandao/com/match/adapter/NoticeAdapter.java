@@ -103,7 +103,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList.size();
     }
 
     @Override

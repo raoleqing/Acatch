@@ -148,12 +148,34 @@
             android:layout_height="1px"
             android:background="@color/line_01"/>
 
-        <TextView
-            style="@style/activity_text1_type3"
+
+        <RelativeLayout
+            android:id="@+id/clear_cache"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center_vertical"
-            android:text="清除缓存" />
+            android:layout_height="56dp">
+
+            <TextView
+                style="@style/activity_text1_type3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="清除缓存" />
+
+
+
+            <TextView
+                android:id="@+id/cache_text"
+                style="@style/activity_text1_type5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="25dp"
+                android:gravity="right"
+                android:text="0.0M  " />
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 
@@ -175,6 +197,8 @@
             android:text="退出登录" />
 
     </LinearLayout>
+
+
 
 
     </LinearLayout>

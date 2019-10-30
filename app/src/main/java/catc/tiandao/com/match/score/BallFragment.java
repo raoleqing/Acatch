@@ -43,6 +43,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.BallAdapter;
 import catc.tiandao.com.match.ben.BallBen;
+import catc.tiandao.com.match.ben.BallFragmentBen;
 import catc.tiandao.com.match.ben.DateBen;
 import catc.tiandao.com.match.ben.Expert;
 import catc.tiandao.com.match.ben.Match;
@@ -106,6 +107,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
     private String onDate = "";
 
     private CustomDatePicker mDatePicker;
+    private FootballMatchCollectAndCancelRun setRun;
 
 
     Handler myHandler = new Handler() {
@@ -118,6 +120,11 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                     Bundle bundle1 = msg.getData();
                     String result1 = bundle1.getString("result");
                     parseData(result1);
+                    break;
+                case 0x003:
+                    Bundle bundle2 = msg.getData();
+                    String result2 = bundle2.getString("result");
+                    setParseData(result2,msg.arg1);
                     break;
                 default:
                     break;
@@ -196,6 +203,26 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
         }
 
+
+        if(mParam2 == 3){
+            textArray2[0].setVisibility( View.VISIBLE );
+            textArray1[4].setText( "今天" );
+            textArray2[4].setVisibility( View.GONE );
+
+            textArray1[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text1 ) );
+            textArray1[0].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+            textArray2[0].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+
+        }else {
+            textArray2[4].setVisibility( View.VISIBLE );
+            textArray1[0].setText( "今天" );
+            textArray2[0].setVisibility( View.GONE );
+            textArray1[0].setTextColor( ContextCompat.getColor( getActivity(),R.color.text1 ) );
+            textArray1[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+            textArray2[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+        }
+
+
         // 设置布局管理器
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         ball_recycler.setLayoutManager(mLinearLayoutManager);
@@ -205,24 +232,37 @@ public class BallFragment extends Fragment implements View.OnClickListener{
             public void onItemClick(View view, int postion, int type) {
                 BallBen mBallBen =  mList.get( postion );
 
-                if(mBallBen.getMatchStatusId() > 1){
+                if(view.getId() == R.id.is_collection){
+                    if(UserUtils.isLanded( getActivity() )){
 
-                    String matchName =  mBallBen.getMatchEventName() + " 第"+ mBallBen.getMatchRound() + "轮  " + mBallBen.getMatchTime();
+                        FootballMatchCollectAndCancel(mBallBen.getMatchId(),postion);
 
-                    Intent intent01 = new Intent(getActivity(), ScoreDetailsActivity.class);
-                    intent01.putExtra( ScoreDetailsActivity.BALL_TYPE,  0);
-                    intent01.putExtra( ScoreDetailsActivity.BALL_ID,  mBallBen.getMatchId() );
-                    intent01.putExtra( ScoreDetailsActivity.MATCH_NAME,  matchName);
-                    startActivity(intent01);
-                    ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
-                }else {
-                    //
-                    Intent intent01 = new Intent(getActivity(), MatchDetailsActivity.class);
-                    intent01.putExtra( MatchDetailsActivity.BALL_TYPE,  0);
-                    intent01.putExtra( MatchDetailsActivity.BALL_ID,  mBallBen.getMatchId());
-                    startActivity(intent01);
-                    ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    }else {
+                        UserUtils.startLongin( getActivity() );
+                    }
+
+                }else{
+                    if(mBallBen.getMatchStatusId() > 1){
+
+                        String matchName =  mBallBen.getMatchEventName() + " 第"+ mBallBen.getMatchRound() + "轮  " + mBallBen.getMatchTime();
+
+                        Intent intent01 = new Intent(getActivity(), ScoreDetailsActivity.class);
+                        intent01.putExtra( ScoreDetailsActivity.BALL_TYPE,  0);
+                        intent01.putExtra( ScoreDetailsActivity.BALL_ID,  mBallBen.getMatchId() );
+                        intent01.putExtra( ScoreDetailsActivity.MATCH_NAME,  matchName);
+                        startActivity(intent01);
+                        ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    }else {
+                        //
+                        Intent intent01 = new Intent(getActivity(), MatchDetailsActivity.class);
+                        intent01.putExtra( MatchDetailsActivity.BALL_TYPE,  0);
+                        intent01.putExtra( MatchDetailsActivity.BALL_ID,  mBallBen.getMatchId());
+                        startActivity(intent01);
+                        ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    }
                 }
+
+
 
 
 
@@ -306,7 +346,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
             endTimestamp = DateFormatUtils.str2Long(startDate, false);
 
-            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 30);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 7);
             String yearStr = calendar.get(Calendar.YEAR)+"";//获取年份
             int month = calendar.get(Calendar.MONTH) + 1;//获取月份
             String monthStr = month < 10 ? "0" + month : month + "";
@@ -330,7 +370,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
             String startDate = startYearStr + "-" + startMonthStr + "-" + startDayStr;
             beginTimestamp = DateFormatUtils.str2Long(startDate , false);
 
-            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 30);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 7);
 
 
             String yearStr = calendar.get(Calendar.YEAR)+"";//获取年份
@@ -392,6 +432,107 @@ public class BallFragment extends Fragment implements View.OnClickListener{
     }
 
 
+    private void FootballMatchCollectAndCancel(String matchId,int postion) {
+
+        try{
+            if (CheckNet.isNetworkConnected( getActivity())) {
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("token", UserUtils.getToken( getActivity() ) );
+                param.put("matchId", matchId);
+
+                setRun = new FootballMatchCollectAndCancelRun(param,postion);
+                ThreadPoolManager.getsInstance().execute(setRun);
+            } else {
+
+                Toast.makeText(getActivity(), "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     *
+     * */
+    class FootballMatchCollectAndCancelRun implements Runnable{
+        private HashMap<String, String> param;
+        private int poistion;
+
+        FootballMatchCollectAndCancelRun(HashMap<String, String> param,int poistion){
+            this.param =param;
+            this.poistion = poistion;
+        }
+
+        @Override
+        public void run() {
+
+            HttpUtil.post( getActivity(),HttpUtil.FOOTBALL_MATCH_COLLECT_ANDCANCEL ,param,new HttpUtil.HttpUtilInterface(){
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    message.setData( data );
+                    message.what = 0x003;
+                    message.arg1 = poistion;
+                    myHandler.sendMessage( message );
+                }
+            });
+
+
+
+        }
+    }
+
+
+
+    private void setParseData(String result,int poistion) {
+
+        if(result == null){
+            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            return;
+        }
+
+        try{
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+
+            if(code == 0) {
+
+                BallBen mBallBen = mList.get( poistion );
+                int iCollection = mBallBen.getIsCollection();
+
+                if(iCollection == 0){
+                    mList.get( poistion ).setIsCollection( 1 );
+                }else {
+                    mList.get( poistion ).setIsCollection( 0 );
+                }
+
+                mAdapter.notifyDataSetChanged();
+
+            }
+
+            Toast.makeText( getActivity(),message,Toast.LENGTH_SHORT ).show();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+        }
+
+    }
 
 
     private void getData(String date) {
@@ -539,20 +680,19 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
     private void setData() {
 
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dft1 = new SimpleDateFormat("MM-dd");
+        Date beginDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(beginDate);
+
+        if(mParam2 == 3){
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 5);
+        }
+
         for(int i = 0; i< 5; i++){
-
-            SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat dft1 = new SimpleDateFormat("MM-dd");
-            Date beginDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(beginDate);
             if(i > 0){
-                if(mParam2 == 3){
-                    calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - i);
-                }else {
-                    calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + i);
-                }
-
+                calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
             }
 
             String yearStr = calendar.get(Calendar.YEAR)+"";//获取年份

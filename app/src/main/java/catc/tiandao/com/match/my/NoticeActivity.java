@@ -1,5 +1,6 @@
 package catc.tiandao.com.match.my;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +31,8 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_notice );
-
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
         setTitleText( "通知" );
          viewInfo();
         setProgressVisibility( View.GONE );

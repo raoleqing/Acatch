@@ -26,7 +26,6 @@ public class HttpUtil {
 
     public static final String URL = "http://www.leisuvip1.com/";
 
-
     //注册获取短信
     public static final String GET_REGISTER_SMS = "LSQB/GetRegisterSms?phone=";
     public static final String GET_PASSWORD_SMS = "LSQB/GetPasswordSms?phone=";
@@ -116,6 +115,7 @@ public class HttpUtil {
 
     public static final String FOOTBALL_MATCH_COLLECT_ANDCANCEL = "LSQB/FootballMatchCollectAndCancel";
     public static final String BASKETBAL_MATCH_COLLECT_ANDCANCEL = "LSQB/BasketballMatchCollectAndCancel";
+    public static final String GET_HEADS = "LSQB/GetHeads";
 
 
     public static void getDatasync(final Context mContext, String method , final HttpUtilInterface mInterface){

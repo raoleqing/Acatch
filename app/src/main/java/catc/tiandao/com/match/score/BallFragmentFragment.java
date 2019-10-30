@@ -106,6 +106,8 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
 
     private CustomDatePicker mDatePicker;
 
+    private FootballMatchCollectAndCancelRun setRun;
+
     Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -116,6 +118,11 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
                     Bundle bundle1 = msg.getData();
                     String result1 = bundle1.getString("result");
                     parseData(result1);
+                    break;
+                case 0x003:
+                    Bundle bundle2 = msg.getData();
+                    String result2 = bundle2.getString("result");
+                    setParseData(result2,msg.arg1);
                     break;
                 default:
                     break;
@@ -183,6 +190,8 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
 
         tab_bar6.setOnClickListener( this );
 
+
+
         for(int i = 0; i< tarLayout.length ;i++){
 
             DateBen mDateBen = dateList.get( i );
@@ -193,8 +202,19 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
             textArray1[i].setText( mDateBen.getShowDate() );
             textArray2[i].setText( mDateBen.getWeek() );
             layout.setOnClickListener( this );
-
         }
+
+        if(mParam2 == 3){
+            textArray2[0].setVisibility( View.VISIBLE );
+            textArray1[4].setText( "今天" );
+            textArray2[4].setVisibility( View.GONE );
+
+        }else {
+            textArray2[4].setVisibility( View.VISIBLE );
+            textArray1[0].setText( "今天" );
+            textArray2[0].setVisibility( View.GONE );
+        }
+
 
         // 设置布局管理器
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -205,24 +225,37 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
             public void onItemClick(View view, int postion, int type) {
                 BallFragmentBen mBallBen =  mList.get( postion );
 
-                if(mBallBen.getMatchStatusId() > 1){
+                if(view.getId() == R.id.is_collection){
+                    if(UserUtils.isLanded( getActivity() )){
 
-                    String matchName = mBallBen.getMatchEventName() + " " + mBallBen.getMatchTime();
+                        FootballMatchCollectAndCancel(mBallBen.getMatchId(),postion);
 
-                    Intent intent01 = new Intent(getActivity(), ScoreDetailsActivity.class);
-                    intent01.putExtra( ScoreDetailsActivity.BALL_TYPE,  1);
-                    intent01.putExtra( ScoreDetailsActivity.BALL_ID,  mBallBen.getMatchId());
-                    intent01.putExtra( ScoreDetailsActivity.MATCH_NAME,  matchName);
-                    startActivity(intent01);
-                    ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    }else {
+                        UserUtils.startLongin( getActivity() );
+                    }
+
                 }else {
-                    //
-                    Intent intent01 = new Intent(getActivity(), MatchDetailsActivity.class);
-                    intent01.putExtra( MatchDetailsActivity.BALL_TYPE,  1);
-                    intent01.putExtra( MatchDetailsActivity.BALL_ID,  mBallBen.getMatchId());
-                    startActivity(intent01);
-                    ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    if(mBallBen.getMatchStatusId() > 1){
+
+                        String matchName = mBallBen.getMatchEventName() + " " + mBallBen.getMatchTime();
+
+                        Intent intent01 = new Intent(getActivity(), ScoreDetailsActivity.class);
+                        intent01.putExtra( ScoreDetailsActivity.BALL_TYPE,  1);
+                        intent01.putExtra( ScoreDetailsActivity.BALL_ID,  mBallBen.getMatchId());
+                        intent01.putExtra( ScoreDetailsActivity.MATCH_NAME,  matchName);
+                        startActivity(intent01);
+                        ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    }else {
+                        //
+                        Intent intent01 = new Intent(getActivity(), MatchDetailsActivity.class);
+                        intent01.putExtra( MatchDetailsActivity.BALL_TYPE,  1);
+                        intent01.putExtra( MatchDetailsActivity.BALL_ID,  mBallBen.getMatchId());
+                        startActivity(intent01);
+                        ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                    }
                 }
+
+
 
 
             }
@@ -304,7 +337,7 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
 
             endTimestamp = DateFormatUtils.str2Long(startDate, false);
 
-            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 30);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 7);
             String yearStr = calendar.get(Calendar.YEAR)+"";//获取年份
             int month = calendar.get(Calendar.MONTH) + 1;//获取月份
             String monthStr = month < 10 ? "0" + month : month + "";
@@ -328,7 +361,7 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
             String startDate = startYearStr + "-" + startMonthStr + "-" + startDayStr;
             beginTimestamp = DateFormatUtils.str2Long(startDate , false);
 
-            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 30);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 7);
 
 
             String yearStr = calendar.get(Calendar.YEAR)+"";//获取年份
@@ -393,6 +426,108 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
     }
 
 
+
+    private void FootballMatchCollectAndCancel(String matchId,int postion) {
+
+        try{
+            if (CheckNet.isNetworkConnected( getActivity())) {
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("token", UserUtils.getToken( getActivity() ) );
+                param.put("matchId", matchId);
+
+                setRun = new FootballMatchCollectAndCancelRun(param,postion);
+                ThreadPoolManager.getsInstance().execute(setRun);
+            } else {
+
+                Toast.makeText(getActivity(), "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     *
+     * */
+    class FootballMatchCollectAndCancelRun implements Runnable{
+        private HashMap<String, String> param;
+        private int poistion;
+
+        FootballMatchCollectAndCancelRun(HashMap<String, String> param,int poistion){
+            this.param =param;
+            this.poistion = poistion;
+        }
+
+        @Override
+        public void run() {
+
+            HttpUtil.post( getActivity(),HttpUtil.BASKETBAL_MATCH_COLLECT_ANDCANCEL ,param,new HttpUtil.HttpUtilInterface(){
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    message.setData( data );
+                    message.what = 0x003;
+                    message.arg1 = poistion;
+                    myHandler.sendMessage( message );
+                }
+            });
+
+
+
+        }
+    }
+
+
+
+    private void setParseData(String result,int poistion) {
+
+        if(result == null){
+            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            return;
+        }
+
+        try{
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+
+            if(code == 0) {
+
+                BallFragmentBen mBallFragmentBen = mList.get( poistion );
+                int iCollection = mBallFragmentBen.getIsCollection();
+
+                if(iCollection == 0){
+                    mList.get( poistion ).setIsCollection( 1 );
+                }else {
+                    mList.get( poistion ).setIsCollection( 0 );
+                }
+
+                mAdapter.notifyDataSetChanged();
+
+            }
+
+            Toast.makeText( getActivity(),message,Toast.LENGTH_SHORT ).show();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+        }
+
+    }
 
 
     private void getData(String date) {
@@ -537,20 +672,20 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
 
     private void setData() {
 
+
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dft1 = new SimpleDateFormat("MM-dd");
+        Date beginDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(beginDate);
+
+        if(mParam2 == 3){
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 5);
+        }
+
         for(int i = 0; i< 5; i++){
-
-            SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat dft1 = new SimpleDateFormat("MM-dd");
-            Date beginDate = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(beginDate);
             if(i > 0){
-                if(mParam2 == 3){
-                    calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - i);
-                }else {
-                    calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + i);
-                }
-
+                calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
             }
 
             String yearStr = calendar.get(Calendar.YEAR)+"";//获取年份

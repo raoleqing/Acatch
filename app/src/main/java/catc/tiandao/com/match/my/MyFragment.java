@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.w3c.dom.Text;
 
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.common.CircleImageView;
@@ -42,9 +43,10 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM2 = "param2";
 
     private CircleImageView user_icon;
-    private Button login_but;
+    private TextView login_but;
     private TextView user_name;
-    private TextView but_type1,but_type2,but_type3,but_type4,but_type5,but_type6;
+    private ImageView set_icon;
+    private TextView but_type1,but_type2,but_type3,but_type5,but_type6;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -86,9 +88,9 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         EventBus.getDefault().register(this);
 
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.icon_def_avatar)          // 设置图片下载期间显示的图片
-                .showImageForEmptyUri(R.mipmap.icon_def_avatar)  // 设置图片Uri为空或是错误的时候显示的图片
-                .showImageOnFail(R.mipmap.icon_def_avatar)       // 设置图片加载或解码过程中发生错误显示的图片
+                .showImageOnLoading(R.mipmap.user_icon)          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.user_icon)  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.user_icon)       // 设置图片加载或解码过程中发生错误显示的图片
                 .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
                 .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
                 //.displayer(new RoundedBitmapDisplayer(20))  // 设置成圆角图片
@@ -123,7 +125,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         but_type1 = ViewUtls.find( view,R.id.but_type1 );
         but_type2 = ViewUtls.find( view,R.id.but_type2 );
         but_type3 = ViewUtls.find( view,R.id.but_type3 );
-        but_type4 = ViewUtls.find( view,R.id.but_type4 );
+        set_icon = ViewUtls.find( view,R.id.set_icon );
         but_type5 = ViewUtls.find( view,R.id.but_type5 );
         but_type6 = ViewUtls.find( view,R.id.but_type6 );
 
@@ -133,7 +135,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         but_type1.setOnClickListener( this );
         but_type2.setOnClickListener( this );
         but_type3.setOnClickListener( this );
-        but_type4.setOnClickListener( this );
+        set_icon.setOnClickListener( this );
         but_type5.setOnClickListener( this );
         but_type6.setOnClickListener( this );
     }
@@ -154,7 +156,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             }
             user_name.setText( name);
         }else {
-            ImageLoader.getInstance().displayImage( "drawable://" + R.mipmap.icon_def_avatar, user_icon );
+            ImageLoader.getInstance().displayImage( "drawable://" + R.mipmap.user_icon, user_icon );
             login_but.setVisibility( View.VISIBLE );
             user_name.setVisibility( View.GONE );
         }
@@ -220,7 +222,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
 
                 break;
-            case R.id.but_type4:
+            case R.id.set_icon:
 
                 Intent intent05 = new Intent(getActivity(), MySetActivity.class);
                 startActivity(intent05);

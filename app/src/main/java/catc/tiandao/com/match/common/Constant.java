@@ -9,7 +9,12 @@ public class Constant {
     public static final String APP_NET_SUCCESS = "app.net.success";
     public static final String UP_SCORE = "com.match.common_up_score";
     public static final String UP_MAIN = "com.match.common_up_main";
-    public static final String UP_BALL = "com.match.common_up_ball";
+    public static final String UP_BALL = "com.match.common_submit_select";
+    public static final String SELECT_ALL0 = "com.match.common_select_all0";
+    public static final String SELECT_ALL1 = "com.match.common_select_all1";
+    public static final String SELECT_INVERSE0 = "com.match.common_select_Inverse0";
+    public static final String SELECT_INVERSE1 = "com.match.common_select_Inverse1";
+    public static final String SUBMIT_SELECT = "com.match.common_up_ball";
     public static final String UP_BASEKET_BALL = "com.match.common_up_basket_ball";
 
     public static final String UMENG_APP_KEY = "5da86e7f0cafb2fa14000590";

@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="104dp"
+        android:layout_height="90dp"
         android:layout_marginTop="10dp"
         android:padding="15dp"
         android:background="@color/white">
@@ -32,9 +32,9 @@
 
             <catc.tiandao.com.match.common.CircleImageView
                 android:id="@+id/user_icon"
-                android:layout_width="74dp"
-                android:layout_height="74dp"
-                android:src="@mipmap/icon_def_avatar"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/user_icon"/>
 
 
             <ImageView
@@ -119,6 +119,12 @@
 
 
         </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_01" />
 
 
         <LinearLayout

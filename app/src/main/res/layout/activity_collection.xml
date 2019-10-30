@@ -1,77 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg1"
     tools:context=".my.CollectionActivity">
 
 
     <RelativeLayout
+        android:id="@+id/botton_view"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
         android:background="@color/white">
 
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:scaleType="center"
-            android:src="@mipmap/filter"/>
-
+        <TextView
+            android:id="@+id/del_all"
+            style="@style/activity_text1_type2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center"
+            android:text="一键清空"/>
 
 
         <LinearLayout
+            android:id="@+id/del_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center">
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/football"
-                android:layout_width="90dp"
-                android:layout_height="30dp"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:background="@drawable/bg_search_normal1"
-                android:text="足球"/>
+            <ImageView
+                android:id="@+id/del_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/collect_icon_delete_default"/>
 
-
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/blueBall"
-                android:layout_width="90dp"
-                android:layout_height="30dp"
-                android:textColor="@color/text1"
-                android:textSize="15sp"
-                android:background="@drawable/bg_search_normal2_host"
-                android:text="蓝球"/>
-
-
-
+            <TextView
+                android:id="@+id/del_text"
+                style="@style/activity_text6_type3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="删除"/>
         </LinearLayout>
+
 
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_01"/>
 
-
-    <LinearLayout
-        android:id="@+id/score_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/main_host"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        android:layout_above="@id/botton_view"/>
 
 
+    <TextView
+        style="@style/activity_text1_type3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/not_data"
+        android:visibility="gone"
+        android:gravity="center"
+        android:background="@color/white"
+        android:id="@+id/no_data"/>
 
 
 
-</LinearLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>

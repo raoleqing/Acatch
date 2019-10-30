@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -73,7 +74,7 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
     private SetUser2EventRun setRun;
 
     // TODO: Rename and change types of parameters
-    private int areaId;
+    private int areaId = 0;
     private int iUserChoose;
     private int number;
 
@@ -138,6 +139,8 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
             areaId = getArguments().getInt( ARG_PARAM1 );
             iUserChoose = getArguments().getInt( ARG_PARAM2 );
         }
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -186,6 +189,11 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
 
                 mAdapter.notifyDataSetChanged();
 
+                FootballEvent sedFootballEvent =  mList.get( postion );
+                sedFootballEvent.setType( 0 );
+
+                EventBus.getDefault().post(sedFootballEvent);
+
             }
         } );
 
@@ -203,9 +211,12 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.select_all:
                 selectAll();
+                EventBus.getDefault().post( Constant.SELECT_ALL0);
+
                 break;
             case R.id.Inverse_selection:
                 InverseSselection();
+                EventBus.getDefault().post( Constant.SELECT_INVERSE0);
                 break;
             case R.id.submit:
 
@@ -229,7 +240,7 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
 
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
-                param.put("areaId",  "0");
+                param.put("areaId", areaId + "");
                 param.put("eventIds", eventIds);
 
                 setRun = new SetUser2EventRun(param);
@@ -387,6 +398,22 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    private void upList(FootballEvent footballEvent) {
+
+        for(int i = 0; i< mList.size(); i++){
+            FootballEvent mFootballEvent = mList.get( i );
+            if(mFootballEvent.getId() == footballEvent.getId()){
+                mFootballEvent.setiUserChoose( footballEvent.getiUserChoose() );
+                mAdapter.notifyDataSetChanged();
+                return;
+            }
+
+        }
+    }
+
+
+
+
     private void getNumber() {
 
         number = 0;
@@ -539,10 +566,36 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
+    @Subscribe
+    public void onEvent(Object event) {
+        if(event instanceof FootballEvent){
+            FootballEvent mFootballEvent = (FootballEvent)event;
+            if(mFootballEvent.getType() == 1){
+
+                upList(mFootballEvent);
+            }
+
+        }else if(event instanceof String){
+
+            if(event.equals( Constant.SUBMIT_SELECT )){
+
+                SetUser2Event();
+            }else if(event.equals( Constant.SELECT_ALL1 ) ){
+                selectAll();
+            }else if(event.equals( Constant.SELECT_INVERSE1 )){
+                InverseSselection();
+            }
+        }
+    }
+
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
+        EventBus.getDefault().unregister(this);
     }
 
 }

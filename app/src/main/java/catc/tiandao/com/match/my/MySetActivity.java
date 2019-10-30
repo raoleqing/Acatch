@@ -1,18 +1,25 @@
 package catc.tiandao.com.match.my;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.match.common.ImageUtils;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
+import catc.tiandao.com.match.utils.DataCleanManager;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,8 +28,13 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 
+
+/**
+ * 设置
+ * **/
 public class MySetActivity extends BaseActivity implements View.OnClickListener {
 
 
@@ -34,7 +46,11 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
     private ImageView push_but_icon02;
     private ImageView push_but_icon03;
     private ImageView push_but_icon04;
+    private RelativeLayout clear_cache;
     private TextView sign_out;
+    private TextView cache_text;
+
+    private String fileSize;
 
     private int isOpen1 = 1;
     private int isOpen2 = 0;
@@ -67,6 +83,8 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_my_set );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
 
         setTitleText( "设置" );
         viewInfo();
@@ -82,11 +100,19 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
         push_but_layout02 = (RelativeLayout) findViewById(R.id.push_but_layout02);
         push_but_layout03 = (RelativeLayout) findViewById(R.id.push_but_layout03);
         push_but_layout04 = (RelativeLayout) findViewById(R.id.push_but_layout04);
+        clear_cache = (RelativeLayout) findViewById(R.id.clear_cache);
         push_but_icon01 = (ImageView) findViewById(R.id.push_but_icon01);
         push_but_icon02 = (ImageView) findViewById(R.id.push_but_icon02);
         push_but_icon03 = (ImageView) findViewById(R.id.push_but_icon03);
         push_but_icon04 = (ImageView) findViewById(R.id.push_but_icon04);
         sign_out = (TextView) findViewById(R.id.sign_out);
+        cache_text = (TextView) findViewById(R.id.cache_text);
+
+        if(UserUtils.isLanded( this )){
+            sign_out.setVisibility( View.VISIBLE );
+        }else {
+            sign_out.setVisibility( View.GONE );
+        }
 
 
         push_but_layout01.setOnClickListener(this);
@@ -95,9 +121,26 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
         push_but_layout04.setOnClickListener(this);
         sign_out.setOnClickListener(this);
 
+        setCacheText();
 
     }
 
+
+    /*
+     * 设置缓存
+     * **/
+    private void setCacheText() {
+        // TODO Auto-generated method stub
+        try {
+            String path = ImageUtils.getAlbumFilesDir(this).getPath();
+            File file = new File(path);
+            fileSize = DataCleanManager.getCacheSize(file);
+            cache_text.setText(fileSize + "  ");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -113,10 +156,10 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
 
                 if (isOpen1 == 1) {
                     isOpen1 = 0;
-                    push_but_icon01.setBackgroundResource(R.mipmap.push_but_iocn02);
+                    push_but_icon01.setBackgroundResource(R.mipmap.slide_off);
                 } else {
                     isOpen1 = 1;
-                    push_but_icon01.setBackgroundResource(R.mipmap.push_but_iocn01);
+                    push_but_icon01.setBackgroundResource(R.mipmap.slide_on);
                 }
 
 
@@ -125,10 +168,10 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
 
                 if (isOpen2 == 1) {
                     isOpen2 = 0;
-                    push_but_icon02.setBackgroundResource(R.mipmap.push_but_iocn02);
+                    push_but_icon02.setBackgroundResource(R.mipmap.slide_off);
                 } else {
                     isOpen2 = 1;
-                    push_but_icon02.setBackgroundResource(R.mipmap.push_but_iocn01);
+                    push_but_icon02.setBackgroundResource(R.mipmap.slide_on);
                 }
 
                 break;
@@ -137,10 +180,10 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
 
                 if (isOpen3 == 1) {
                     isOpen3 = 0;
-                    push_but_icon03.setBackgroundResource(R.mipmap.push_but_iocn02);
+                    push_but_icon03.setBackgroundResource(R.mipmap.slide_off);
                 } else {
                     isOpen3 = 1;
-                    push_but_icon03.setBackgroundResource(R.mipmap.push_but_iocn01);
+                    push_but_icon03.setBackgroundResource(R.mipmap.slide_on);
                 }
                 break;
 
@@ -148,10 +191,14 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
 
                 if (isOpen4 == 1) {
                     isOpen4 = 0;
-                    push_but_icon04.setBackgroundResource(R.mipmap.push_but_iocn02);
+                    push_but_icon04.setBackgroundResource(R.mipmap.slide_off);
+                    acquireWakeLock();
+                    releaseWakeLock();
                 } else {
                     isOpen4 = 1;
-                    push_but_icon04.setBackgroundResource(R.mipmap.push_but_iocn01);
+                    push_but_icon04.setBackgroundResource(R.mipmap.slide_on);
+
+                    acquireWakeLock();
                 }
                 break;
             case R.id.sign_out:
@@ -159,11 +206,60 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
                 LoginOff();
                 break;
 
+            case R.id.clear_cache:
+                //清除缓存
+                if(fileSize != null && !fileSize.startsWith("0.0")){
+                    showCloseDialog();
+                }
+                break;
+
         }
 
 
 
     }
+
+
+
+    private PowerManager.WakeLock mWakeLock;
+
+    private void acquireWakeLock() {
+        if(mWakeLock == null) {
+            PowerManager pm = (PowerManager)getSystemService( Context.POWER_SERVICE);
+            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                    this.getClass().getCanonicalName());
+            mWakeLock.acquire();
+
+        }
+
+    }
+
+    private void releaseWakeLock() {
+        if (mWakeLock != null) {
+            mWakeLock.release();
+            mWakeLock = null;
+        }
+
+    }
+
+    /**
+     *清除缓存提示
+     **/
+    private void showCloseDialog() {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("现在的缓存为" + fileSize + ", 是否要清理").setTitle("提示")
+                .setPositiveButton("清理", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String path = ImageUtils.getAlbumFilesDir(MySetActivity.this).getPath();
+                        DataCleanManager.cleanInternalCache(MySetActivity.this,path);
+                        setCacheText();
+                    }
+                }).setNegativeButton("取消", null).show();
+    }
+
 
     private void LoginOff() {
 

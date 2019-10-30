@@ -31,6 +31,7 @@ dtPublish：发布时间
     private String titleImageUrl;
     private String titleVideoUrl;
     private String dtPublish;
+    private int isSelet;
 
 
     public int getiDianZanCount() {
@@ -87,5 +88,13 @@ dtPublish：发布时间
 
     public void setDtPublish(String dtPublish) {
         this.dtPublish = dtPublish;
+    }
+
+    public int getIsSelet() {
+        return isSelet;
+    }
+
+    public void setIsSelet(int isSelet) {
+        this.isSelet = isSelet;
     }
 }

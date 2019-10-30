@@ -1,9 +1,11 @@
 package catc.tiandao.com.match.my;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.NoticeAdapter;
@@ -13,14 +15,20 @@ import catc.tiandao.com.match.utils.ViewUtls;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class AboutActivity extends BaseActivity implements View.OnClickListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_about );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
         setTitleText( "关于我们" );
+
         viewInfo();
         setProgressVisibility( View.GONE );
     }
@@ -31,6 +39,8 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
         ImageView image = ViewUtls.find( this,R.id.activity_return );
         image.setOnClickListener( this);
+
+
 
 
     }

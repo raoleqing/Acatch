@@ -2,10 +2,13 @@ package catc.tiandao.com.match.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -16,6 +19,7 @@ import java.util.List;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.Banner;
 import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.widgets.loopswitch.AutoLoopSwitchBaseAdapter;
 
 public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
@@ -50,13 +54,17 @@ public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
   public View getView(final int position) {
     final Banner mBanner = mDatas.get(position);
 
-    ImageView imageView = new ImageView(mContext);
-    imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
-    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-    ImageLoader.getInstance().displayImage(mBanner.getTitleImageUrl(), imageView, options);
+    View view = LayoutInflater.from(mContext).inflate(R.layout.banner_item, null);
+    ImageView banner_img = ViewUtls.find( view,R.id.banner_img );
+    TextView banner_title = ViewUtls.find( view,R.id.banner_title );
+
+    banner_img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+    ImageLoader.getInstance().displayImage(mBanner.getTitleImageUrl(), banner_img, options);
     //ImageLoader.getInstance().displayImage("drawable://" + mBanner.getTitleImageUrl(), imageView);
 
-    imageView.setOnClickListener(new View.OnClickListener() {
+    banner_title.setText( mBanner.getcTitle() );
+
+    banner_img.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
 
@@ -69,7 +77,7 @@ public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
 
       }
     });
-    return imageView;
+    return view;
   }
 
   @Override

@@ -1,8 +1,10 @@
 package catc.tiandao.com.match.my;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.adapter.SelectAvatarAdapter;
 import catc.tiandao.com.match.ben.UserBen;
 import catc.tiandao.com.match.common.CircleImageView;
 import catc.tiandao.com.match.utils.UserUtils;
@@ -32,12 +34,16 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_my_data );
 
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
+
+
         setTitleText( "个人资料" );
 
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.icon_def_avatar)          // 设置图片下载期间显示的图片
-                .showImageForEmptyUri(R.mipmap.icon_def_avatar)  // 设置图片Uri为空或是错误的时候显示的图片
-                .showImageOnFail(R.mipmap.icon_def_avatar)       // 设置图片加载或解码过程中发生错误显示的图片
+                .showImageOnLoading(R.mipmap.user_icon)          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.user_icon)  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.user_icon)       // 设置图片加载或解码过程中发生错误显示的图片
                 .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
                 .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
                 //.displayer(new RoundedBitmapDisplayer(20))  // 设置成圆角图片
@@ -46,7 +52,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
 
         viewInfo();
-        setUserContent();
         setProgressVisibility( View.GONE );
     }
 
@@ -61,9 +66,25 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
         UserBen muUserBen = UserUtils.getUserInfo( this );
 
-        user_name.setText( muUserBen.getNickName() );
+        String name = muUserBen.getNickName();
+        if(name == null || name.equals( "" ) || name.equals( "null" )){
+            name = "未设置";
+        }
+
+        user_name.setText( name );
         user_phone.setText( muUserBen.getPhone() );
-        user_sex.setText( muUserBen.getSex() );
+        String sex = muUserBen.getSex();
+        if(sex.equals( "1" )){
+            user_sex.setText( "男" );
+        }else {
+            user_sex.setText( "女" );
+        }
+
+        String Appavatar = UserUtils.getUserAvatar(MyDataActivity.this);
+        if (Appavatar != null && !"".equals(Appavatar)) {
+            ImageLoader.getInstance().displayImage(Appavatar, user_icon,options);
+        }
+
     }
 
     private void viewInfo() {
@@ -72,6 +93,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         image.setOnClickListener( this);
 
         iv_name = ViewUtls.find( this,R.id.iv_name );
+        user_icon = ViewUtls.find( this,R.id.user_icon );
         iv_sex = ViewUtls.find( this,R.id.iv_sex );
         user_name = ViewUtls.find( this,R.id.user_name );
         user_phone = ViewUtls.find( this,R.id.user_phone );
@@ -79,18 +101,9 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
         iv_name.setOnClickListener( this );
         iv_sex.setOnClickListener( this );
+        user_icon.setOnClickListener( this );
 
     }
-
-
-    private void setUserContent() {
-
-        String Appavatar = UserUtils.getUserAvatar(MyDataActivity.this);
-        if (Appavatar != null && !"".equals(Appavatar)) {
-            ImageLoader.getInstance().displayImage(Appavatar, user_icon,options);
-        }
-    }
-
 
 
 
@@ -112,6 +125,13 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
                 Intent intent1 = new Intent(MyDataActivity.this, SetSexActivity.class);
                 startActivity(intent1);
+                overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+                break;
+            case R.id.user_icon:
+
+                Intent intent2 = new Intent(MyDataActivity.this, SelectAvatarActivity.class);
+                startActivity(intent2);
                 overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
 
 

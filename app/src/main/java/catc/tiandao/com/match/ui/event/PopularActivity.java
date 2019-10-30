@@ -103,10 +103,12 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
 
                 if(onPosition == 0){
                     Intent intent01 = new Intent(PopularActivity.this, MatchSelection.class);
+                    intent01.putExtra( MatchSelection.AREA_ID,areaId );
                     startActivity(intent01);
                     overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
                 }else {
                     Intent intent01 = new Intent( PopularActivity.this, SelectActivity.class);
+                    intent01.putExtra( MatchSelection.AREA_ID,areaId );
                     startActivity(intent01);
                     overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
                 }

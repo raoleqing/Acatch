@@ -236,6 +236,7 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
             view.setOnClickListener( this );
+            is_collection.setOnClickListener( this );
 
         }
 

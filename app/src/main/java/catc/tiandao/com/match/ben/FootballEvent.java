@@ -11,6 +11,7 @@ public class FootballEvent {
     private String shortName;
     private int iUserChoose;
     private String areaName;
+    private int type; // 0 为全部， 1 正赛
 
     public int getId() {
         return id;
@@ -42,5 +43,13 @@ public class FootballEvent {
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

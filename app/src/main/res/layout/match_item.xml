@@ -29,6 +29,7 @@
                 style="@style/activity_text1_type2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="阿拉维斯"/>
 
             <ImageView
@@ -92,7 +93,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="纽卡斯尔"/>
+                android:singleLine="true"
+                android:text="纽卡斯尔" />
 
 
 
