@@ -125,7 +125,12 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.iv_share:
-                showShare();
+                if(UserUtils.isLanded( MatchDetailsActivity.this )){
+                    showShare();
+                }else {
+                    UserUtils.startLongin( MatchDetailsActivity.this );
+                }
+
                 break;
 
         }

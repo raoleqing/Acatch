@@ -205,7 +205,13 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.iv_collection:
 
-                FootballMatchCollectAndCancel();
+                if(UserUtils.isLanded( getActivity() )){
+                    FootballMatchCollectAndCancel();
+                }else {
+                    UserUtils.startLongin( getActivity() );
+                }
+
+
                 break;
 
         }

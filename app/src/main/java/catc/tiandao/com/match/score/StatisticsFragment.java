@@ -291,7 +291,14 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             case R.id.iv_collection:
 
                 //http:// 域名/LSQB/ FootballMatchCollectAndCancel? token=***& matchId=比赛id
-                FootballMatchCollectAndCancel();
+
+                if(UserUtils.isLanded( getActivity() )){
+                    FootballMatchCollectAndCancel();
+                }else {
+                    UserUtils.startLongin( getActivity() );
+                }
+
+
 
                 break;
 
