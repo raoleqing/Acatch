@@ -8,6 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--自定义对话框-->
+    <style name="commonDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/fade_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_scale_out</item>
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+
+    <!--底部选择框的弹出样式-->
+    <style name="bottomShowAnimStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowEnterAnimation">@anim/pop_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/pop_exit_bottom</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -22,9 +40,9 @@
     <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="car_order_dialog" parent="@android:style/Theme.Dialog">
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowBackground">@color/exit01</item>
-</style>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/exit01</item>
+    </style>
 
     <style name="date_picker_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
@@ -33,9 +51,6 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/date_picker_bg</item>
     </style>
-
-
-
 
 
     <style name="activity_text1_type1">
@@ -74,15 +89,14 @@
     </style>
 
     <style name="activity_text2_type1">
-    <item name="android:textColor">#ffffff</item>
-    <item name="android:textSize">12sp</item>
-</style>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
     <style name="activity_text2_type5">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">13sp</item>
     </style>
-
 
 
     <style name="activity_text2_type2">
@@ -127,23 +141,23 @@
         <item name="android:textSize">13sp</item>
     </style>
 
-  <style name="activity_text4_type1">
+    <style name="activity_text4_type1">
         <item name="android:textColor">#939393</item>
         <item name="android:textSize">12sp</item>
     </style>
 
 
-<style name="activity_text4_type2">
+    <style name="activity_text4_type2">
         <item name="android:textColor">#939393</item>
         <item name="android:textSize">14sp</item>
 
 
+    </style>
 
-    </style><style name="activity_text5_type2">
+    <style name="activity_text5_type2">
         <item name="android:textColor">#47C1D8</item>
         <item name="android:textSize">14sp</item>
     </style>
-
 
 
     <style name="activity_text6_type1">
@@ -167,7 +181,6 @@
     </style>
 
 
-
     <style name="activity_text7_type1">
         <item name="android:textColor">#FF5500</item>
         <item name="android:textSize">12sp</item>
@@ -177,11 +190,11 @@
         <item name="android:textColor">#FF5500</item>
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="activity_text7_type4">
         <item name="android:textColor">#FF5500</item>
         <item name="android:textSize">13sp</item>
     </style>
-
 
 
     <style name="activity_text7_type3">
@@ -204,7 +217,6 @@
         <item name="android:textColor">#000000</item>
         <item name="android:textSize">14sp</item>
     </style>
-
 
 
     <style name="activity_text8_type3">
@@ -230,18 +242,16 @@
     </style>
 
 
-
     <style name="activity_text10_type2">
         <item name="android:textColor">#666666</item>
         <item name="android:textSize">13sp</item>
     </style>
 
 
- <style name="activity_text11_type3">
+    <style name="activity_text11_type3">
         <item name="android:textColor">#25D37D</item>
         <item name="android:textSize">16sp</item>
     </style>
-
 
 
 </resources>

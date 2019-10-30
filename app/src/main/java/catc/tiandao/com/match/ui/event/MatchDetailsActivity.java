@@ -1,37 +1,43 @@
 package catc.tiandao.com.match.ui.event;
 
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import catc.tiandao.com.match.BaseActivity;
-import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.Match;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import catc.tiandao.com.match.BaseActivity;
+import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.utils.UmengUtil;
+import catc.tiandao.com.match.utils.UserUtils;
+import catc.tiandao.com.match.utils.ViewUtls;
 
 
 /**
  * 球赛详情页
- * **/
-public class MatchDetailsActivity extends BaseActivity implements View.OnClickListener,OnFragmentInteractionListener{
+ **/
+public class MatchDetailsActivity extends BaseActivity implements View.OnClickListener, OnFragmentInteractionListener {
 
     public static final String BALL_TYPE = "BallType";
     public static final String BALL_ID = "BallId";
 
-    private int[] typeViews = {R.id.game_type1,R.id.game_type2,R.id.game_type3,R.id.game_type4,R.id.game_type5};
-    private int[] typeIndicators = {R.id.game_type1_view,R.id.game_type2_view,R.id.game_type3_view,R.id.game_type4_view,R.id.game_type5_view};
+    private int[] typeViews = {R.id.game_type1, R.id.game_type2, R.id.game_type3, R.id.game_type4, R.id.game_type5};
+    private int[] typeIndicators = {R.id.game_type1_view, R.id.game_type2_view, R.id.game_type3_view, R.id.game_type4_view, R.id.game_type5_view};
     private TextView[] types = new TextView[5];
     private View[] Indicators = new View[5];
 
@@ -50,21 +56,23 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
     private String HomeTeamLogoUrl = "", AwayTeamLogoUrl = "", HomeTeamName = "", AwayTeamName = "";
 
     private DisplayImageOptions options;
+    private RelativeLayout rl_contianer;
+    private PopupWindow popupWindow;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_match_details );
-        setTitleVisibility( View.GONE );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_match_details);
+        setTitleVisibility(View.GONE);
         setTranslucentStatus();
 
-        BallType = this.getIntent().getIntExtra( BALL_TYPE,0 );
-        BallId = this.getIntent().getStringExtra( BALL_ID);
+        BallType = this.getIntent().getIntExtra(BALL_TYPE, 0);
+        BallId = this.getIntent().getStringExtra(BALL_ID);
 
         viewInfo();
         initContent();
-        setProgressVisibility( View.GONE );
+        setProgressVisibility(View.GONE);
     }
 
     private void viewInfo() {
@@ -77,35 +85,33 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
                 .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
                 .build();
 
-        ImageView iv_return = ViewUtls.find( this,R.id.iv_return );
-        ImageView iv_share = ViewUtls.find( this,R.id.iv_share );
+        ImageView iv_return = ViewUtls.find(this, R.id.iv_return);
+        ImageView iv_share = ViewUtls.find(this, R.id.iv_share);
+        rl_contianer = ViewUtls.find(this, R.id.rl_container);
 
 
-        iv_return.setOnClickListener( this);
-        iv_share.setOnClickListener( this);
+        iv_return.setOnClickListener(this);
+        iv_share.setOnClickListener(this);
 
-        for(int i = 0; i< typeViews.length; i++){
-            types[i] = ViewUtls.find( this, typeViews[i]);
-            Indicators[i] = ViewUtls.find( this, typeIndicators[i]);
-            types[i].setOnClickListener( this );
+        for (int i = 0; i < typeViews.length; i++) {
+            types[i] = ViewUtls.find(this, typeViews[i]);
+            Indicators[i] = ViewUtls.find(this, typeIndicators[i]);
+            types[i].setOnClickListener(this);
 
         }
-
 
 
     }
 
     private void initContent() {
-        if(fragment01 == null)
-            fragment01 = IntelligenceFragment.newInstance(BallType,BallId);
+        if (fragment01 == null)
+            fragment01 = IntelligenceFragment.newInstance(BallType, BallId);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.main_content, fragment01,"fragment01").show(fragment01);
+        transaction.add(R.id.main_content, fragment01, "fragment01").show(fragment01);
         mContent = fragment01;
         transaction.commit();
     }
-
-
 
 
     @Override
@@ -119,7 +125,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.iv_share:
-
+                showShare();
                 break;
 
         }
@@ -128,18 +134,18 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
         for (int i = 0; i < typeViews.length; i++) {
 
             if (v.getId() == typeViews[i]) {
-                if(i == 4){
+                if (i == 4) {
 
-                    if(UserUtils.isLanded( MatchDetailsActivity.this )){
-                        setContontViewColor( i );
+                    if (UserUtils.isLanded(MatchDetailsActivity.this)) {
+                        setContontViewColor(i);
                         setViewContent(i);
-                    }else {
-                        UserUtils.startLongin( MatchDetailsActivity.this );
+                    } else {
+                        UserUtils.startLongin(MatchDetailsActivity.this);
                     }
 
-                }else {
+                } else {
 
-                    setContontViewColor( i );
+                    setContontViewColor(i);
                     setViewContent(i);
 
                 }
@@ -149,29 +155,82 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    private void showShare() {
+        //分享
+        if (popupWindow == null) {
+            View contentView = LayoutInflater.from(this).inflate(R.layout.pop_share, null);
+            popupWindow = new PopupWindow(this);
+            popupWindow.setContentView(contentView);
+            popupWindow.setAnimationStyle(R.style.bottomShowAnimStyle);
+            popupWindow.setWidth(LinearLayoutCompat.LayoutParams.MATCH_PARENT);
+            popupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
+
+            popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    setBackgroundAlpha(1f);
+                }
+            });
+
+            contentView.findViewById(R.id.iv_zone).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.QZONE);
+                    popupWindow.dismiss();
+                }
+            });
+            contentView.findViewById(R.id.iv_moment).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN_CIRCLE);
+                    popupWindow.dismiss();
+                }
+            });
+        }
+        popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
+        setBackgroundAlpha(0.5f);
+    }
+
+    /***设置背景透明度*/
+    private void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = alpha;
+        getWindow().setAttributes(lp);
+    }
+
+    /***分享*/
+    private void singleShare(SHARE_MEDIA shareMedia) {
+//        足球：http://www.leisuvip1.com/New/Football?matchid=比赛id
+//        篮球：http://www.leisuvip1.com/New/Basketball?matchid=比赛id
+        int logoResId = R.mipmap.app_icon;
+
+        UmengUtil.shareSinglePlatform(this, shareMedia, "http://www.leisuvip1.com/New/Football?matchid=" + BallId, "分享标题", logoResId, "分享描述内容");
+    }
+
 
     /*
      * 修改中间的内容 *
      */
-    private void setContontViewColor(int position){
+    private void setContontViewColor(int position) {
         // TODO Auto-generated method stub
 
-        int color01 = ContextCompat.getColor( this,R.color.text1);
-        int color02 = ContextCompat.getColor(this,R.color.text4);
+        int color01 = ContextCompat.getColor(this, R.color.text1);
+        int color02 = ContextCompat.getColor(this, R.color.text4);
 
-        for(int i = 0; i< typeViews.length; i++){
-            if(position == i){
-                types[i].setTextColor( color01 );
-                Indicators[i].setVisibility( View.VISIBLE );
-            }else {
+        for (int i = 0; i < typeViews.length; i++) {
+            if (position == i) {
+                types[i].setTextColor(color01);
+                Indicators[i].setVisibility(View.VISIBLE);
+            } else {
 
-                types[i].setTextColor( color02 );
-                Indicators[i].setVisibility( View.GONE );
+                types[i].setTextColor(color02);
+                Indicators[i].setVisibility(View.GONE);
             }
         }
     }
-
-
 
 
     private void setViewContent(int i) {
@@ -183,7 +242,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
             case 0:
 
                 if (fragment01 == null) {
-                    fragment01 = IntelligenceFragment.newInstance(BallType,BallId);
+                    fragment01 = IntelligenceFragment.newInstance(BallType, BallId);
                 }
                 switchContent(fragment01);
 
@@ -192,14 +251,14 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
 
 
                 if (fragment02 == null) {
-                    fragment02 = ExponentFragment.newInstance(BallType,BallId);
+                    fragment02 = ExponentFragment.newInstance(BallType, BallId);
                 }
                 switchContent(fragment02);
                 break;
             case 2:
 
                 if (fragment03 == null) {
-                    fragment03 = BattleFragment.newInstance(BallType,BallId, HomeTeamLogoUrl, AwayTeamLogoUrl, HomeTeamName, AwayTeamName);
+                    fragment03 = BattleFragment.newInstance(BallType, BallId, HomeTeamLogoUrl, AwayTeamLogoUrl, HomeTeamName, AwayTeamName);
                 }
                 switchContent(fragment03);
 
@@ -207,7 +266,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
             case 3:
 
                 if (fragment04 == null) {
-                    fragment04 = dataFragment.newInstance(BallType,BallId);
+                    fragment04 = dataFragment.newInstance(BallType, BallId);
                 }
                 switchContent(fragment04);
                 break;
@@ -215,7 +274,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
             case 4:
 
                 if (fragment05 == null) {
-                    fragment05 = MemberInformation.newInstance(BallType,BallId);
+                    fragment05 = MemberInformation.newInstance(BallType, BallId);
                 }
                 switchContent(fragment05);
                 break;
@@ -228,7 +287,9 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    /** 修改显示的内容 不会重新加载 **/
+    /**
+     * 修改显示的内容 不会重新加载
+     **/
     public void switchContent(Fragment to) {
         if (mContent != to) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -242,7 +303,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    public void setTitleContent(String HomeTeamLogoUrl,String AwayTeamLogoUrl,String HomeTeamName,String AwayTeamName){
+    public void setTitleContent(String HomeTeamLogoUrl, String AwayTeamLogoUrl, String HomeTeamName, String AwayTeamName) {
 
         this.HomeTeamLogoUrl = HomeTeamLogoUrl;
         this.AwayTeamLogoUrl = AwayTeamLogoUrl;
@@ -253,14 +314,12 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-        if(uri.toString().equals( OnFragmentInteractionListener.PROGRESS_SHOW)){
+        if (uri.toString().equals(OnFragmentInteractionListener.PROGRESS_SHOW)) {
             setProgressVisibility(View.VISIBLE);
-        }else if(uri.toString().equals(OnFragmentInteractionListener.PROGRESS_HIDE)){
+        } else if (uri.toString().equals(OnFragmentInteractionListener.PROGRESS_HIDE)) {
             setProgressVisibility(View.GONE);
         }
 
@@ -272,7 +331,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
     public void onBackPressed() {
         // TODO Auto-generated method stub
         super.onBackPressed();
-        overridePendingTransition( R.anim.day_push_right_in01, R.anim.day_push_right_out);
+        overridePendingTransition(R.anim.day_push_right_in01, R.anim.day_push_right_out);
         MatchDetailsActivity.this.finish();
     }
 
