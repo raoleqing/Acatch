@@ -9,6 +9,7 @@
 
 
     <ImageView
+        android:id="@+id/user_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:background="@mipmap/icon_def_avatar"/>
@@ -28,6 +29,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/user_name"
                     style="@style/activity_text1_type2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
 
 
             <TextView
+                android:id="@+id/user_desc"
                 style="@style/activity_text10_type1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,6 +54,7 @@
                 android:text="人人都知道你要交易，意味着你可能偏偏不…"/>
 
             <TextView
+                android:id="@+id/user_wechat"
                 style="@style/activity_text6_type1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

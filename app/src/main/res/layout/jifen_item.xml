@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/JiFen_text1"
+            style="@style/activity_text6_type1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="球队"/>
+
+        <TextView
+            android:id="@+id/JiFen_text2"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="赛"/>
+
+        <TextView
+            android:id="@+id/JiFen_text3"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="胜"/>
+
+
+        <TextView
+            android:id="@+id/JiFen_text4"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="平"/>
+
+
+        <TextView
+            android:id="@+id/JiFen_text5"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="负"/>
+
+        <TextView
+            android:id="@+id/JiFen_text6"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="进/失"/>
+
+        <TextView
+            android:id="@+id/JiFen_text7"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="净胜"/>
+
+
+        <TextView
+            android:id="@+id/JiFen_text8"
+            style="@style/activity_text6_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="积分"/>
+
+
+        <TextView
+            android:id="@+id/JiFen_text9"
+            style="@style/activity_text7_type1"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="排名"/>
+
+
+
+</LinearLayout>

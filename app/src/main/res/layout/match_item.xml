@@ -25,15 +25,16 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/home_name"
                 style="@style/activity_text1_type2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="阿拉维斯"/>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/match_icon1"
+                android:id="@+id/home_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="8dp"
                 />
 
@@ -49,6 +50,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/item_time"
                 style="@style/activity_text1_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
 
 
             <TextView
+                android:id="@+id/item_name"
                 style="@style/activity_text6_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,13 +80,14 @@
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/match_icon2"
+                android:id="@+id/away_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="8dp" />
 
 
             <TextView
+                android:id="@+id/away_name"
                 style="@style/activity_text1_type2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

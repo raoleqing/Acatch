@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 public class SelectActivity extends BaseActivity implements View.OnClickListener,OnFragmentInteractionListener {
 
+    public static final String AREA_ID = "areaId";
 
     private Button game_type1,game_type2;
     private View game_type1_view,game_type2_view;
@@ -31,12 +32,18 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
     private FragmentTransaction transaction;
     private int onPosition = 0;
 
+    private int areaId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_select );
+        setContentView( R.layout.activity_match_selection );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
         setTitleText( "赛事选择" );
+        areaId = this.getIntent().getIntExtra( AREA_ID,0 );
+
         viewInfo();
         ContentInfo();
         setProgressVisibility( View.GONE );
@@ -67,12 +74,12 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
             case R.id.activity_return:
                 SelectActivity.this.onBackPressed();
                 break;
-            case R.id.football:
+            case R.id.game_type1:
                 if (onPosition != 0) {
                     setContontView( 0 );
                 }
                 break;
-            case R.id.blueBall:
+            case R.id.game_type2:
                 if (onPosition != 1) {
                     setContontView( 1 );
                 }
@@ -103,7 +110,7 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
                 game_type2_view.setVisibility( View.GONE );
 
                 if (fragment01 == null) {
-                    fragment01 = SelectFragment.newInstance("","");
+                    fragment01 = SelectFragment.newInstance(areaId,1,0);
                 }
                 switchContent(fragment01, "fragment01");
                 break;
@@ -114,7 +121,7 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
                 game_type2_view.setVisibility( View.VISIBLE );
 
                 if (fragment02 == null) {
-                    fragment02 =  SelectFragment.newInstance("'","");
+                    fragment02 =  SelectFragment.newInstance(areaId,1,1);
                 }
                 switchContent(fragment02, "fragment02");
                 break;
@@ -129,7 +136,7 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
 
     private void ContentInfo() {
         if(fragment01 == null)
-            fragment01 = SelectFragment.newInstance("","");
+            fragment01 = SelectFragment.newInstance(0,1,0);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.select_content, fragment01,"fragment01").show(fragment01);

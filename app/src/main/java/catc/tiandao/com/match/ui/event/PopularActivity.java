@@ -8,6 +8,7 @@ import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
 import catc.tiandao.com.match.my.CollectionFragment;
+import catc.tiandao.com.match.score.MatchSelection;
 import catc.tiandao.com.match.utils.ViewUtls;
 
 import android.app.Activity;
@@ -24,6 +25,9 @@ import android.widget.ImageView;
  * */
 public class PopularActivity extends BaseActivity implements View.OnClickListener, OnFragmentInteractionListener  {
 
+    public static final String BALL_TYPE = "BallType";
+    public static final String AREA_ID = "areaId";
+
     private Button football,blueBall;
     private ImageView tv_switch;
     private Fragment fragment01;
@@ -35,22 +39,35 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
     private FragmentTransaction transaction;
     private int onPosition = 0;
 
+    private int areaId = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_popular );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
+
+        int BallType = getIntent().getIntExtra( BALL_TYPE,0 );
+        areaId = getIntent().getIntExtra( AREA_ID,0 );
 
         setTitleVisibility( View.GONE );
         viewInfo();
         ContentInfo();
+        if(BallType > 0){
+            setContontView(BallType);
+        }
         setProgressVisibility( View.GONE );
     }
 
     private void viewInfo() {
         manager = getSupportFragmentManager();
 
-        ImageView image = ViewUtls.find( this,R.id.activity_return );
+
+
+        ImageView image = ViewUtls.find( this,R.id.tv_return );
         tv_switch = ViewUtls.find( this,R.id.tv_switch );
         image.setOnClickListener( this);
 
@@ -69,6 +86,9 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.tv_return:
+                PopularActivity.this.onBackPressed();
+                break;
             case R.id.football:
                 if (onPosition != 0) {
                     setContontView( 0 );
@@ -80,9 +100,18 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
             case R.id.tv_switch:
-                Intent intent01 = new Intent(PopularActivity.this, SelectActivity.class);
-                startActivity(intent01);
-                overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+                if(onPosition == 0){
+                    Intent intent01 = new Intent(PopularActivity.this, MatchSelection.class);
+                    startActivity(intent01);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    Intent intent01 = new Intent( PopularActivity.this, SelectActivity.class);
+                    startActivity(intent01);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }
+
+
                 break;
 
         }
@@ -110,7 +139,7 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
 
 
                 if (fragment01 == null) {
-                    fragment01 = EventFragment.newInstance(0,"");
+                    fragment01 = EventFragment.newInstance(0,areaId);
                 }
                 switchContent(fragment01, "fragment01");
                 break;
@@ -121,7 +150,7 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
                 blueBall.setTextColor( color02 );
 
                 if (fragment02 == null) {
-                    fragment02 =  EventFragment.newInstance(1,"");
+                    fragment02 =  EventFragment.newInstance(1,areaId);
                 }
                 switchContent(fragment02, "fragment02");
                 break;
@@ -136,7 +165,7 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
 
     private void ContentInfo() {
         if(fragment01 == null)
-            fragment01 = CollectionFragment.newInstance(0,"");
+            fragment01 = EventFragment.newInstance(0,areaId);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.score_content, fragment01,"fragment01").show(fragment01);

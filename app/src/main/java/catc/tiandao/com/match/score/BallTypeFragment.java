@@ -108,14 +108,23 @@ public class BallTypeFragment extends Fragment implements View.OnClickListener {
 
 
         list = new ArrayList<Fragment>();
-        list.add(BallFragment.newInstance(0,""));
-        list.add(BallFragment.newInstance(1,""));
-        list.add(BallFragment.newInstance(2,""));
-        list.add(BallFragment.newInstance(3,""));
-        list.add(BallFragment.newInstance(4,""));
+        if(mParam1 == 0){
+            list.add(BallFragment.newInstance(mParam1,0));
+            list.add(BallFragment.newInstance(mParam1,1));
+            list.add(BallFragment.newInstance(mParam1,2));
+            list.add(BallFragment.newInstance(mParam1,3));
+            list.add(BallFragment.newInstance(mParam1,4));
+        }else {
+            list.add(BallFragmentFragment.newInstance(mParam1,0));
+            list.add(BallFragmentFragment.newInstance(mParam1,1));
+            list.add(BallFragmentFragment.newInstance(mParam1,2));
+            list.add(BallFragmentFragment.newInstance(mParam1,3));
+            list.add(BallFragmentFragment.newInstance(mParam1,4));
+        }
 
 
-        manager = getFragmentManager();
+
+        manager = getChildFragmentManager();
         mViewPager = ViewUtls.find( view,R.id.ball_viewpager );
         adapter = new MyAdapter(manager);
         mViewPager.setAdapter(adapter);

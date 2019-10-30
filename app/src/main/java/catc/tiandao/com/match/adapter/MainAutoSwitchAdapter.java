@@ -53,8 +53,8 @@ public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
     ImageView imageView = new ImageView(mContext);
     imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-    //ImageLoader.getInstance().displayImage(mBanner.getImageUrl(), imageView, options);
-    ImageLoader.getInstance().displayImage("drawable://" + mBanner.getImageUrl(), imageView);
+    ImageLoader.getInstance().displayImage(mBanner.getTitleImageUrl(), imageView, options);
+    //ImageLoader.getInstance().displayImage("drawable://" + mBanner.getTitleImageUrl(), imageView);
 
     imageView.setOnClickListener(new View.OnClickListener() {
       @Override

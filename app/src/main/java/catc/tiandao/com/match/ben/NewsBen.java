@@ -4,102 +4,88 @@ public class NewsBen {
 
 
     /*news":[{
-        "newId": "xxxx",
-                "title": "新闻的标题",
-                "videoUrl": "视频的播放URL",
-                "imageUrl": "视频的默认背景图片",       //如果是视频的，就是视频的背景图，如果是普通的，就是新闻配图
-                "shareCount": "838",                 //新闻分享人数
-                "comment": "1984",                   //新闻评论人数
-                "like": "2535",                      //新闻点赞人数
-                "shareInfo":{
-            "shareTitle"   : "分享的标题",
-                    "shareDesc"    : "分享的描述文本",
-                    "shareImageUrl": "图片的url可以用本地icon也行",
-                    "shareLink"    : "分享点击跳转的链接"
-        },
-        "isLike": 0         //是否点过赞 0否1是
+        { iDianZanCount:点赞数,
+iZhuanFaCount:转发数,
+ cCommentCount:评论数,
+cTitle:标题,
+titleImageUrl:带标题图片就显示标题图片,
+titleVideoUrl:带视频就显示视频（图片和视频只会有一个）
+dtPublish：发布时间
+
+        "iDianZanCount": 0,
+		"iZhuanFaCount": 0,
+		"cCommentCount": 0,
+		"cTitle": "测试777777777",
+		"titleImageUrl": "http://www.leisuvip1.com/Image/GetImage/25810",
+		"titleVideoUrl": "http://www.leisuvip1.com/Image/GetImage/",
+		"dtPublish": "10-26 15:36:00"
+
+
     }]
     */
 
-    private int newId;
-    private String title;
-    private String videoUrl;
-    private String imageUrl;
-    private int shareCount;
-    private int comment;
-    private int like;
-    private int isLike;
-    private ShareInfoBan shareInfo;
+    private int iDianZanCount;
+    private int iZhuanFaCount;
+    private int cCommentCount;
+    private String cTitle;
+    private String titleImageUrl;
+    private String titleVideoUrl;
+    private String dtPublish;
 
-    public int getNewId() {
-        return newId;
+
+    public int getiDianZanCount() {
+        return iDianZanCount;
     }
 
-    public void setNewId(int newId) {
-        this.newId = newId;
+    public void setiDianZanCount(int iDianZanCount) {
+        this.iDianZanCount = iDianZanCount;
     }
 
-    public String getTitle() {
-        return title;
+    public int getiZhuanFaCount() {
+        return iZhuanFaCount;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setiZhuanFaCount(int iZhuanFaCount) {
+        this.iZhuanFaCount = iZhuanFaCount;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public int getcCommentCount() {
+        return cCommentCount;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setcCommentCount(int cCommentCount) {
+        this.cCommentCount = cCommentCount;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getcTitle() {
+        return cTitle;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setcTitle(String cTitle) {
+        this.cTitle = cTitle;
     }
 
-    public int getShareCount() {
-        return shareCount;
+    public String getTitleImageUrl() {
+        return titleImageUrl;
     }
 
-    public void setShareCount(int shareCount) {
-        this.shareCount = shareCount;
+    public void setTitleImageUrl(String titleImageUrl) {
+        this.titleImageUrl = titleImageUrl;
     }
 
-    public int getComment() {
-        return comment;
+    public String getTitleVideoUrl() {
+        return titleVideoUrl;
     }
 
-    public void setComment(int comment) {
-        this.comment = comment;
+    public void setTitleVideoUrl(String titleVideoUrl) {
+        this.titleVideoUrl = titleVideoUrl;
     }
 
-    public int getLike() {
-        return like;
+    public String getDtPublish() {
+        return dtPublish;
     }
 
-    public void setLike(int like) {
-        this.like = like;
-    }
-
-    public int getIsLike() {
-        return isLike;
-    }
-
-    public void setIsLike(int isLike) {
-        this.isLike = isLike;
-    }
-
-    public ShareInfoBan getShareInfo() {
-        return shareInfo;
-    }
-
-    public void setShareInfo(ShareInfoBan shareInfo) {
-        this.shareInfo = shareInfo;
+    public void setDtPublish(String dtPublish) {
+        this.dtPublish = dtPublish;
     }
 }

@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.BallBen;
+import catc.tiandao.com.match.ben.SuggestBen;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
 import catc.tiandao.com.match.utils.ViewUtls;
@@ -25,7 +26,7 @@ public class SuggestTypeAdapter extends RecyclerView.Adapter<SuggestTypeAdapter.
 
 
     private Context mContext;
-    private String[] array;
+    private List<SuggestBen> mList ;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
@@ -36,9 +37,9 @@ public class SuggestTypeAdapter extends RecyclerView.Adapter<SuggestTypeAdapter.
 
 
 
-    public SuggestTypeAdapter(Context mContext, String[] array) {
+    public SuggestTypeAdapter(Context mContext, List<SuggestBen> mList ) {
         this.mContext = mContext;
-        this.array = array;
+        this.mList = mList;
         this.mInflater=LayoutInflater.from(mContext);
 
 
@@ -58,7 +59,7 @@ public class SuggestTypeAdapter extends RecyclerView.Adapter<SuggestTypeAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.item_text.setText( array[position] );
+        holder.item_text.setText( mList.get( position ).getName());
         if(showType == position){
             holder.item_text.setBackgroundResource( R.drawable.bg_search_normal12 );
             holder.item_text.setTextColor( ContextCompat.getColor( mContext,R.color.white ) );
@@ -71,7 +72,7 @@ public class SuggestTypeAdapter extends RecyclerView.Adapter<SuggestTypeAdapter.
 
     @Override
     public int getItemCount() {
-        return array.length;
+        return mList.size();
     }
 
 

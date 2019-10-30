@@ -24,6 +24,8 @@ import java.lang.reflect.Method;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import catc.tiandao.com.match.utils.ViewUtls;
+import pl.droidsonroids.gif.GifImageView;
 
 
 /**
@@ -37,12 +39,9 @@ public class BaseActivity extends FragmentActivity {
 	private ImageView activity_return;// 返回
 
 	private View progress;
-
+	private GifImageView iv_image;
 	private int progressIndex = 1;
-
 	private int backgroundColor;
-
-
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,9 @@ public class BaseActivity extends FragmentActivity {
 
 		progress = LayoutInflater.from(this).inflate(R.layout.progress, null);
 		//progress.setPadding(0, getStatusBarHeight(this), 0, 0);
+		iv_image = ViewUtls.find( progress,R.id.iv_image );
+		iv_image.setImageResource( R.mipmap.loading );
+
 		viewGroup.addView(progress);
 
 		// 不作任何处理
@@ -279,26 +281,6 @@ public class BaseActivity extends FragmentActivity {
 			}
 
 
-		/*	if(OSUtil.isMIUI()) {
-				//小米MIUI系统
-				setMIUIStatusBarTextMode(isTextDark);
-			} else if(OSUtil.isFlyme()) {
-				//魅族flyme系统
-				setFlymeStatusBarTextMode(isTextDark);
-			} else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				//6.0以上，调用系统方法
-				Window window = getWindow();
-				window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-				window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-				if(isTextDark){
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-				}else {
-					getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				}
-
-			} else {
-				//4.4以上6.0以下的其他系统，暂时没有修改状态栏的文字图标颜色的方法，有可以加上
-			}*/
 		}
 	}
 

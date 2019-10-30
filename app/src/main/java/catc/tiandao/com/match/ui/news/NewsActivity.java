@@ -111,6 +111,8 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener, 
             if(position == i){
                 types[i].setTextColor( color01 );
                 Indicators[i].setVisibility( View.VISIBLE );
+
+                mViewPager.setCurrentItem( i );
             }else {
 
                 types[i].setTextColor( color02 );

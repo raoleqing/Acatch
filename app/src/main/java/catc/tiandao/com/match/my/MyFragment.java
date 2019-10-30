@@ -11,10 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.CircleImageView;
+import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 
 /**
@@ -31,6 +41,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private CircleImageView user_icon;
     private Button login_but;
     private TextView but_type1,but_type2,but_type3,but_type4,but_type5,but_type6;
 
@@ -39,6 +50,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private DisplayImageOptions options;
 
     public MyFragment() {
         // Required empty public constructor
@@ -69,6 +81,21 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             mParam1 = getArguments().getString( ARG_PARAM1 );
             mParam2 = getArguments().getString( ARG_PARAM2 );
         }
+
+        EventBus.getDefault().register(this);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.icon_def_avatar)          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.icon_def_avatar)  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.icon_def_avatar)       // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
+                .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
+                //.displayer(new RoundedBitmapDisplayer(20))  // 设置成圆角图片
+                .build();
+
+
+
+
     }
 
     @Override
@@ -77,11 +104,13 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.fragment_my, container, false );
         viewInfo(view);
+        setUserContent();
         return view;
     }
 
     private void viewInfo(View view) {
 
+        user_icon = ViewUtls.find( view,R.id.user_icon );
         login_but = ViewUtls.find( view,R.id.login_but );
         but_type1 = ViewUtls.find( view,R.id.but_type1 );
         but_type2 = ViewUtls.find( view,R.id.but_type2 );
@@ -90,6 +119,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         but_type5 = ViewUtls.find( view,R.id.but_type5 );
         but_type6 = ViewUtls.find( view,R.id.but_type6 );
 
+        user_icon.setOnClickListener( this );
         login_but.setOnClickListener( this );
         but_type1.setOnClickListener( this );
         but_type2.setOnClickListener( this );
@@ -99,10 +129,41 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         but_type6.setOnClickListener( this );
     }
 
+
+    private void setUserContent() {
+
+        if(UserUtils.isLanded( getActivity() )){
+            String Appavatar = UserUtils.getUserAvatar(getActivity());
+            if (Appavatar != null && !"".equals(Appavatar)) {
+                ImageLoader.getInstance().displayImage(Appavatar, user_icon,options);
+            }
+            login_but.setVisibility( View.GONE );
+        }else {
+            ImageLoader.getInstance().displayImage( "drawable://" + R.mipmap.icon_def_avatar, user_icon );
+            login_but.setVisibility( View.VISIBLE );
+        }
+    }
+
+
+
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
+            case R.id.user_icon:
+
+                if(UserUtils.isLanded( getActivity() )){
+                    Intent intent = new Intent(getActivity(), MyDataActivity.class);
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    Intent intent01 = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent01);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }
+
+
+                break;
             case R.id.login_but:
 
                 Intent intent01 = new Intent(getActivity(), LoginActivity.class);
@@ -111,14 +172,29 @@ public class MyFragment extends Fragment implements View.OnClickListener{
 
                 break;
             case R.id.but_type1:
-                Intent intent02 = new Intent(getActivity(), CollectionActivity.class);
-                startActivity(intent02);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+
+                if(UserUtils.isLanded( getActivity() )){
+                    Intent intent02 = new Intent(getActivity(), CollectionActivity.class);
+                    startActivity(intent02);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                  UserUtils.startLongin( getActivity() );
+                }
+
+
+
                 break;
             case R.id.but_type2:
-                Intent intent03 = new Intent(getActivity(), AttentionActivity.class);
-                startActivity(intent03);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+                if(UserUtils.isLanded( getActivity() )){
+                    Intent intent03 = new Intent(getActivity(), AttentionActivity.class);
+                    startActivity(intent03);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    UserUtils.startLongin( getActivity() );
+                }
+
                 break;
             case R.id.but_type3:
 
@@ -137,10 +213,14 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.but_type5:
 
+                if(UserUtils.isLanded( getActivity() )){
+                    Intent intent06 = new Intent(getActivity(), SuggestActivity.class);
+                    startActivity(intent06);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
 
-                Intent intent06 = new Intent(getActivity(), SuggestActivity.class);
-                startActivity(intent06);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    UserUtils.startLongin( getActivity() );
+                }
 
 
                 break;
@@ -177,11 +257,23 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Subscribe
+    public void onEvent(String event){
+      if(Constant.LOGIN_SUCCESS.equals(event)){
+          setUserContent();
+        }
+    }
+
+
+
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        EventBus.getDefault().unregister(this);
     }
+
 
 
 

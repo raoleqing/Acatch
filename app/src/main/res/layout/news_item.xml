@@ -36,6 +36,7 @@
 
 
                 <TextView
+                    android:id="@+id/zhuanfa"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,6 +46,7 @@
                     android:text="1000"/>
 
                 <TextView
+                    android:id="@+id/comment"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
 
 
                 <TextView
+                    android:id="@+id/dianzan"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,9 +74,10 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/item_image"
             android:layout_width="120dp"
             android:layout_height="80dp"
-            />
+            android:scaleType="center" />
     </LinearLayout>
 
 

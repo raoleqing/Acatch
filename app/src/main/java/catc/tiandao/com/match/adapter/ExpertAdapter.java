@@ -4,18 +4,25 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.BallBen;
+import catc.tiandao.com.match.ben.Expert;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
+import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 
 /**
@@ -25,10 +32,12 @@ public class ExpertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     private Context mContext;
-    private List<BallBen> mList;
+    private List<Expert> mList;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
+
+    private DisplayImageOptions options;
 
     private static final int TYPE_ITEM =0;  //普通Item View
     private static final int TYPE_FOOTER = 1;  //顶部FootView
@@ -46,10 +55,22 @@ public class ExpertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
 
-    public ExpertAdapter(Context mContext, List<BallBen> mList) {
+    public ExpertAdapter(Context mContext, List<Expert> mList) {
         this.mContext = mContext;
         this.mList = mList;
         this.mInflater=LayoutInflater.from(mContext);
+
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.icon_def_avatar)          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.icon_def_avatar)  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.icon_def_avatar)       // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
+                .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
+                //.displayer(new RoundedBitmapDisplayer(20))  // 设置成圆角图片
+                .build();
+
+
 
 
     }
@@ -76,8 +97,16 @@ public class ExpertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if(holder instanceof MyViewHolder) {
+
+            Expert mExpert = mList.get( position );
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
+
+            ImageLoader.getInstance().displayImage(mExpert.getIcon(), mMyViewHolder.user_icon,options);
+            mMyViewHolder.user_name.setText( mExpert.getSpecialName() );
+            mMyViewHolder.user_desc.setText( mExpert.getDesc() );
+            mMyViewHolder.user_wechat.setText( "微信："+ mExpert.getWechat() +" · QQ：" + mExpert.getQq() );
+
 
 
         }else if(holder instanceof FootViewHolder){
@@ -100,41 +129,44 @@ public class ExpertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
 
-
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null || mList.size() == 0 ? 0 : mList.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
         // 最后一个item设置为footerView
-/*        if (position + 1 == getItemCount()) {
+        if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         } else {
             return TYPE_ITEM;
-        }*/
-
-        return TYPE_ITEM;
+        }
 
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
-        private LinearLayout list_item;
+        private ImageView user_icon;
+        private TextView user_name;
+        private TextView user_desc;
+        private TextView user_wechat;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
         public MyViewHolder(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
 
-            this.list_item = ViewUtls.find( view,R.id.list_item );
+            this.user_icon = ViewUtls.find( view,R.id.user_icon );
+            this.user_name = ViewUtls.find( view,R.id.user_name );
+            this.user_desc = ViewUtls.find( view,R.id.user_desc );
+            this.user_wechat = ViewUtls.find( view,R.id.user_wechat );
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
-            list_item.setOnClickListener( this );
+            view.setOnClickListener( this );
 
         }
 
@@ -219,7 +251,7 @@ public class ExpertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     //添加数据
-    public void addItem(List<BallBen> newDatas) {
+    public void addItem(List<Expert> newDatas) {
         //mTitles.add(position, data);
         //notifyItemInserted(position);
         newDatas.addAll(mList);
@@ -228,7 +260,7 @@ public class ExpertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
-    public void addMoreItem(List<BallBen> newDatas) {
+    public void addMoreItem(List<Expert> newDatas) {
         mList.addAll(newDatas);
         notifyDataSetChanged();
     }

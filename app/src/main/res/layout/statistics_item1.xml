@@ -11,6 +11,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/home"
             style="@style/activity_text8_type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,6 +21,7 @@
 
 
         <TextView
+            android:id="@+id/name"
             style="@style/activity_text8_type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +30,7 @@
 
 
         <TextView
+            android:id="@+id/away"
             style="@style/activity_text8_type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,12 +53,14 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/home_view1"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="#f8f8f8"/>
 
             <ImageView
-                android:layout_width="60dp"
+                android:id="@+id/home_view2"
+                android:layout_width="wrap_content"
                 android:layout_height="5dp"
                 android:layout_alignParentRight="true"
                 android:background="@color/text1"/>
@@ -74,12 +79,14 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/away_view1"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="#f8f8f8"/>
 
             <ImageView
-                android:layout_width="60dp"
+                android:id="@+id/away_view2"
+                android:layout_width="wrap_content"
                 android:layout_height="5dp"
                 android:background="@color/text5"/>
 

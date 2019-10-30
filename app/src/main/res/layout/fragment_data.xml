@@ -6,263 +6,490 @@
     android:orientation="vertical"
     tools:context=".ui.event.dataFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:gravity="center_vertical"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="22dp"
-            android:background="@color/text1"/>
-
-        <TextView
-            style="@style/activity_text8_type3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="球队统计" />
-
-
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-        style="@style/activity_text6_type1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.4"
-            android:paddingLeft="15dp"
-        android:text="球队"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:text="胜"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:text="负"/>
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:text="胜率"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:gravity="center"
-            android:text="连胜/负"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:text="排名"/>
-
-
-    </LinearLayout>
-
-
-
-
-    <LinearLayout
+        android:id="@+id/ball_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:orientation="vertical">
-
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="44dp"
-           android:orientation="horizontal"
-           android:gravity="center_vertical">
-
-
-           <LinearLayout
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="0.4">
-
-               <ImageView
-                   android:layout_width="20dp"
-                   android:layout_height="20dp"
-                   android:scaleType="center"/>
-
-               <TextView
-                   style="@style/activity_text8_type0"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="6dp"
-                   android:text="洛杉矶快船"/>
-
-
-           </LinearLayout>
-
-
-
-
-
-           <TextView
-               style="@style/activity_text8_type0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="0.1"
-               android:gravity="center"
-               android:text="5"/>
-
-
-           <TextView
-               style="@style/activity_text8_type0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="0.1"
-               android:gravity="center"
-               android:text="0"/>
-
-           <TextView
-               style="@style/activity_text8_type0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="0.1"
-               android:gravity="center"
-               android:text="100%"/>
-
-
-           <TextView
-               style="@style/activity_text8_type0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="0.2"
-               android:gravity="center"
-               android:text="5连胜"/>
-
-
-           <TextView
-               style="@style/activity_text8_type0"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_weight="0.1"
-               android:gravity="center"
-               android:text="西1"/>
-
-
-       </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_01"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
+            <View
+                android:layout_width="2dp"
+                android:layout_height="22dp"
+                android:background="@color/text1"/>
+
+            <TextView
+                style="@style/activity_text8_type3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="进球分布" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/content_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="00′" />
+
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="15′" />
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="30′" />
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="45′" />
+
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="60′" />
+
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="75′" />
+
+
+                    <TextView
+
+                        style="@style/activity_text1_type2"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="90′" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:gravity="right"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/goal1_name"
+                        style="@style/activity_text8_type1"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="0"/>
+
+
+
+                    <TextView
+                        android:id="@+id/goal1_text"
+                        style="@style/activity_text7_type4"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal1_text1"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg7"
+                        android:text="0"/>
+
+                    <TextView
+                        android:id="@+id/goal1_text2"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg6"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal1_text3"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg6"
+                        android:layout_marginRight="4dp"
+                        android:text="0"/>
+
+                    <TextView
+                        android:id="@+id/goal1_text4"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg6"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal1_text5"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg6"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal1_text6"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg6"
+                        android:text="0"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:gravity="right"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/goal2_name"
+                        style="@style/activity_text8_type1"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="0"/>
+
+
+
+                    <TextView
+                        android:id="@+id/goal2_text"
+                        style="@style/activity_text7_type4"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal2_text1"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg8"
+                        android:text="0"/>
+
+                    <TextView
+                        android:id="@+id/goal2_text2"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg8"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal2_text3"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg8"
+                        android:layout_marginRight="4dp"
+                        android:text="0"/>
+
+                    <TextView
+                        android:id="@+id/goal2_text4"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg8"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal2_text5"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg8"
+                        android:text="0"/>
+
+
+                    <TextView
+                        android:id="@+id/goal2_text6"
+                        style="@style/activity_text2_type5"
+                        android:layout_width="32dp"
+                        android:layout_height="26dp"
+                        android:gravity="center"
+                        android:background="@color/bg8"
+                        android:text="0"/>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/no_data1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:text="@string/not_data"/>
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="22dp"
+                android:background="@color/text1"/>
+
+            <TextView
+                style="@style/activity_text8_type3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4">
+                android:layout_marginLeft="15dp"
+                android:text="联赛积分" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleType="center"/>
 
-                <TextView
-                    style="@style/activity_text8_type0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:text="洛杉矶快船"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/content_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="球队"/>
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="赛"/>
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="胜"/>
+
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="平"/>
+
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="负"/>
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="进/失"/>
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="净胜"/>
+
+
+                    <TextView
+                        style="@style/activity_text6_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="积分"/>
+
+
+                    <TextView
+                        style="@style/activity_text7_type1"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:text="排名"/>
+
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/jiFen_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
 
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/no_data2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:text="@string/not_data"/>
+        </RelativeLayout>
 
 
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="22dp"
+                android:background="@color/text1"/>
 
             <TextView
-                style="@style/activity_text8_type0"
-                android:layout_width="wrap_content"
+                style="@style/activity_text8_type3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:gravity="center"
-                android:text="5"/>
-
-
-            <TextView
-                style="@style/activity_text8_type0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:gravity="center"
-                android:text="0"/>
-
-            <TextView
-                style="@style/activity_text8_type0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:gravity="center"
-                android:text="100%"/>
-
-
-            <TextView
-                style="@style/activity_text8_type0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:gravity="center"
-                android:text="5连胜"/>
-
-
-            <TextView
-                style="@style/activity_text8_type0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:gravity="center"
-                android:text="西1"/>
+                android:layout_marginLeft="15dp"
+                android:text="伤停情况" />
 
 
         </LinearLayout>
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/Injured_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/no_data3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:text="@string/not_data"/>
+
+        </RelativeLayout>
+
+
+
+
     </LinearLayout>
+
 
 
     <LinearLayout
@@ -285,71 +512,115 @@
             android:layout_marginLeft="15dp"
             android:text="历史交锋" />
 
-
     </LinearLayout>
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/content_layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/bg2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="日期"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="赛事"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="主队"/>
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="比分"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="客队"/>
+
+                <TextView
+                    android:id="@+id/title_item1"
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盘路"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/history_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <TextView
+                android:id="@+id/history_text"
+                style="@style/activity_text6_type1"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:singleLine="true"
+                android:gravity="center"/>
+        </LinearLayout>
+
 
         <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="日期"/>
+            android:id="@+id/no_data4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:text="@string/not_data"/>
 
 
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="赛事"/>
+    </RelativeLayout>
 
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="主队"/>
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="比分"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="客队"/>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@color/white">
-    </androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -376,183 +647,257 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:gravity="center_vertical"
-        android:background="@color/white"
-        android:paddingLeft="15dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/content_layout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:orientation="horizontal">
 
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="center"/>
+                <ImageView
+                    android:id="@+id/team1Last_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="center"/>
+
+                <TextView
+                    android:id="@+id/team1Last_name"
+                    style="@style/activity_text8_type0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="洛杉矶快船"/>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/bg2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="日期"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="赛事"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="主队"/>
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="比分"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="客队"/>
+
+                <TextView
+                    android:id="@+id/title_item2"
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盘路"/>
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recent_recyclerview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <TextView
+                android:id="@+id/team1last_text"
+                style="@style/activity_text6_type1"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:singleLine="true"
+                android:gravity="center"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/team2Last_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="center"/>
+
+                <TextView
+                    android:id="@+id/team2Last_name"
+                    style="@style/activity_text8_type0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="洛杉矶快船"/>
+
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/bg2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="日期"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="赛事"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="主队"/>
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="比分"/>
+
+
+                <TextView
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="客队"/>
+
+                <TextView
+                    android:id="@+id/title_item3"
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盘路"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recent_recyclerview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/team2last_text"
+                style="@style/activity_text6_type1"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:singleLine="true"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
 
         <TextView
-            style="@style/activity_text8_type0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:text="洛杉矶快船"/>
+            android:id="@+id/no_data5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:text="@string/not_data"/>
+
+
+    </RelativeLayout>
 
 
 
 
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="日期"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="赛事"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="主队"/>
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="比分"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="客队"/>
-
-    </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recent_recyclerview1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:gravity="center_vertical"
-        android:background="@color/white"
-        android:paddingLeft="15dp"
-        android:orientation="horizontal">
-
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="center"/>
-
-        <TextView
-            style="@style/activity_text8_type0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:text="洛杉矶快船"/>
 
 
 
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="日期"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="赛事"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="主队"/>
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="比分"/>
-
-
-        <TextView
-            style="@style/activity_text6_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="客队"/>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recent_recyclerview2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@color/white">
-    </androidx.recyclerview.widget.RecyclerView>
 
 
    

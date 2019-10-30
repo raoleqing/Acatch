@@ -4,6 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -13,21 +17,23 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.AreaMatch;
+import catc.tiandao.com.match.ben.JiShiShiJian;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.match.utils.ViewUtls;
 
 public class ImmediateByFootballAdapter extends RecyclerView.Adapter<ImmediateByFootballAdapter.MyViewHolder>  {
 
 
     private Context mContext;
-    private List<AreaMatch> list;
+    private List<JiShiShiJian> list;
     private MyItemClickListener mItemClickListener;
     private DisplayImageOptions options;
 
 
     private LayoutInflater mInflater;
 
-    public ImmediateByFootballAdapter(Context mContext, List<AreaMatch> list) {
+    public ImmediateByFootballAdapter(Context mContext, List<JiShiShiJian> list) {
         this.mContext = mContext;
         this.list = list;
         this.mInflater=LayoutInflater.from(mContext);
@@ -58,12 +64,70 @@ public class ImmediateByFootballAdapter extends RecyclerView.Adapter<ImmediateBy
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+        JiShiShiJian mJiShiShiJian = list.get( position );
+        int pos = mJiShiShiJian.getPosition();
+        if(pos == 1){
+            //主
+            holder.home_layout.setVisibility( View.VISIBLE );
+            holder.away_layout.setVisibility( View.GONE );
+
+            holder.home_time.setText( mJiShiShiJian.getTime() );
+            int resource = getImageResource(mJiShiShiJian.getType());
+            if(resource > 0){
+                holder.home_icon.setImageResource( resource );
+                holder.home_icon.setVisibility( View.VISIBLE );
+            }else {
+                holder.home_icon.setVisibility( View.GONE );
+            }
+
+            holder.home_text.setText( mJiShiShiJian.getData() );
+
+
+
+        }else {
+            holder.home_layout.setVisibility( View.GONE );
+            holder.away_layout.setVisibility( View.VISIBLE );
+
+            holder.away_time.setText( mJiShiShiJian.getTime() );
+            int resource = getImageResource(mJiShiShiJian.getType());
+            if(resource > 0){
+                holder.away_icon.setImageResource( resource );
+                holder.away_icon.setVisibility( View.VISIBLE );
+            }else {
+                holder.away_icon.setVisibility( View.GONE );
+            }
+
+            holder.away_text.setText( mJiShiShiJian.getData() );
+
+
+        }
+
+        if(position == list.size() - 1){
+            holder.line1.setVisibility( View.GONE );
+        }else {
+            holder.line1.setVisibility( View.VISIBLE );
+        }
+
+        holder.item_view.post(new Runnable() {
+            @Override
+            public void run() {
+                int height = holder.item_view.getHeight();
+
+                ViewGroup.LayoutParams params = holder.line1.getLayoutParams(); //取控件textView当前的布局参数
+                params.height = height;
+                holder.line1.setLayoutParams(params);
+
+
+            }
+        });
+
 
     }
 
+
     @Override
     public int getItemCount() {
-        return 3;
+        return list.size();
     }
 
 
@@ -71,10 +135,30 @@ public class ImmediateByFootballAdapter extends RecyclerView.Adapter<ImmediateBy
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
+        private RelativeLayout item_view;
+        private View line1;
+        private RelativeLayout home_layout;
+        private TextView home_time;
+        private TextView home_text;
+        private ImageView home_icon;
+        private LinearLayout away_layout;
+        private TextView away_time;
+        private ImageView away_icon;
+        private TextView away_text;
         private MyItemClickListener mListener;
 
         public MyViewHolder(View view, MyItemClickListener listener) {
             super(view);
+            item_view = ViewUtls.find( view,R.id.item_view );
+            line1 = ViewUtls.find( view,R.id.line1 );
+            home_layout = ViewUtls.find( view,R.id.home_layout );
+            home_time = ViewUtls.find( view,R.id.home_time );
+            home_text = ViewUtls.find( view,R.id.home_text );
+            home_icon = ViewUtls.find( view,R.id.home_icon );
+            away_layout = ViewUtls.find( view,R.id.away_layout );
+            away_time = ViewUtls.find( view,R.id.away_time );
+            away_icon = ViewUtls.find( view,R.id.away_icon );
+            away_text = ViewUtls.find( view,R.id.away_text );
 
             this.mListener = listener;
         }
@@ -102,6 +186,49 @@ public class ImmediateByFootballAdapter extends RecyclerView.Adapter<ImmediateBy
     public void setOnItemClickListener(MyItemClickListener listener) {
         this.mItemClickListener = listener;
     }
+
+
+
+
+    //黄牌、红牌、进球、换人、射门（任意球、球门球、点球）
+    private int getImageResource(int type) {
+
+        int res = 0;
+
+        switch (type){
+            case 3:
+                //黄牌
+                res =  R.mipmap.event_icon_yellowcard;
+               break;
+            case 4:
+
+                res =  R.mipmap.event_icon_redcard;
+
+                //红牌
+                break;
+            case 1:
+
+                res =  R.mipmap.event_icon_football;
+                //进球
+                break;
+            case 9:
+                //换人
+                res =  R.mipmap.event_icon_change;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                //射门
+                res =  R.mipmap.event_icon_corners;
+                break;
+        }
+
+        return res;
+
+
+    }
+
+
 
 
 

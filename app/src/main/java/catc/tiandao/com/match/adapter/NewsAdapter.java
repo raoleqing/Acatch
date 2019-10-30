@@ -10,6 +10,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +22,7 @@ import catc.tiandao.com.match.ben.BallBen;
 import catc.tiandao.com.match.ben.NewsBen;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
+import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 import cn.jzvd.JzvdStd;
 
@@ -39,6 +44,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     private int load_more_status=0;  //上拉加载更多状态-默认为0
     private LayoutInflater mInflater;
 
+    private DisplayImageOptions options;
+
 
     //没有数据了
     public  static final int NO_DATA = -1;
@@ -52,6 +59,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         this.mContext = mContext;
         this.mList = mList;
         this.mInflater=LayoutInflater.from(mContext);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading( R.mipmap.mall_cbg )          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.mall_cbg )  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.mall_cbg )       // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
+                .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
+                .displayer(new RoundedBitmapDisplayer( UnitConverterUtils.dip2px( mContext,6 )))  // 设置成圆角图片
+                .build();
     }
 
     @Override
@@ -63,6 +79,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             View itemView =mInflater.inflate( R.layout.news_item1,parent,false);
             MyViewHolderByVideo viewHolder = new MyViewHolderByVideo(itemView, mItemClickListener, mItemLongClickListener);
             return viewHolder;
+
         }else if(viewType==TYPE_ITEM2){
 
             View itemView =mInflater.inflate( R.layout.news_item,parent,false);
@@ -85,18 +102,30 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         if(holder instanceof MyViewHolder) {
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
+            NewsBen mNewsBen = mList.get( position );
 
+            mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
 
+            mMyViewHolder.zhuanfa.setText( mNewsBen.getiZhuanFaCount() + "" );
+            mMyViewHolder.comment.setText( mNewsBen.getcCommentCount() + "" );
+            mMyViewHolder.dianzan.setText( mNewsBen.getiDianZanCount() + "" );
+
+            ImageLoader.getInstance().displayImage(mNewsBen.getTitleImageUrl(), mMyViewHolder.item_image,options);
 
         }else if(holder instanceof MyViewHolderByVideo){
 
-//            MyViewHolderByVideo mMyViewHolder = (MyViewHolderByVideo)holder;
-//
-//            mMyViewHolder.jz_video.setVisibility( View.VISIBLE );
-//
-//            mMyViewHolder.jz_video.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-//                    , "饺子闭眼睛");
-//            mMyViewHolder.jz_video.thumbImageView.setImageURI( Uri.parse( "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640" ) );
+            NewsBen mNewsBen = mList.get( position );
+
+            MyViewHolderByVideo mMyViewHolder = (MyViewHolderByVideo)holder;
+            mMyViewHolder.jz_video.setVisibility( View.VISIBLE );
+            mMyViewHolder.jz_video.setUp(mNewsBen.getTitleVideoUrl(),mNewsBen.getcTitle());
+            mMyViewHolder.jz_video.thumbImageView.setImageURI( Uri.parse( mNewsBen.getTitleImageUrl() ) );
+
+            mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
+
+            mMyViewHolder.zhuanfa.setText( mNewsBen.getiZhuanFaCount() + "" );
+            mMyViewHolder.comment.setText( mNewsBen.getcCommentCount() + "" );
+            mMyViewHolder.dianzan.setText( mNewsBen.getiDianZanCount() + "" );
 
 
         }else if(holder instanceof FootViewHolder){
@@ -133,7 +162,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
        if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         } else {
-           if(mList.get( position ).getVideoUrl() != null && mList.get( position ).getVideoUrl().length() > 0){
+           if(mList.get( position ).getTitleVideoUrl() != null && mList.get( position ).getTitleVideoUrl().length() > 0){
                return TYPE_ITEM1;
            }else {
                return TYPE_ITEM2;
@@ -147,11 +176,19 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
+        private TextView item_title;
+        private TextView zhuanfa,comment,dianzan;
+        private ImageView item_image;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
         public MyViewHolder(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
+            this.item_title = ViewUtls.find( view,R.id.item_title);
+            this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
+            this.comment = ViewUtls.find( view,R.id.comment);
+            this.dianzan = ViewUtls.find( view,R.id.dianzan);
+            this.item_image = ViewUtls.find( view,R.id.item_image);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
 
@@ -183,12 +220,18 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     class MyViewHolderByVideo extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
+        private TextView item_title;
+        private TextView zhuanfa,comment,dianzan;
         private JzvdStd jz_video;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
         public MyViewHolderByVideo(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
+            this.item_title = ViewUtls.find( view,R.id.item_title);
+            this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
+            this.comment = ViewUtls.find( view,R.id.comment);
+            this.dianzan = ViewUtls.find( view,R.id.dianzan);
             this.jz_video = ViewUtls.find( view,R.id.jz_video);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;

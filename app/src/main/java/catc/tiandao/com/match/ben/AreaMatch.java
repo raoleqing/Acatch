@@ -5,38 +5,38 @@ import java.util.List;
 //首页数据
 public class AreaMatch {
 
-    /* "matchName":"欧洲赛事",
-             "matchNewList":[],
-             "matchList":[]
+    /* "areaId": 1,
+		"areaName": "国际",
+		"matchL":
         */
 
 
-    private String matchName;
-    private List<MatchNew> matchNewList;
-    private List<Match> matchList;
+    private int areaId;
+    private String areaName;
+    private List<MatchNew> matchL;
 
 
-    public String getMatchName() {
-        return matchName;
+    public int getAreaId() {
+        return areaId;
     }
 
-    public void setMatchName(String matchName) {
-        this.matchName = matchName;
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
     }
 
-    public List<MatchNew> getMatchNewList() {
-        return matchNewList;
+    public String getAreaName() {
+        return areaName;
     }
 
-    public void setMatchNewList(List<MatchNew> matchNewList) {
-        this.matchNewList = matchNewList;
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
-    public List<Match> getMatchList() {
-        return matchList;
+    public List<MatchNew> getMatchL() {
+        return matchL;
     }
 
-    public void setMatchList(List<Match> matchList) {
-        this.matchList = matchList;
+    public void setMatchL(List<MatchNew> matchL) {
+        this.matchL = matchL;
     }
 }

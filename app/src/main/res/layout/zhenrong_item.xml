@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/home_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/home_icon"
+                    style="@style/activity_text2_type0"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_search_normal23" />
+
+                <TextView
+                    style="@style/activity_text8_type1"
+                    android:id="@+id/home_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/away_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/away_icon"
+                    style="@style/activity_text2_type0"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/bg_search_normal23_host" />
+
+                <TextView
+                    style="@style/activity_text8_type1"
+                    android:id="@+id/away_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/away_icon"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:layout_marginRight="5dp"/>
+        </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

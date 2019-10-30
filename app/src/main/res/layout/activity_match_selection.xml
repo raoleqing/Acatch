@@ -66,35 +66,6 @@
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <Button
-                style="@style/activity_text10_type2"
-                android:id="@+id/game_type3"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/button_background_selector"
-                android:text="足彩"/>
-
-            <View
-                android:id="@+id/game_type3_view"
-                android:layout_width="14dp"
-                android:layout_height="2dp"
-                android:visibility="gone"
-                android:background="@color/text1" />
-
-        </LinearLayout>
-
-
-
-
-
-
 
     </LinearLayout>
 
@@ -103,12 +74,22 @@
         android:layout_height="1px"
         android:background="@color/line_01"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/ball_viewpager"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center" >
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/ball_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+        </androidx.viewpager.widget.ViewPager>
+
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

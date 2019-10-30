@@ -1,16 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".score.MatchAllFragment">
 
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/select_all"
+                style="@style/activity_text8_type2"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="全选" />
+
+            <TextView
+                android:id="@+id/Inverse_selection"
+                style="@style/activity_text8_type2"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="反选" />
+
+
+            <TextView
+                android:id="@+id/selection_number"
+                style="@style/activity_text6_type3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="隐藏了175场" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/submit"
+            style="@style/activity_text2_type3"
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
+            android:background="@color/text1"
+            android:gravity="center"
+            android:text="确定" />
+
+
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout1">
     </androidx.recyclerview.widget.RecyclerView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_01"
+        android:layout_above="@id/layout1"/>
 
 
-</FrameLayout>
+
+</RelativeLayout>

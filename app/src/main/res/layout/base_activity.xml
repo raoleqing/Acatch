@@ -79,6 +79,18 @@
         </LinearLayout>
 
 
+        <TextView
+            android:id="@+id/activity_text"
+            style="@style/activity_text7_type3"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            tools:text="" />
+
+
+
+
 
 
 

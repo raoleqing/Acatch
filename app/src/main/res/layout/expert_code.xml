@@ -14,12 +14,14 @@
 
 
         <ImageView
+            android:id="@+id/code_image"
             android:layout_width="184dp"
             android:layout_height="184dp"
             android:layout_marginTop="30dp"
             android:background="@color/line_01"/>
 
         <TextView
+            android:id="@+id/expert_name"
             style="@style/activity_text6_type3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,6 +37,7 @@
             android:background="@color/line_01"/>
 
         <TextView
+            android:id="@+id/expert_wx"
             style="@style/activity_text1_type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,6 +45,7 @@
             android:text="微信号：YyangYi1234" />
 
         <TextView
+            android:id="@+id/expert_qq"
             style="@style/activity_text1_type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,10 +55,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/close_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
 
 </LinearLayout>

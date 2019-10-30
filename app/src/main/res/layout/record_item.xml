@@ -7,15 +7,16 @@
 
 
     <TextView
+        android:id="@+id/item_text1"
         style="@style/activity_text8_type0"
-        android:layout_width="wrap_content"
+        android:layout_width="33dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="2019-03-03"/>
 
 
     <TextView
+        android:id="@+id/item_text2"
         style="@style/activity_text8_type0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +26,7 @@
 
 
     <TextView
+        android:id="@+id/item_text3"
         style="@style/activity_text8_type0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +35,7 @@
         android:text="湖人"/>
 
     <TextView
+        android:id="@+id/item_text4"
         style="@style/activity_text8_type0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,12 +45,25 @@
 
 
     <TextView
+        android:id="@+id/item_text5"
         style="@style/activity_text8_type0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="快船"
         android:gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/item_text6"
+        style="@style/activity_text8_type0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="盘路"/>
+
+
 
 
 </LinearLayout>

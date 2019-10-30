@@ -24,11 +24,12 @@ import java.util.List;
 
 public class MatchSelection  extends BaseActivity implements View.OnClickListener , OnFragmentInteractionListener {
 
+    public static final String AREA_ID = "areaId";
 
-    private int[] typeViews = {R.id.game_type1,R.id.game_type2,R.id.game_type3};
-    private int[] typeIndicators = {R.id.game_type1_view,R.id.game_type2_view,R.id.game_type3_view};
-    private TextView[] types = new TextView[5];
-    private View[] Indicators = new View[5];
+    private int[] typeViews = {R.id.game_type1,R.id.game_type2};
+    private int[] typeIndicators = {R.id.game_type1_view,R.id.game_type2_view};
+    private TextView[] types = new TextView[2];
+    private View[] Indicators = new View[2];
 
 
     private ViewPager mViewPager;
@@ -38,6 +39,7 @@ public class MatchSelection  extends BaseActivity implements View.OnClickListene
     private MyAdapter adapter;
 
     private int onPosition;
+    private int areaId;
 
 
 
@@ -45,9 +47,13 @@ public class MatchSelection  extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_match_selection );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
         setTitleText( "赛事选择" );
+
+        areaId = this.getIntent().getIntExtra( AREA_ID,0 );
+
         viewInfo();
-        setProgressVisibility( View.GONE );
     }
 
     private void viewInfo() {
@@ -65,9 +71,8 @@ public class MatchSelection  extends BaseActivity implements View.OnClickListene
 
 
         list = new ArrayList<Fragment>();
-        list.add(MatchAllFragment.newInstance("",""));
-        list.add( SelectFragment.newInstance("",""));
-        list.add(SelectFragment.newInstance("",""));
+        list.add(MatchAllFragment.newInstance(areaId,0));
+        list.add( SelectFragment.newInstance(areaId,0,1));
 
 
         manager = getSupportFragmentManager();

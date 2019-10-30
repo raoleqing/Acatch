@@ -3,28 +3,41 @@ package catc.tiandao.com.match.ben;
 public class MatchNew {
 
 //    {
-//        "matchId":"xxx",                                //赛事ID
-//            "title":"巴西国际vs桑托斯首发：XXX 先发领衔三叉戟",   //标题
-//            "time" : "19:30",                               //时间
-//            "matchInfo": "巴西国际vs桑托斯",                  //对战球队信息
-//            "imageUrl": "xxxx",                             //赛事新闻URL
-//            "isFirst" : 1                                  //是否置顶 0否 1是
+//        {
+//			"id": 2770362,
+//			"title": null,
+//			"dt": "21:00",
+//			"name1": "吉大港坝州",
+//			"image1": "http://www.leisuvip1.com/Image/GetImage/10400",
+//			"name2": "喀拉拉邦FC",
+//			"image2": "http://www.leisuvip1.com/Image/GetImage/680",
+//			"iturn": 0,
+//			"eventName": "球会友谊",
+//			"iTop": 0,
+//			"titleImageUrl": ""
+//		},
 //    }
 
 
-    private int matchId;
+    private String id;
     private String title;
-    private String time;
-    private String matchInfo;
-    private String imageUrl;
-    private int isFirst;
+    private String dt;
+    private String name1;
+    private String image1;
+    private String name2;
+    private String image2;
+    private int iturn;
+    private String eventName;
+    private int iTop;
+    private String titleImageUrl;
+    private int matchStatusId;
 
-    public int getMatchId() {
-        return matchId;
+    public String getId() {
+        return id;
     }
 
-    public void setMatchId(int matchId) {
-        this.matchId = matchId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -35,35 +48,83 @@ public class MatchNew {
         this.title = title;
     }
 
-    public String getTime() {
-        return time;
+    public String getDt() {
+        return dt;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDt(String dt) {
+        this.dt = dt;
     }
 
-    public String getMatchInfo() {
-        return matchInfo;
+    public String getName1() {
+        return name1;
     }
 
-    public void setMatchInfo(String matchInfo) {
-        this.matchInfo = matchInfo;
+    public void setName1(String name1) {
+        this.name1 = name1;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage1() {
+        return image1;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage1(String image1) {
+        this.image1 = image1;
     }
 
-    public int getIsFirst() {
-        return isFirst;
+    public String getName2() {
+        return name2;
     }
 
-    public void setIsFirst(int isFirst) {
-        this.isFirst = isFirst;
+    public void setName2(String name2) {
+        this.name2 = name2;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public int getIturn() {
+        return iturn;
+    }
+
+    public void setIturn(int iturn) {
+        this.iturn = iturn;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public int getiTop() {
+        return iTop;
+    }
+
+    public void setiTop(int iTop) {
+        this.iTop = iTop;
+    }
+
+    public String getTitleImageUrl() {
+        return titleImageUrl;
+    }
+
+    public void setTitleImageUrl(String titleImageUrl) {
+        this.titleImageUrl = titleImageUrl;
+    }
+
+    public int getMatchStatusId() {
+        return matchStatusId;
+    }
+
+    public void setMatchStatusId(int matchStatusId) {
+        this.matchStatusId = matchStatusId;
     }
 }

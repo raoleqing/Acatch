@@ -99,7 +99,7 @@ public class ScoreFragment extends Fragment implements View.OnClickListener{
 
     private void viewInfo(View view) {
 
-        manager = getFragmentManager();
+        manager = getChildFragmentManager();
 
         ImageView tv_switch = ViewUtls.find( view,R.id.tv_switch );
         football = ViewUtls.find( view,R.id.football );
@@ -119,9 +119,17 @@ public class ScoreFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.tv_switch:
 
-                Intent intent01 = new Intent( getActivity(), MatchSelection.class);
-                startActivity(intent01);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                if(onPosition == 0){
+                    Intent intent01 = new Intent( getActivity(), MatchSelection.class);
+                    startActivity(intent01);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    Intent intent01 = new Intent( getActivity(), SelectActivity.class);
+                    startActivity(intent01);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }
+
+
                 break;
             case R.id.football:
                 if (onPosition != 0) {

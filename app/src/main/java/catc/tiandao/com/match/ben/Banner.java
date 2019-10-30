@@ -2,24 +2,27 @@ package catc.tiandao.com.match.ben;
 
 public class Banner {
 
-    private int imageUrl;
-    private int title;
+
+
+    private String titleImageUrl;
+    private String cTitle;
     private int bannerId;
 
-    public int getImageUrl() {
-        return imageUrl;
+
+    public String getTitleImageUrl() {
+        return titleImageUrl;
     }
 
-    public void setImageUrl(int imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setTitleImageUrl(String titleImageUrl) {
+        this.titleImageUrl = titleImageUrl;
     }
 
-    public int getTitle() {
-        return title;
+    public String getcTitle() {
+        return cTitle;
     }
 
-    public void setTitle(int title) {
-        this.title = title;
+    public void setcTitle(String cTitle) {
+        this.cTitle = cTitle;
     }
 
     public int getBannerId() {

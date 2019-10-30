@@ -11,7 +11,6 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,11 +28,18 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tab_bar1_text1"
                     style="@style/activity_text7_type4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="今天"/>
 
+                <TextView
+                    android:id="@+id/tab_bar1_text2"
+                    style="@style/activity_text1_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -46,12 +52,14 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tab_bar2_text1"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="09-11"/>
 
                 <TextView
+                    android:id="@+id/tab_bar2_text2"
                     style="@style/activity_text1_type1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,12 +81,14 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tab_bar3_text1"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="09-11"/>
 
                 <TextView
+                    android:id="@+id/tab_bar3_text2"
                     style="@style/activity_text1_type1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,12 +107,14 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tab_bar4_text1"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="09-11"/>
 
                 <TextView
+                    android:id="@+id/tab_bar4_text2"
                     style="@style/activity_text1_type1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,12 +134,14 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tab_bar5_text1"
                     style="@style/activity_text1_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="09-11"/>
 
                 <TextView
+                    android:id="@+id/tab_bar5_text2"
                     style="@style/activity_text1_type1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,11 +159,12 @@
                 android:orientation="vertical"
                 android:layout_weight="1">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/tab_icon"
                     style="@style/activity_text7_type4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23"/>
+                    android:background="@mipmap/icon_calendar"/>
 
             </LinearLayout>
 
@@ -165,19 +180,44 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ball_recycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ball_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/no_data"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无数据"/>
+
+        </LinearLayout>
+    </RelativeLayout>
 
 
 

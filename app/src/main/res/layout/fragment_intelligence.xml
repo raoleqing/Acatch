@@ -9,25 +9,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="64dp"
         android:gravity="center"
         android:orientation="horizontal">
 
 
         <Button
+            android:id="@+id/home_name"
             style="@style/activity_text2_type2"
             android:layout_width="142dp"
             android:layout_height="34dp"
             android:text="快船"
-            android:background="@drawable/bg_search_normal17"/>
+            android:stateListAnimator="@null"
+            android:background="@mipmap/home_nam_bg"/>
 
         <Button
-            style="@style/activity_text7_type2"
+            android:id="@+id/away_name"
+            style="@style/activity_text6_type2"
             android:layout_width="142dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="10dp"
             android:text="湖人"
-            android:background="@drawable/bg_search_normal15"/>
+            android:stateListAnimator="@null"
+            android:background="@mipmap/away_name_bg"/>
 
     </LinearLayout>
 
@@ -61,6 +64,7 @@
 
 
         <TextView
+            android:id="@+id/good_content"
             style="@style/activity_text1_type2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,6 +98,7 @@
 
 
         <TextView
+            android:id="@+id/bad_content"
             style="@style/activity_text1_type2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -13,21 +16,24 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.AreaMatch;
+import catc.tiandao.com.match.ben.BasketJiShuTongJi;
+import catc.tiandao.com.match.ben.JiShuTongJi;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.match.utils.ViewUtls;
 
 public class StatisticsAdapter1 extends RecyclerView.Adapter<StatisticsAdapter1.MyViewHolder>  {
 
 
     private Context mContext;
-    private List<AreaMatch> list;
+    private List<Object> list;
     private MyItemClickListener mItemClickListener;
     private DisplayImageOptions options;
 
 
     private LayoutInflater mInflater;
 
-    public StatisticsAdapter1(Context mContext, List<AreaMatch> list) {
+    public StatisticsAdapter1(Context mContext, List<Object> list) {
         this.mContext = mContext;
         this.list = list;
         this.mInflater=LayoutInflater.from(mContext);
@@ -58,12 +64,78 @@ public class StatisticsAdapter1 extends RecyclerView.Adapter<StatisticsAdapter1.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+        Object obj = list.get( position );
+
+        // if(holder instanceof MyViewHolder)
+        if(obj instanceof JiShuTongJi){
+            JiShuTongJi mJiShuTongJi = (JiShuTongJi)obj;
+            holder.name.setText( mJiShuTongJi.getName() );
+            holder.home.setText( mJiShuTongJi.getHome() + "" );
+            holder.away.setText( mJiShuTongJi.getAway() + "" );
+
+            int sum = mJiShuTongJi.getHome() + mJiShuTongJi.getAway();
+
+            float homeRatio = (float)mJiShuTongJi.getHome() / (float)sum;
+            float awayRatio = (float)mJiShuTongJi.getAway() / (float)sum;
+
+            holder.away_view1.post(new Runnable() {
+                @Override
+                public void run() {
+                    int width = holder.away_view1.getWidth();
+
+                    ViewGroup.LayoutParams params = holder.home_view2.getLayoutParams(); //取控件textView当前的布局参数
+                    params.width = (int)(homeRatio * (float) width);
+                    holder.home_view2.setLayoutParams(params);
+
+
+                    ViewGroup.LayoutParams params1 = holder.away_view2.getLayoutParams(); //取控件textView当前的布局参数
+                    params1.width = (int)(awayRatio * (float)width);
+                    holder.away_view2.setLayoutParams(params1);
+
+                }
+            });
+
+        }else if(obj instanceof BasketJiShuTongJi){
+
+            BasketJiShuTongJi mJiShuTongJi = (BasketJiShuTongJi)obj;
+            holder.name.setText( mJiShuTongJi.getTechName());
+            holder.home.setText( mJiShuTongJi.getZhuDui() + "" );
+            holder.away.setText( mJiShuTongJi.getKeDui() + "" );
+
+            int sum = (int)(mJiShuTongJi.getZhuDui() + mJiShuTongJi.getKeDui());
+
+            float homeRatio = (float)mJiShuTongJi.getZhuDui() / (float)sum;
+            float awayRatio = (float)mJiShuTongJi.getKeDui() / (float)sum;
+
+            holder.away_view1.post(new Runnable() {
+                @Override
+                public void run() {
+                    int width = holder.away_view1.getWidth();
+
+                    ViewGroup.LayoutParams params = holder.home_view2.getLayoutParams(); //取控件textView当前的布局参数
+                    params.width = (int)(homeRatio * (float) width);
+                    holder.home_view2.setLayoutParams(params);
+
+
+                    ViewGroup.LayoutParams params1 = holder.away_view2.getLayoutParams(); //取控件textView当前的布局参数
+                    params1.width = (int)(awayRatio * (float)width);
+                    holder.away_view2.setLayoutParams(params1);
+
+                }
+            });
+
+        }
+
+
+
+
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return list.size();
     }
 
 
@@ -71,10 +143,24 @@ public class StatisticsAdapter1 extends RecyclerView.Adapter<StatisticsAdapter1.
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
+        private TextView name;
+        private TextView home;
+        private TextView away;
+        private ImageView home_view1;
+        private ImageView home_view2;
+        private ImageView away_view1;
+        private ImageView away_view2;
         private MyItemClickListener mListener;
 
         public MyViewHolder(View view, MyItemClickListener listener) {
             super(view);
+            name = ViewUtls.find( view,R.id.name );
+            home = ViewUtls.find( view,R.id.home );
+            away = ViewUtls.find( view,R.id.away );
+            home_view1 = ViewUtls.find( view,R.id.home_view1 );
+            home_view2 = ViewUtls.find( view,R.id.home_view2 );
+            away_view1 = ViewUtls.find( view,R.id.away_view1 );
+            away_view2 = ViewUtls.find( view,R.id.away_view2 );
 
             this.mListener = listener;
         }

@@ -94,22 +94,7 @@ public class ImmediateEvent extends Fragment {
 
     private void viewInfo(View view) {
 
-        ie_recycler = ViewUtls.find( view,R.id.ie_recycler );
-        ie_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ImmediateAdapter(getActivity(),list);
-        mAdapter.setOnItemClickListener( new MyItemClickListener() {
-            @Override
-            public void onItemClick(View view, int postion, int type) {
 
-            }
-        } );
-
-        ie_recycler.setNestedScrollingEnabled( false );
-        ie_recycler.setAdapter(mAdapter);
-        // 设置Item增加、移除动画
-        ie_recycler.setItemAnimator(new DefaultItemAnimator());
-        //添加Android自带的分割线
-        //statistics_recycler1.addItemDecoration(new DividerItemDecoration( getActivity(), DividerItemDecoration.VERTICAL));
 
 
     }

@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.ben.FootballEvent;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
 import catc.tiandao.com.match.utils.ViewUtls;
@@ -20,7 +23,7 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.MyViewHold
 
 
     private Context mContext;
-    private String[] array;
+    private List<FootballEvent> mList;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
@@ -29,9 +32,9 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.MyViewHold
     private LayoutInflater mInflater;
 
 
-    public SelectAdapter(Context mContext, String[] array) {
+    public SelectAdapter(Context mContext, List<FootballEvent> mList) {
         this.mContext = mContext;
-        this.array = array;
+        this.mList = mList;
         this.mInflater=LayoutInflater.from(mContext);
 
 
@@ -51,12 +54,23 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+        FootballEvent mFootballEvent = mList.get( position );
+
+        holder.item_text.setText( mFootballEvent.getShortName() );
+        if(mFootballEvent.getiUserChoose() == 1){
+            holder.item_text.setBackgroundResource(R.drawable.bg_search_normal18  );
+            holder.item_text.setTextColor( ContextCompat.getColor( mContext,R.color.text1) );
+        }else {
+            holder.item_text.setBackgroundResource(R.drawable.bg_search_normal18_host  );
+            holder.item_text.setTextColor( ContextCompat.getColor( mContext,R.color.text7) );
+        }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return array.length;
+        return mList.size();
     }
 
 

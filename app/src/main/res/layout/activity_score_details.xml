@@ -36,7 +36,7 @@
                     android:layout_below="@+id/view_holder">
 
                     <TextView
-                        android:id="@+id/activity_title"
+                        android:id="@+id/tv_title"
                         style="@style/activity_text2_type3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -45,14 +45,23 @@
                         android:singleLine="true"
                         android:ellipsize="end"
                         android:gravity="center"
-                        tools:text="NBA常规赛" />
+                        tools:text="" />
 
                     <ImageView
-                        android:id="@+id/activity_return"
+                        android:id="@+id/iv_return"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/button_background_selector"
                         android:src="@mipmap/navbar_icon_back_white"
+                        android:scaleType="center"/>
+
+                    <ImageView
+                        android:id="@+id/iv_collection"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_background_selector"
+                        android:src="@mipmap/navbar_icon_collect_white_default"
+                        android:layout_alignParentRight="true"
                         android:scaleType="center"/>
 
 
@@ -60,10 +69,21 @@
                 </RelativeLayout>
 
 
+                <TextView
+                    android:id="@+id/match_name"
+                    style="@style/activity_text2_type1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    tools:text="NBA常规赛" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="34dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -74,13 +94,14 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/team1_logoUrl"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@color/text1"
                             />
 
 
                         <TextView
+                            android:id="@+id/team1_name"
                             style="@style/activity_text2_type2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -104,6 +125,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/team1_score"
                                 style="@style/activity_text2_type2"
                                 android:layout_width="40dp"
                                 android:layout_height="36dp"
@@ -120,6 +142,7 @@
 
 
                             <TextView
+                                android:id="@+id/team2_score"
                                 style="@style/activity_text2_type2"
                                 android:layout_width="40dp"
                                 android:layout_height="36dp"
@@ -136,6 +159,7 @@
 
 
                         <TextView
+                            android:id="@+id/match_status"
                             style="@style/activity_text2_type2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -157,13 +181,14 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/team2_logoUrl"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@color/text1"
                             />
 
 
                         <TextView
+                            android:id="@+id/team2_name"
                             style="@style/activity_text2_type2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
