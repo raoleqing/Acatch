@@ -103,7 +103,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
         setTitleVisibility( View.GONE );
-        setTranslucentStatus();
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
+
         viewInfo();
         ContentInfo();
 
@@ -176,16 +178,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
             case R.id.main_host_layout01:
                 if(onPosition != 0){
                     setContontView(0);
-                }else {
-                    //发送登录广播
-                    EventBus.getDefault().post( Constant.UP_SCORE);
                 }
                 break;
             case R.id.main_host_layout02:
                 if(onPosition != 1){
                     setContontView(1);
-                }else {
-                    EventBus.getDefault().post( Constant.UP_MAIN);
                 }
                 break;
             case R.id.main_host_layout03:
@@ -214,6 +211,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
         switch (i) {
             case 0:
+                setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+                setStatusBarMode(true);
 
                 main_host_image01.setImageResource( R.mipmap.tabbar_icon_match );
                 main_host_image02.setImageResource( R.mipmap.tabbar_icon_home_default );
@@ -225,10 +224,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
                 if (fragment01 == null) {
                     fragment01 = ScoreFragment.newInstance("","");
                 }
+
+
                 switchContent(fragment01, "fragment01");
                 break;
             case 1:
 
+                setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+                setStatusBarMode(true);
                 main_host_image01.setImageResource( R.mipmap.tabbar_icon_match_default );
                 main_host_image02.setImageResource( R.mipmap.tabbar_icon_home );
                 main_host_image03.setImageResource( R.mipmap.tabbar_icon_me_default );
@@ -239,9 +242,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
                 if (fragment02 == null) {
                     fragment02 =  MainFragment.newInstance("","");
                 }
+
                 switchContent(fragment02, "fragment02");
                 break;
             case 2:
+
+                setTranslucentStatus(  );
+
                 main_host_image01.setImageResource( R.mipmap.tabbar_icon_match_default );
                 main_host_image02.setImageResource( R.mipmap.tabbar_icon_home_default );
                 main_host_image03.setImageResource( R.mipmap.tabbar_icon_me );

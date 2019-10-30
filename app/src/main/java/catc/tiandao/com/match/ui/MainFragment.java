@@ -38,6 +38,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.MainAutoSwitchAdapter;
 import catc.tiandao.com.match.adapter.SampleAdapter;
@@ -80,6 +81,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     private AutoSwitchView ls_top;
     private RecyclerView mRecyclerView;
     private ConstraintLayout mConstraintLayout;
@@ -106,7 +109,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private GetChangedNewRun changedRun;
     private GetHomeFootballDataRun footballRun;
     private GetBasketballDataRun basketBallRun;
-    private int pageSize = 10;
+    private int pageSize = 3;
     private int page = 1;
 
 
@@ -115,6 +118,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private boolean isGetData1 = false;
     private boolean isGetData2 = false;
     private boolean isGetData3 = false;
+
+    private boolean isRun;
 
 
 
@@ -201,11 +206,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.fragment_main, container, false );
         viewInfo(view);
-        getData(0);
+        getData();
         return view;
     }
 
-    private void getData(int type) {
+    private void getData() {
         if(!isGetData1){
             GetHomeHeadNew();
         }
@@ -243,6 +248,29 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         int height = (int)(width * 0.6);
         lp.height = height;
         ls_top.setLayoutParams(lp);
+
+
+        mSwipeRefreshLayout = ViewUtls.find( view,R.id.swipeRefreshLayout );
+
+        /*setOnRefreshListener(OnRefreshListener):添加下拉刷新监听器
+        setRefreshing(boolean):显示或者隐藏刷新进度条
+        isRefreshing():检查是否处于刷新状态
+        setColorSchemeResources():设置进度条的颜色主题，最多设置四种，以前的setColorScheme()方法已经弃用了
+        */
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!isRun){
+                    isGetData1 = false;
+                    isGetData2 = false;
+                    isGetData3 = false;
+                    getData();
+                }
+            }
+        });
+
+
+
 
 
 
@@ -513,10 +541,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
 
 
-
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            mSwipeRefreshLayout.setRefreshing(false);
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
         }
 
@@ -709,6 +737,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                     ImageView item_image = ViewUtls.find( view, R.id.item_image );
                     TextView Topping = ViewUtls.find( view,R.id.Topping );
 
+                    item_title.setText( mMainNewsBen.getcTitle() );
+                    item_time.setText( mMainNewsBen.getDtPublish() );
+
                     if(i == 0){
                         Topping.setVisibility( View.VISIBLE );
                     }else {
@@ -770,13 +801,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Subscribe
     public void onEvent(Object event) {
         if (Constant.APP_NET_SUCCESS.equals(event)) {
-            getData(1);
+            getData();
         }else if (Constant.UP_MAIN.equals(event)){
             isGetData1 = false;
             isGetData2 = false;
             isGetData3 = false;
 
-            getData(2);
+            getData();
         }
     }
 

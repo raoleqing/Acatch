@@ -97,7 +97,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         setContentView( R.layout.activity_login );
         setTitleVisibility( View.GONE );
 
-
         setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
         setStatusBarMode(true);
         setTranslucentStatus();

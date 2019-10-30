@@ -30,14 +30,30 @@
                 android:layout_marginLeft="15dp"
                 android:src="@mipmap/icon_def_avatar" />
 
-            <Button
-                android:id="@+id/login_but"
-                style="@style/activity_text2_type2"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/bg_search_normal3"
-                android:text="登录/注册" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp">
+                <Button
+                    android:id="@+id/login_but"
+                    style="@style/activity_text2_type2"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_search_normal3"
+                    android:text="登录/注册" />
+
+                <TextView
+                    style="@style/activity_text2_type3"
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:text=""/>
+
+            </RelativeLayout>
+
+
 
 
         </LinearLayout>
