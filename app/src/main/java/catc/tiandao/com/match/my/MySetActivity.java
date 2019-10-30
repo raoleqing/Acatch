@@ -173,7 +173,6 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
 
                 setProgressVisibility( View.VISIBLE );
 
-                //token=***& name=新用户名
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( MySetActivity.this ) );
 

@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private ImageView shwo_icon,close_icon,wexin_but,qq_but;
 
     private int showPassworedType = 0;
-    private boolean isName,isPassword,isCheck;
+    private boolean isName,isPassword;
 
 
     private LoginOnRun run;
@@ -178,15 +178,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         });
 
-        //setOnCheckedChangeListener
-
-        myCheckbox.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isCheck = isChecked;
-                setLoginBut();
-            }
-        } );
 
     }
 
@@ -202,7 +193,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 
     private void setLoginBut() {
-        if(isName && isPassword &&isCheck){
+        if(isName && isPassword ){
             login.setBackgroundResource( R.drawable.bg_search_normal11_host );
             login.setClickable( true );
         }else {
@@ -348,7 +339,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     private void getContent() {
 
-        if(isName && isPassword &&isCheck){
+        if(isName && isPassword ){
 
             phone = uername.getText().toString();
             if(phone == null || phone.isEmpty()){
@@ -453,7 +444,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             String message = obj.optString( "message" );
 
 
-           // {"code":0,"message":"登录成功","data":{"token":"2dac2028-526c-40d9-9546-3547d298ba5c","nickName":"13006884459","iconUrl":null}}
+           //  {"code":0,"message":"登录成功","data":{"userId":104,"sex":1,"token":"1b4fb49e-b01a-4133-a1a1-065ed4047fc2","nickName":"13873146635","iconUrl":null}}
+            //2019-10-30 10:53:18.851 32377-32377/catc.tiandao.com.match I/System.out:
 
             if(code == 0) {
 

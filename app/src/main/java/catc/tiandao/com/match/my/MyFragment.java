@@ -43,6 +43,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
 
     private CircleImageView user_icon;
     private Button login_but;
+    private TextView user_name;
     private TextView but_type1,but_type2,but_type3,but_type4,but_type5,but_type6;
 
     // TODO: Rename and change types of parameters
@@ -104,13 +105,20 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.fragment_my, container, false );
         viewInfo(view);
-        setUserContent();
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUserContent();
     }
 
     private void viewInfo(View view) {
 
         user_icon = ViewUtls.find( view,R.id.user_icon );
+        user_name = ViewUtls.find( view,R.id.user_name );
         login_but = ViewUtls.find( view,R.id.login_but );
         but_type1 = ViewUtls.find( view,R.id.but_type1 );
         but_type2 = ViewUtls.find( view,R.id.but_type2 );
@@ -120,6 +128,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         but_type6 = ViewUtls.find( view,R.id.but_type6 );
 
         user_icon.setOnClickListener( this );
+        user_name.setOnClickListener( this );
         login_but.setOnClickListener( this );
         but_type1.setOnClickListener( this );
         but_type2.setOnClickListener( this );
@@ -138,9 +147,12 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 ImageLoader.getInstance().displayImage(Appavatar, user_icon,options);
             }
             login_but.setVisibility( View.GONE );
+            user_name.setVisibility( View.VISIBLE );
+            user_name.setText( UserUtils.getNickName( getActivity() ) );
         }else {
             ImageLoader.getInstance().displayImage( "drawable://" + R.mipmap.icon_def_avatar, user_icon );
             login_but.setVisibility( View.VISIBLE );
+            user_name.setVisibility( View.GONE );
         }
     }
 
@@ -150,6 +162,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         switch (v.getId()){
+            case R.id.user_name:
             case R.id.user_icon:
 
                 if(UserUtils.isLanded( getActivity() )){

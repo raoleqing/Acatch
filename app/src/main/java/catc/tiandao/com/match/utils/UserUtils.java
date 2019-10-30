@@ -14,6 +14,7 @@ import catc.tiandao.com.match.my.LoginActivity;
 
 public class UserUtils {
 
+    public static final String USERID = "userId";
     public static final String IS_LOGIN = "isLogin";
     public static final String PHONE = "phone";
     public static final String PASSWORD = "password";
@@ -32,11 +33,13 @@ public class UserUtils {
      * private String token;
      *     private String nickName;
      *     private String iconUrl;
+     *     {"userId":104,"sex":1,"token":"1b4fb49e-b01a-4133-a1a1-065ed4047fc2","nickName":"13873146635","iconUrl":null}}
      **/
     public static void sarvUserInfo(Context context, UserBen mUserBen) {
         SharedPreferences sharedPreferences = SharedPreferencesUtil.getDefaultSharedPreferences(context);
 
         sharedPreferences.edit()
+                .putString(USERID, mUserBen.getUserId())
                 .putString(TOKEN, mUserBen.getToken())
                 .putString(NICKNAME, mUserBen.getNickName())
                 .putString(ICONURL, mUserBen.getIconUrl())
@@ -58,6 +61,12 @@ public class UserUtils {
         mUserBen.setIconUrl( sharedPreferences.getString(ICONURL,"" ));
         mUserBen.setSex( sharedPreferences.getString(SEX,"" ) );
         return mUserBen;
+    }
+
+    public static String getNickName(Context context){
+        String nickName = SharedPreferencesUtil.getString( context,NICKNAME );
+        return nickName;
+
     }
 
     /**
