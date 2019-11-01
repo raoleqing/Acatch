@@ -24,6 +24,7 @@ dtPublish：发布时间
     }]
     */
 
+    private int id;
     private int iDianZanCount;
     private int iZhuanFaCount;
     private int cCommentCount;
@@ -33,6 +34,13 @@ dtPublish：发布时间
     private String dtPublish;
     private int isSelet;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getiDianZanCount() {
         return iDianZanCount;

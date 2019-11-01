@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
@@ -105,6 +107,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         setTitleVisibility( View.GONE );
         setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
         setStatusBarMode(true);
+
+        //通过可以设置alias，alias_type为haolikeji
 
         viewInfo();
         ContentInfo();
@@ -380,6 +384,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
                 String data = obj.optString( "data" );
                 SharedPreferencesUtil.putString( MainActivity.this,SharedPreferencesUtil.USER_KEY,data );
+
+                PushAgent mPushAgent = PushAgent.getInstance(this);
+                mPushAgent.addAlias(data, "haolikeji", new UTrack.ICallBack() {
+
+                    @Override
+
+                    public void onMessage(boolean isSuccess, String message) {
+
+                        System.out.println( "Alias:message: " + message );
+
+                    }
+
+                });
+
+
                 if(UserUtils.isLanded( this )){
 
                     String loginType  = SharedPreferencesUtil.getString(MainActivity.this, UserUtils.LOGIN_TYPE);

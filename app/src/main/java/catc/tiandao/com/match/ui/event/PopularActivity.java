@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 /**
@@ -27,8 +29,11 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
 
     public static final String BALL_TYPE = "BallType";
     public static final String AREA_ID = "areaId";
+    public static final String AREA_NAME = "AreaName";
 
     private Button football,blueBall;
+    private LinearLayout title_layout;
+    private TextView activity_title;
     private ImageView tv_switch;
     private Fragment fragment01;
     private Fragment fragment02;
@@ -40,6 +45,7 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
     private int onPosition = 0;
 
     private int areaId = 0;
+    private String AreaName;
 
 
 
@@ -52,6 +58,8 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
 
         int BallType = getIntent().getIntExtra( BALL_TYPE,0 );
         areaId = getIntent().getIntExtra( AREA_ID,0 );
+        AreaName = getIntent().getStringExtra( AREA_NAME);
+
 
         setTitleVisibility( View.GONE );
         viewInfo();
@@ -69,7 +77,14 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
 
         ImageView image = ViewUtls.find( this,R.id.tv_return );
         tv_switch = ViewUtls.find( this,R.id.tv_switch );
+        title_layout = ViewUtls.find( this,R.id.title_layout );
+        activity_title = ViewUtls.find( this,R.id.tv_title );
         image.setOnClickListener( this);
+
+        if(areaId > 0 && AreaName != null ){
+            activity_title.setText( AreaName );
+            title_layout.setVisibility( View.GONE );
+        }
 
 
         football = ViewUtls.find( this,R.id.football );

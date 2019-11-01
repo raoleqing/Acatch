@@ -25,6 +25,7 @@ public class SharedPreferencesUtil {
     public static final String OPEN_PERMISSIONS = "open_permissions";
     private static final String SHARED_PATH = "User_data";
 	public static final String USER_KEY = "user_key";
+	public static final String DEVICE_TOKEN = "device_token";
 
 	/**
 	 * 拿到SharedPreferences

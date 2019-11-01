@@ -157,7 +157,10 @@ public class NewsFragment extends Fragment {
             @Override
             public void onItemClick(View view, int postion, int type) {
 
+                NewsBen mNewsBen = mList.get( postion );
+
                 Intent intent02 = new Intent(getActivity(), NewsDetailsActivity.class);
+                intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
                 startActivity(intent02);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
 

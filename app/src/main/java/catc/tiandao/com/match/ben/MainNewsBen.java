@@ -13,6 +13,7 @@ public class MainNewsBen {
    private String cTitle;
    private String titleImageUrl;
    private String dtPublish;
+   private int iTop;
 
     public int getId() {
         return id;
@@ -44,5 +45,13 @@ public class MainNewsBen {
 
     public void setDtPublish(String dtPublish) {
         this.dtPublish = dtPublish;
+    }
+
+    public int getiTop() {
+        return iTop;
+    }
+
+    public void setiTop(int iTop) {
+        this.iTop = iTop;
     }
 }

@@ -53,11 +53,13 @@ import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.my.CollectionActivity;
 import catc.tiandao.com.match.my.LoginActivity;
 import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
 import catc.tiandao.com.match.ui.event.PopularActivity;
 import catc.tiandao.com.match.ui.expert.ExpertActivity;
 import catc.tiandao.com.match.ui.news.NewsActivity;
+import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
 import catc.tiandao.com.match.utils.DES;
 import catc.tiandao.com.match.utils.DeviceUtils;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
@@ -287,6 +289,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
                        Intent intent01 = new Intent(getActivity(), PopularActivity.class);
                        intent01.putExtra( PopularActivity.AREA_ID, mAreaMatch.getAreaId());
+                       intent01.putExtra( PopularActivity.AREA_NAME, mAreaMatch.getAreaName());
                        if(mAreaMatch.getAreaName().equals( "篮球赛事" )){
                            intent01.putExtra( PopularActivity.BALL_TYPE, 1);
                        }else {
@@ -740,7 +743,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                     item_title.setText( mMainNewsBen.getcTitle() );
                     item_time.setText( mMainNewsBen.getDtPublish() );
 
-                    if(i == 0){
+                    if(mMainNewsBen.getiTop() == 1){
                         Topping.setVisibility( View.VISIBLE );
                     }else {
                         Topping.setVisibility( View.GONE);
@@ -759,7 +762,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onClick(View v) {
 
-
+                            Intent intent02 = new Intent( getActivity(), NewsDetailsActivity.class);
+                            intent02.putExtra( NewsDetailsActivity.NEW_ID, mMainNewsBen.getId());
+                            startActivity(intent02);
+                            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
 
                         }
                     } );

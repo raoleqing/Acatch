@@ -234,9 +234,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
                 if(view.getId() == R.id.is_collection){
                     if(UserUtils.isLanded( getActivity() )){
-
                         FootballMatchCollectAndCancel(mBallBen.getMatchId(),postion);
-
                     }else {
                         UserUtils.startLongin( getActivity() );
                     }
@@ -517,10 +515,19 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                     mList.get( poistion ).setIsCollection( 1 );
                 }else {
                     mList.get( poistion ).setIsCollection( 0 );
+                    if(mParam2 == 4){
+                        mList.remove( poistion );
+                    }
                 }
 
                 mAdapter.notifyDataSetChanged();
+            }
 
+            if(mList.size() > 0){
+
+                no_data.setVisibility( View.GONE );
+            }else {
+                no_data.setVisibility( View.VISIBLE );
             }
 
             Toast.makeText( getActivity(),message,Toast.LENGTH_SHORT ).show();

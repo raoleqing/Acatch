@@ -54,6 +54,8 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     //正在加载中
     public static final int  LOADING_MORE=1;
 
+    private int showEndType;
+
 
 
 
@@ -64,6 +66,8 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.mInflater=LayoutInflater.from(mContext);
 
         int radius = UnitConverterUtils.dip2px(mContext,11 );
+
+        showEndType = 0;
 
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
@@ -99,10 +103,25 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if(holder instanceof MyViewHolder) {
+
+            if(position == 0){
+                showEndType = 0;
+            }
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
 
             BallFragmentBen mBallBen = mList.get( position );
+
+            if(showType == 4){
+               int statusId = mBallBen.getMatchStatusId();
+               if(statusId >= 10 && showEndType == 0){
+                   showEndType = 1;
+                   mMyViewHolder.end_title.setVisibility( View.VISIBLE );
+               }else {
+                   mMyViewHolder.end_title.setVisibility( View.GONE );
+               }
+            }
+
             mMyViewHolder.match_event_name.setText( mBallBen.getMatchEventName() + " " +  mBallBen.getMatchTime());
             //"matchStatusId": 4, //1-未开赛，2-7都是进行中， 8结束，大于8都是中断、取消类的
             mMyViewHolder.match_status.setText(  mBallBen.getMatchStatus() );
@@ -186,6 +205,7 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private ImageView home_team_logoUrl;
         private ImageView away_team_logoUrl;
         private TextView away_teamName;
+        private TextView end_title;
 
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
@@ -202,6 +222,7 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             home_team_logoUrl = ViewUtls.find( view,R.id.home_team_logoUrl );
             away_team_logoUrl = ViewUtls.find( view,R.id.away_team_logoUrl );
             away_teamName = ViewUtls.find( view,R.id.away_teamName );
+            end_title = ViewUtls.find( view,R.id.end_title );
 
             this.mListener = listener;
             this.mLongClickListener = longClickListener;

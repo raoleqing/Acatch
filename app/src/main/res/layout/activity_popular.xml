@@ -23,8 +23,19 @@
                 android:src="@mipmap/navbar_icon_back_black"
                 android:scaleType="center"/>
 
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/activity_text8_type3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                tools:text="" />
 
             <LinearLayout
+                android:id="@+id/title_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

@@ -51,6 +51,8 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     //正在加载中showType
     public static final int  LOADING_MORE=1;
 
+    private int showEndType;
+
 
 
 
@@ -60,6 +62,8 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         this.mList = mList;
         this.showType = showType;
         this.mInflater=LayoutInflater.from(mContext);
+
+        showEndType = 0;
 
         int radius = UnitConverterUtils.dip2px(mContext,11 );
 
@@ -97,10 +101,26 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if(holder instanceof MyViewHolder) {
+
+            if(position == 0){
+                showEndType = 0;
+            }
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
 
             BallBen mBallBen = mList.get( position );
+
+            if(showType == 4){
+                int statusId = mBallBen.getMatchStatusId();
+                if(statusId >= 8 && showEndType == 0){
+                    showEndType = 1;
+                    mMyViewHolder.end_title.setVisibility( View.VISIBLE );
+                }else {
+                    mMyViewHolder.end_title.setVisibility( View.GONE );
+                }
+            }
+
+
             mMyViewHolder.match_event_name.setText( mBallBen.getMatchEventName() + " 第"+ mBallBen.getMatchRound()+"轮 " +  mBallBen.getMatchTime());
             //"matchStatusId": 4, //1-未开赛，2-7都是进行中， 8结束，大于8都是中断、取消类的
             if(mBallBen.getMatchStatusId() >= 2 && mBallBen.getMatchStatusId() <= 7){
@@ -213,6 +233,8 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         private TextView away_yellow;
         private TextView match_value;
 
+        private TextView end_title;
+
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
@@ -232,6 +254,7 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             away_red = ViewUtls.find( view,R.id.away_red );
             away_yellow = ViewUtls.find( view,R.id.away_yellow );
             match_value = ViewUtls.find( view,R.id.match_value );
+            end_title = ViewUtls.find( view,R.id.end_title );
 
             this.mListener = listener;
             this.mLongClickListener = longClickListener;

@@ -1,28 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".my.AttentionActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myRecyclerView"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
 
-    <TextView
-        style="@style/activity_text1_type3"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    style="@style/activity_text7_type4"
+                    android:id="@+id/game_type1"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/button_background_selector"
+                    android:text="足球"/>
+
+
+                <View
+                    android:id="@+id/game_type1_view"
+                    android:layout_width="14dp"
+                    android:layout_height="2dp"
+                    android:background="@color/text1" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    style="@style/activity_text10_type2"
+                    android:id="@+id/game_type2"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/button_background_selector"
+                    android:text="蓝球"/>
+
+                <View
+                    android:id="@+id/game_type2_view"
+                    android:layout_width="14dp"
+                    android:layout_height="2dp"
+                    android:visibility="gone"
+                    android:background="@color/text1" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_01"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ball_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/not_data"
-        android:visibility="gone"
-        android:gravity="center"
-        android:background="@color/white"
-        android:id="@+id/no_data"/>
+        android:layout_gravity="center" >
+    </androidx.viewpager.widget.ViewPager>
 
 
 
 
-</RelativeLayout>
+
+</LinearLayout>

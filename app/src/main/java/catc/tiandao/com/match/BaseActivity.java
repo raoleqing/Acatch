@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.message.PushAgent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,6 +27,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import catc.tiandao.com.match.utils.ViewUtls;
 import pl.droidsonroids.gif.GifImageView;
+
+import static com.umeng.socialize.utils.DeviceConfigInternal.context;
 
 
 /**
@@ -49,6 +52,7 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 		requestWindowFeature( Window.FEATURE_NO_TITLE);
 		initContentView(R.layout.base_activity);
+		PushAgent.getInstance(this).onAppStart();
 
 		backgroundColor = ContextCompat.getColor( this,R.color.colorPrimary );
 		infoView();

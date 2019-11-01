@@ -105,7 +105,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         setTitleText( "我的收藏" );
         viewInfo();
 
-       // getData();
+        getData();
 
         no_data.setVisibility( View.VISIBLE );
         setProgressVisibility( View.GONE );
@@ -140,7 +140,10 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onItemClick(View view, int postion, int type) {
 
+                NewsBen mNewsBen = mList.get( postion );
+
                 Intent intent02 = new Intent(CollectionActivity.this, NewsDetailsActivity.class);
+                intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
                 startActivity(intent02);
                overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
 
@@ -233,7 +236,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
 
 
-            HttpUtil.post( CollectionActivity.this,HttpUtil.GET_BASKETBALL_MATH ,param,new HttpUtil.HttpUtilInterface(){
+            HttpUtil.post( CollectionActivity.this,HttpUtil.GET_MY_NEW ,param,new HttpUtil.HttpUtilInterface(){
                 @Override
                 public void onResponse(String result) {
 

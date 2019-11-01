@@ -115,7 +115,10 @@ public class HttpUtil {
 
     public static final String FOOTBALL_MATCH_COLLECT_ANDCANCEL = "LSQB/FootballMatchCollectAndCancel";
     public static final String BASKETBAL_MATCH_COLLECT_ANDCANCEL = "LSQB/BasketballMatchCollectAndCancel";
-    public static final String GET_HEADS = "LSQB/GetHeads";
+    public static final String GET_HEADS = "LSQB/GetHomeHeadNew";
+    public static final String GET_MY_NEW = "LSQB/GetMyNew";
+    public static final String NEW_OPERATION_RUN = "LSQB/NewOperationRun";
+    public static final String GETNEW = "LSQB/GetNew";
 
 
     public static void getDatasync(final Context mContext, String method , final HttpUtilInterface mInterface){

@@ -189,7 +189,7 @@ public class SelectAvatarActivity extends BaseActivity implements View.OnClickLi
 
 
 
-            HttpUtil.post( SelectAvatarActivity.this,HttpUtil.GET_HEADS ,param,new HttpUtil.HttpUtilInterface(){
+            HttpUtil.get( SelectAvatarActivity.this,HttpUtil.GET_HEADS,new HttpUtil.HttpUtilInterface(){
                 @Override
                 public void onResponse(String result) {
 

@@ -26,6 +26,10 @@
         <item name="android:windowExitAnimation">@anim/pop_exit_bottom</item>
     </style>
 
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
+
+    <style name="NotificationContent" parent="android:TextAppearance.StatusBar.EventContent" />
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

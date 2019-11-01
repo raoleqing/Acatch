@@ -1,183 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:paddingTop="5dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/match_event_name"
-        style="@style/activity_text6_type1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2NBA常规赛 09:30"/>
-
-
-    <TextView
-        android:id="@+id/match_status"
-        style="@style/activity_text6_type1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="未开始"/>
-
-
-    <ImageView
-        android:id="@+id/is_collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp" />
-
-    <LinearLayout
+        android:id="@+id/end_title"
+        style="@style/activity_text8_type2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@color/bg1"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="已结束"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.6"
-            android:gravity="center_vertical|right"
-            android:orientation="horizontal">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="80dp"
+       android:paddingTop="5dp"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp">
 
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp">
-
-                <TextView
-                    android:id="@+id/home_red"
-                    style="@style/activity_text2_type0"
-                    android:layout_width="10dp"
-                    android:layout_height="16dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:background="@color/red"/>
+       <TextView
+           android:id="@+id/match_event_name"
+           style="@style/activity_text6_type1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="2NBA常规赛 09:30"/>
 
 
-                <TextView
-                    android:id="@+id/home_yellow"
-                    style="@style/activity_text2_type0"
-                    android:layout_width="10dp"
-                    android:layout_height="16dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:layout_marginLeft="2dp"
-                    android:background="@color/yellow"/>
-            </LinearLayout>
+       <TextView
+           android:id="@+id/match_status"
+           style="@style/activity_text6_type1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:text="未开始"/>
 
 
+       <ImageView
+           android:id="@+id/is_collection"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="15dp" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="30dp"
+           android:orientation="horizontal">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="0.6"
+               android:gravity="center_vertical|right"
+               android:orientation="horizontal">
 
 
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="5dp">
 
-            <TextView
-                android:id="@+id/home_team_name"
-                style="@style/activity_text8_type1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="6dp"
-                android:text="火箭"/>
-
-
-            <ImageView
-                android:id="@+id/home_team_logoUrl"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                />
+                   <TextView
+                       android:id="@+id/home_red"
+                       style="@style/activity_text2_type0"
+                       android:layout_width="10dp"
+                       android:layout_height="16dp"
+                       android:gravity="center"
+                       android:text="0"
+                       android:background="@color/red"/>
 
 
-
-        </LinearLayout>
-
-
-
-        <TextView
-            android:id="@+id/score"
-            style="@style/activity_text8_type3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="0.8"
-            android:textStyle="bold"
-            android:text="1 - 0 "/>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_weight="0.6"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/away_team_logoUrl"
-                android:layout_width="22dp"
-                android:layout_height="22dp" />
-
-            <TextView
-                android:id="@+id/away_teamName"
-                style="@style/activity_text8_type1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:text="火箭"/>
-
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    android:id="@+id/away_red"
-                    style="@style/activity_text2_type0"
-                    android:layout_width="10dp"
-                    android:layout_height="16dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:visibility="gone"
-                    android:background="@color/red"/>
-
-
-                <TextView
-                    android:id="@+id/away_yellow"
-                    style="@style/activity_text2_type0"
-                    android:layout_width="10dp"
-                    android:layout_height="16dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:layout_marginLeft="2dp"
-                    android:visibility="gone"
-                    android:background="@color/yellow"/>
-            </LinearLayout>
+                   <TextView
+                       android:id="@+id/home_yellow"
+                       style="@style/activity_text2_type0"
+                       android:layout_width="10dp"
+                       android:layout_height="16dp"
+                       android:gravity="center"
+                       android:text="0"
+                       android:layout_marginLeft="2dp"
+                       android:background="@color/yellow"/>
+               </LinearLayout>
 
 
 
 
-        </LinearLayout>
+
+               <TextView
+                   android:id="@+id/home_team_name"
+                   style="@style/activity_text8_type1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="6dp"
+                   android:text="火箭"/>
 
 
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/match_value"
-        style="@style/activity_text6_type1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="6dp"
-        android:textSize="11sp"
-        android:text=""/>
+               <ImageView
+                   android:id="@+id/home_team_logoUrl"
+                   android:layout_width="22dp"
+                   android:layout_height="22dp"
+                   />
 
 
 
-</RelativeLayout>
+           </LinearLayout>
+
+
+
+           <TextView
+               android:id="@+id/score"
+               style="@style/activity_text8_type3"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:layout_weight="0.8"
+               android:textStyle="bold"
+               android:text="1 - 0 "/>
+
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center_vertical"
+               android:layout_weight="0.6"
+               android:orientation="horizontal">
+
+               <ImageView
+                   android:id="@+id/away_team_logoUrl"
+                   android:layout_width="22dp"
+                   android:layout_height="22dp" />
+
+               <TextView
+                   android:id="@+id/away_teamName"
+                   style="@style/activity_text8_type1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="6dp"
+                   android:text="火箭"/>
+
+
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="5dp">
+
+                   <TextView
+                       android:id="@+id/away_red"
+                       style="@style/activity_text2_type0"
+                       android:layout_width="10dp"
+                       android:layout_height="16dp"
+                       android:gravity="center"
+                       android:text="0"
+                       android:visibility="gone"
+                       android:background="@color/red"/>
+
+
+                   <TextView
+                       android:id="@+id/away_yellow"
+                       style="@style/activity_text2_type0"
+                       android:layout_width="10dp"
+                       android:layout_height="16dp"
+                       android:gravity="center"
+                       android:text="0"
+                       android:layout_marginLeft="2dp"
+                       android:visibility="gone"
+                       android:background="@color/yellow"/>
+               </LinearLayout>
+
+
+
+
+           </LinearLayout>
+
+
+       </LinearLayout>
+
+
+       <TextView
+           android:id="@+id/match_value"
+           style="@style/activity_text6_type1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+           android:layout_centerHorizontal="true"
+           android:layout_marginBottom="6dp"
+           android:textSize="11sp"
+           android:text=""/>
+
+
+
+   </RelativeLayout>
+
+
+
+
+
+</LinearLayout>
