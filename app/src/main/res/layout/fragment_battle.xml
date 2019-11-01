@@ -20,14 +20,11 @@
 
         <TextView
             android:id="@+id/title_text"
-        style="@style/activity_text8_type3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="当前阵容" />
-
-
-
+            style="@style/activity_text8_type3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="当前阵容" />
 
     </LinearLayout>
 
@@ -52,534 +49,514 @@
             style="@style/activity_text6_type2"
             android:layout_width="108dp"
             android:layout_height="34dp"
-            android:text="湖人"
+            android:background="@mipmap/away_name_bg"
             android:stateListAnimator="@null"
-            android:background="@mipmap/away_name_bg"/>
+            android:text="湖人" />
 
     </LinearLayout>
 
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
-    <RelativeLayout
-        android:id="@+id/football_layout"
         android:layout_width="match_parent"
-        android:layout_height="360dp"
-        android:background="@mipmap/icon_playground">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/football_zhenrong1"
+            android:id="@+id/football_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="360dp"
+            android:background="@mipmap/icon_playground">
 
-
-            <LinearLayout
-                android:id="@+id/player_layout1"
+            <RelativeLayout
+                android:id="@+id/football_zhenrong1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="36dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/player_layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="116dp"
-                android:orientation="horizontal">
-
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/player_layout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="196dp"
-                android:orientation="horizontal">
-
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="50dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/player_icon"
-                    style="@style/activity_text2_type2"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:gravity="center"
-                    android:background="@mipmap/football_jersey_home" />
-
-                <TextView
-                    android:id="@+id/player_name"
-                    style="@style/activity_text2_type0"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/player_layout1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="name"/>
+                    android:layout_marginTop="36dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
 
-            </LinearLayout>
+
+                </LinearLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/player_layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="116dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/player_layout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="196dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="50dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/player_icon"
+                        style="@style/activity_text2_type2"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:background="@mipmap/football_jersey_home"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/player_name"
+                        style="@style/activity_text2_type0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="name" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/football_zhenrong2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+
+                <LinearLayout
+                    android:id="@+id/player2_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/player2_layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="116dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/player2_layout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="196dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="50dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/player2_icon"
+                        style="@style/activity_text2_type2"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:background="@mipmap/football_jersey_goalkeeper_away"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/player2_name"
+                        style="@style/activity_text2_type0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="name" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
 
         <RelativeLayout
-            android:id="@+id/football_zhenrong2"
+            android:id="@+id/blueball_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
+            android:background="@mipmap/icon_basketball_playground"
             android:visibility="gone">
 
 
-            <LinearLayout
-                android:id="@+id/player2_layout1"
+            <RelativeLayout
+                android:id="@+id/blueball_zhenrong1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="36dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
 
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/player2_layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="116dp"
-                android:orientation="horizontal">
-
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/player2_layout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="196dp"
-                android:orientation="horizontal">
-
-
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="50dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/player2_icon"
-                    style="@style/activity_text2_type2"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:gravity="center"
-                    android:background="@mipmap/football_jersey_goalkeeper_away" />
-
-                <TextView
-                    android:id="@+id/player2_name"
-                    style="@style/activity_text2_type0"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="name"/>
+                    android:layout_marginTop="71dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/blue_ball_member1"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_away"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball_name1"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball_member2"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_away"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball_name2"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball_member3"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_away"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball_name3"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="181dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball_member4"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_away"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball_name4"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball_member5"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_away"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball_name5"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/blueball_zhenrong2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="71dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball2_member1"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_home"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball2_name1"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball2_member2"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_home"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball2_name2"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball2_member3"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_home"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball2_name3"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="181dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball2_member4"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_home"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball2_name4"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/blue_ball2_member5"
+                            style="@style/activity_text2_type2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:background="@mipmap/basketball_jersey_home"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/blue_ball2_name5"
+                            style="@style/activity_text2_type0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="name" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
 
 
         </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/no_data1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:visibility="gone" />
 
     </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/blueball_layout"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:visibility="gone"
-        android:background="@mipmap/icon_basketball_playground">
-
-
-        <RelativeLayout
-            android:id="@+id/blueball_zhenrong1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="71dp"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball_member1"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:background="@mipmap/basketball_jersey_away"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:id="@+id/blue_ball_name1"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball_member2"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:background="@mipmap/basketball_jersey_away"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:id="@+id/blue_ball_name2"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball_member3"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:background="@mipmap/basketball_jersey_away"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:id="@+id/blue_ball_name3"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="181dp"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball_member4"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:background="@mipmap/basketball_jersey_away"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:id="@+id/blue_ball_name4"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball_member5"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:background="@mipmap/basketball_jersey_away"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:id="@+id/blue_ball_name5"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/blueball_zhenrong2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="71dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball2_member1"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:gravity="center"
-                        android:background="@mipmap/basketball_jersey_home" />
-
-                    <TextView
-                        android:id="@+id/blue_ball2_name1"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball2_member2"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:gravity="center"
-                        android:background="@mipmap/basketball_jersey_home" />
-
-                    <TextView
-                        android:id="@+id/blue_ball2_name2"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball2_member3"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:gravity="center"
-                        android:background="@mipmap/basketball_jersey_home" />
-
-                    <TextView
-                        android:id="@+id/blue_ball2_name3"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name"/>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="181dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball2_member4"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:gravity="center"
-                        android:background="@mipmap/basketball_jersey_home" />
-
-                    <TextView
-                        android:id="@+id/blue_ball2_name4"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/blue_ball2_member5"
-                        style="@style/activity_text2_type2"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:gravity="center"
-                        android:background="@mipmap/basketball_jersey_home" />
-
-                    <TextView
-                        android:id="@+id/blue_ball2_name5"
-                        style="@style/activity_text2_type0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="name"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </RelativeLayout>
-
-
-
-
-
-
-
-    </RelativeLayout>
-
-
-    <TextView
-        android:id="@+id/no_data1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="暂无数据"/>
-
-</RelativeLayout>
-
-
-
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:gravity="center_vertical"
         android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <View
             android:layout_width="2dp"
             android:layout_height="22dp"
-            android:background="@color/text1"/>
+            android:background="@color/text1" />
 
         <TextView
             style="@style/activity_text8_type3"
@@ -601,8 +578,6 @@
             android:orientation="horizontal">
 
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -613,16 +588,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
 
                     <ImageView
                         android:id="@+id/team1Logo"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:scaleType="center"/>
+                        android:scaleType="center" />
 
 
                     <TextView
@@ -640,8 +615,7 @@
                     android:id="@+id/ball_recycler1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -657,10 +631,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
                     android:gravity="center_vertical|right"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
 
 
                     <TextView
@@ -669,17 +643,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:text="快船-替补阵容"/>
+                        android:text="快船-替补阵容" />
 
                     <ImageView
                         android:id="@+id/team2Logo"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="6dp"
-                        android:scaleType="center"/>
-
-
-
+                        android:scaleType="center" />
 
 
                 </LinearLayout>
@@ -689,13 +660,10 @@
                     android:id="@+id/ball_recycler2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white">
-                </androidx.recyclerview.widget.RecyclerView>
-
+                    android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -705,27 +673,14 @@
             android:id="@+id/no_data2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="50dp"
             android:background="@color/white"
             android:gravity="center"
-            android:visibility="gone"
-            android:text="暂无数据"/>
+            android:minHeight="50dp"
+            android:text="暂无数据"
+            android:visibility="gone" />
 
 
     </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </LinearLayout>
