@@ -16,9 +16,14 @@ android {
 
         ndk {
             // 选择要添加的对应 cpu 类型的 .so 库，多个abi以“,”分隔。
-            abiFilters "x86", "armeabi", "armeabi-v7a"
+            abiFilters "x86", "armeabi"
             // 可指定的值为 'armeabi-v7a', 'arm64-v8a', 'armeabi', 'x86', 'x86_64'，
         }
+
+        packagingOptions {
+            exclude "lib/arm64-v8a/librealm-jni.so"
+        }
+
 
     }
     buildTypes {
@@ -182,13 +187,11 @@ dependencies {
     implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3'
     //友盟
     implementation 'com.umeng.umsdk:analytics:8.0.0'
-    implementation 'com.umeng.umsdk:common:2.0.0'
-    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
-    implementation 'com.umeng.umsdk:push:6.0.1'
 
 
     implementation files('libs/umeng-share-core-6.9.6.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.6.jar')
     //Gif动画
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+    implementation project(path: ':push')
 }

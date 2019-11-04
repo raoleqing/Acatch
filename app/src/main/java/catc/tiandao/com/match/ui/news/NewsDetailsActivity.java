@@ -219,8 +219,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         webView.setWebViewClient(new MyWebViewClient());
         webView.setDownloadListener(new MyWebViewDownLoadListener());
 
-        webView.loadUrl(urlStr);
-
 
     }
 
@@ -331,7 +329,24 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             int code = obj.optInt( "code",0 );
             String message = obj.optString( "message" );
 
+            if(code == 0){
+                JSONObject data  = obj.optJSONObject( "data" );
+                String title = data.optString( "title" );
+                String dt = data.optString( "dt" );
+                String html = data.optString( "html" );
+                iCollection = data.optInt( "iCollect" );
+                String newUrl = data.optString( "newUrl" );
+                urlStr = newUrl.replace( "###",UserUtils.getToken( NewsDetailsActivity.this )  );
+                webView.loadUrl(urlStr);
 
+                if(iCollection == 0){
+                    tv_collection.setImageResource( R.mipmap.navbar_icon_collect_default );
+                }else {
+                    tv_collection.setImageResource( R.mipmap.icon_collect );
+                }
+
+
+            }
 
             Toast.makeText(NewsDetailsActivity.this,message,Toast.LENGTH_SHORT ).show();
 
@@ -394,7 +409,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void run() {
 
-            HttpUtil.post( NewsDetailsActivity.this,HttpUtil.NEW_OPERATION_RUN ,param,new HttpUtil.HttpUtilInterface(){
+            HttpUtil.post( NewsDetailsActivity.this,HttpUtil.NEW_OPERATION ,param,new HttpUtil.HttpUtilInterface(){
                 @Override
                 public void onResponse(String result) {
 

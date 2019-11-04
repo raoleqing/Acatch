@@ -50,6 +50,12 @@ public class HttpUtil {
     public static final String UPDATE_NAME = "LSQB/UpdateName";
     public static final String UPDATE_SEX = "LSQB/UpdateSex";
 
+    public static final String GET_MY_SETTING = "New/GetMySetting";
+    public static final String SET_NOTICE = "New/SetNotice";
+    public static final String SET_SHAKE = "New/SetShake";
+    public static final String SET_SOUND = "New/SetSound";
+    public static final String SET_SLEEP = "New/SetSleep";
+
     public static final String LOGIN_OFF = "LSQB/LoginOff";
 
     //获取投诉类型
@@ -115,9 +121,11 @@ public class HttpUtil {
 
     public static final String FOOTBALL_MATCH_COLLECT_ANDCANCEL = "LSQB/FootballMatchCollectAndCancel";
     public static final String BASKETBAL_MATCH_COLLECT_ANDCANCEL = "LSQB/BasketballMatchCollectAndCancel";
-    public static final String GET_HEADS = "LSQB/GetHomeHeadNew";
-    public static final String GET_MY_NEW = "LSQB/GetMyNew";
-    public static final String NEW_OPERATION_RUN = "LSQB/NewOperationRun";
+    public static final String GET_HEADS = "LSQB/GetHeads";
+    public static final String UPDATE_HEADICON = "LSQB/UpdateHeadIcon";
+    public static final String GET_MY_NEW = "New/GetMyNew";
+    public static final String DELETE_NEW_COLLECT = "New/DeleteNewCollect";
+    public static final String NEW_OPERATION = "LSQB/NewOperation";
     public static final String GETNEW = "LSQB/GetNew";
 
 

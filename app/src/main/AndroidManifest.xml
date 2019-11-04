@@ -43,6 +43,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="leisuqingbaoapp" />
+            </intent-filter>
+
+
         </activity>
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -70,7 +80,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5da86e7f0cafb2fa14000590" />
+            android:value="5dbe260d0cafb2c06100016e" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />

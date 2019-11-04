@@ -6,6 +6,7 @@ import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.SelectAdapter;
 import catc.tiandao.com.match.adapter.SelectAvatarAdapter;
+import catc.tiandao.com.match.ben.Avatart;
 import catc.tiandao.com.match.ben.FootballEvent;
 import catc.tiandao.com.match.ben.NewsBen;
 import catc.tiandao.com.match.ben.UserBen;
@@ -13,6 +14,7 @@ import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.GridSpacingItemDecoration;
 import catc.tiandao.com.match.common.MyGridLayoutManager;
 import catc.tiandao.com.match.common.MyItemClickListener;
+import catc.tiandao.com.match.common.SharedPreferencesUtil;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
@@ -36,18 +38,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
 public class SelectAvatarActivity extends BaseActivity implements View.OnClickListener {
 
-    private int[] icon = {R.mipmap.icon_def_avatar01,R.mipmap.icon_def_avatar02,R.mipmap.icon_def_avatar03,R.mipmap.icon_def_avatar04};
-
+    private List<Avatart> mList = new ArrayList<>(  );
     private SelectAvatarAdapter mAdapter;
-    private int onPostion;
+    private int onPostion = 0;
 
     private GetHeads run;
+    private UpdateHeadIconRun upRun;
 
     Handler myHandler = new Handler() {
         @Override
@@ -59,6 +62,11 @@ public class SelectAvatarActivity extends BaseActivity implements View.OnClickLi
                     Bundle bundle1 = msg.getData();
                     String result1 = bundle1.getString("result");
                     parseData(result1);
+                    break;
+                case 0x002:
+                    Bundle bundle2 = msg.getData();
+                    String result2 = bundle2.getString("result");
+                    saveParseData(result2);
                     break;
                 default:
                     break;
@@ -99,7 +107,7 @@ public class SelectAvatarActivity extends BaseActivity implements View.OnClickLi
         RecyclerView myRecyclerView = ViewUtls.find( this,R.id.myRecyclerView );
         RecyclerView.LayoutManager mLayoutManager = new MyGridLayoutManager(this, 3);
         myRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SelectAvatarAdapter( this,icon );
+        mAdapter = new SelectAvatarAdapter( this,mList );
 
         // 设置adapter
         myRecyclerView.setAdapter(mAdapter);
@@ -132,18 +140,118 @@ public class SelectAvatarActivity extends BaseActivity implements View.OnClickLi
 
         switch (v.getId()) {
             case R.id.activity_return:
-        SelectAvatarActivity.this.onBackPressed();
+                SelectAvatarActivity.this.onBackPressed();
                 break;
             case R.id.activity_text:
 
-
+                int headId = mList.get( onPostion ).getId();
+                UpdateHeadIcon(headId);
                 break;
         }
     }
 
+    private void UpdateHeadIcon(int headId) {
+
+        try{
+
+            if (CheckNet.isNetworkConnected( SelectAvatarActivity.this)) {
+
+                setProgressVisibility( View.VISIBLE );
+
+
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("token", UserUtils.getToken( SelectAvatarActivity.this ) );
+                param.put("headId", headId + "");
+
+                upRun = new UpdateHeadIconRun(param);
+                ThreadPoolManager.getsInstance().execute(upRun);
+
+
+            } else {
+
+                Toast.makeText(SelectAvatarActivity.this, "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                setProgressVisibility( View.GONE );
+
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * */
+    class UpdateHeadIconRun implements Runnable{
+        private HashMap<String, String> param;
+
+        UpdateHeadIconRun(HashMap<String, String> param){
+            this.param =param;
+        }
+
+        @Override
+        public void run() {
+
+
+
+            HttpUtil.post( SelectAvatarActivity.this,HttpUtil.UPDATE_HEADICON,param,new HttpUtil.HttpUtilInterface(){
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    message.setData( data );
+                    message.what = 0x002;
+                    myHandler.sendMessage( message );
+                }
+            });
+
+
+
+        }
+    }
+
+
+
+    private void saveParseData(String result) {
+
+        if(result == null){
+            setProgressVisibility( View.GONE );
+            return;
+        }
+
+
+        try{
+
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+            if(code == 0) {
+
+                String iconUrl = mList.get( onPostion ).getHeadFileUrl();
+                SharedPreferencesUtil.putString( SelectAvatarActivity.this,UserUtils.ICONURL, iconUrl);
+                SelectAvatarActivity.this.onBackPressed();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            setProgressVisibility( View.GONE );
+        }
+
+    }
+
+
+
+
 
     private void getData() {
-        //http:// 域名/LSQB/ UpdateName? GetHeads=***& name=新用户名
 
         try{
 
@@ -189,7 +297,7 @@ public class SelectAvatarActivity extends BaseActivity implements View.OnClickLi
 
 
 
-            HttpUtil.get( SelectAvatarActivity.this,HttpUtil.GET_HEADS,new HttpUtil.HttpUtilInterface(){
+            HttpUtil.post( SelectAvatarActivity.this,HttpUtil.GET_HEADS,param,new HttpUtil.HttpUtilInterface(){
                 @Override
                 public void onResponse(String result) {
 
@@ -226,6 +334,18 @@ public class SelectAvatarActivity extends BaseActivity implements View.OnClickLi
 
 
             if(code == 0) {
+
+                JSONArray data = obj.optJSONArray( "data" );
+
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Avatart>>(){}.getType();
+                List<Avatart> list = gson.fromJson(data.toString(),type);
+                if(list.size() > 0){
+                    mList.addAll( list );
+                }
+
+
+                mAdapter.notifyDataSetChanged();
 
 
             }

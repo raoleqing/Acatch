@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="11:30 NBA常规赛"/>
+                    android:text=""/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
-                            android:text="广州恒大" />
+                            android:text="" />
 
 
                     </LinearLayout>
@@ -209,7 +209,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
-                            android:text="广州恒大" />
+                            android:text="" />
 
 
                     </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -176,6 +177,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
+        private LinearLayout news_item;
         private TextView item_title;
         private TextView zhuanfa,comment,dianzan;
         private ImageView item_image;
@@ -184,6 +186,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
         public MyViewHolder(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
+            this.news_item = ViewUtls.find( view,R.id.news_item);
             this.item_title = ViewUtls.find( view,R.id.item_title);
             this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
             this.comment = ViewUtls.find( view,R.id.comment);
@@ -191,6 +194,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             this.item_image = ViewUtls.find( view,R.id.item_image);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
+            news_item.setOnClickListener( this );
+            zhuanfa.setOnClickListener( this );
+            comment.setOnClickListener( this );
+            dianzan.setOnClickListener( this );
 
         }
 

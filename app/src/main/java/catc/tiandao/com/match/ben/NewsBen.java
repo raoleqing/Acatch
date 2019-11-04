@@ -3,26 +3,14 @@ package catc.tiandao.com.match.ben;
 public class NewsBen {
 
 
-    /*news":[{
-        { iDianZanCount:点赞数,
-iZhuanFaCount:转发数,
- cCommentCount:评论数,
-cTitle:标题,
-titleImageUrl:带标题图片就显示标题图片,
-titleVideoUrl:带视频就显示视频（图片和视频只会有一个）
-dtPublish：发布时间
-
-        "iDianZanCount": 0,
-		"iZhuanFaCount": 0,
-		"cCommentCount": 0,
-		"cTitle": "测试777777777",
-		"titleImageUrl": "http://www.leisuvip1.com/Image/GetImage/25810",
-		"titleVideoUrl": "http://www.leisuvip1.com/Image/GetImage/",
-		"dtPublish": "10-26 15:36:00"
-
-
-    }]
-    */
+   /* "id": 13,
+            "iDianZanCount": 0,
+            "iZhuanFaCount": 0,
+            "cCommentCount": 0,
+            "cTitle": "罗马官宣姆希塔良租借加盟将承担全部18万英镑周薪",
+            "titleImageUrl": "http://www.leisuvip1.com/Image/GetImage/25815",
+            "titleVideoUrl": "",
+            "dtPublish": "10-26 15:36:00"*/
 
     private int id;
     private int iDianZanCount;

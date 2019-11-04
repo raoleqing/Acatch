@@ -17,8 +17,8 @@ public class Constant {
     public static final String SUBMIT_SELECT = "com.match.common_up_ball";
     public static final String UP_BASEKET_BALL = "com.match.common_up_basket_ball";
 
-    public static final String UMENG_APP_KEY = "5da86e7f0cafb2fa14000590";
-    public static final String UMENG_MESSAGE_SECRET = "9pcq9egfk3eayaovnxcud5ppbr7rg3pm";
+    public static final String UMENG_APP_KEY = "5dbe260d0cafb2c06100016e";
+    public static final String UMENG_MESSAGE_SECRET = "db583178c20574471e7cbbe92f684910\n";
 
 
     public static boolean isData(String str) {

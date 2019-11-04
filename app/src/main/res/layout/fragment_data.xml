@@ -678,7 +678,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="洛杉矶快船"/>
+                    android:text=""/>
 
 
 
@@ -788,7 +788,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="洛杉矶快船"/>
+                    android:text=""/>
 
 
 

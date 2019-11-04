@@ -7,14 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.ben.Avatart;
 import catc.tiandao.com.match.ben.FootballEvent;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
+import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 
 /**
@@ -24,19 +30,29 @@ public class SelectAvatarAdapter extends RecyclerView.Adapter<SelectAvatarAdapte
 
 
     private Context mContext;
-    private int[] icon;
+    private List<Avatart> mList;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
 
 
     private LayoutInflater mInflater;
+    private DisplayImageOptions options;
 
 
-    public SelectAvatarAdapter(Context mContext, int[] icon) {
+    public SelectAvatarAdapter(Context mContext, List<Avatart> mList) {
         this.mContext = mContext;
-        this.icon = icon;
+        this.mList = mList;
         this.mInflater=LayoutInflater.from(mContext);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading( R.mipmap.mall_cbg )          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.mall_cbg )  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.mall_cbg )       // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
+                .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
+                .displayer(new RoundedBitmapDisplayer( UnitConverterUtils.dip2px( mContext,6 )))  // 设置成圆角图片
+                .build();
 
 
     }
@@ -55,7 +71,10 @@ public class SelectAvatarAdapter extends RecyclerView.Adapter<SelectAvatarAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.user_icon.setBackgroundResource( icon[position] );
+        Avatart mAvatart = mList.get( position );
+
+        ImageLoader.getInstance().displayImage(mAvatart.getHeadFileUrl(), holder.user_icon,options);
+
         if(showType == position){
             holder.iv_select.setVisibility( View.VISIBLE );
         }else {
@@ -69,7 +88,7 @@ public class SelectAvatarAdapter extends RecyclerView.Adapter<SelectAvatarAdapte
 
     @Override
     public int getItemCount() {
-        return icon.length;
+        return mList.size();
     }
 
 

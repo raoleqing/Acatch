@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="过球铃声" />
+                android:text="进球铃声" />
 
             <ImageView
                 android:id="@+id/push_but_icon03"

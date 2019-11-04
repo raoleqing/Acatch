@@ -180,6 +180,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             this.item_image = ViewUtls.find( view,R.id.item_image);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
+            view.setOnClickListener( this );
 
         }
 

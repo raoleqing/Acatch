@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/news_item"
     android:padding="15dp"
     android:orientation="horizontal">
 
@@ -33,6 +34,7 @@
                 android:lineSpacingMultiplier="1.2"
                 android:layout_marginRight="15dp"
                 android:maxLines="3"
+                android:minLines="3"
                 android:text="伊布背身“暴扣”+被动助攻，率队追2-2！但还是3-4遭绝杀"/>
 
 

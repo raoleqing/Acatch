@@ -41,6 +41,8 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_news );
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
         setTitleText( "资讯速递" );
         viewInfo();
         setProgressVisibility( View.GONE );

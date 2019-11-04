@@ -258,7 +258,7 @@
                     android:layout_width="146dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="快船-替补阵容" />
+                    android:text="" />
 
 
             </LinearLayout>
@@ -284,7 +284,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
-                    android:text="快船-替补阵容"/>
+                    android:text=""/>
 
 
 
@@ -343,7 +343,7 @@
             android:layout_width="140dp"
             android:layout_height="28dp"
             android:background="@drawable/bg_search_normal1"
-            android:text="足球"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -356,7 +356,7 @@
             android:textColor="@color/text1"
             android:textSize="14sp"
             android:background="@drawable/bg_search_normal2_host"
-            android:text="蓝球"/>
+            android:text=""/>
 
 
 

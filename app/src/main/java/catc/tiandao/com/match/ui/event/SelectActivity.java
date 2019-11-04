@@ -39,8 +39,8 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_select );
-        setContentView( R.layout.activity_match_selection );
         setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
         setTitleText( "赛事选择" );
         areaId = this.getIntent().getIntExtra( AREA_ID,0 );
 

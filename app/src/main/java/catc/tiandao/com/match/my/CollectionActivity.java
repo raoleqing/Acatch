@@ -69,11 +69,14 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     private int delType;
 
     private int page = 1;
-    private int pageSize = 20;
+    private int pageSize = 10;
     private int lastVisibleItem;//现在滑动到那个下标
     private boolean isRun;
     private boolean isData = true;
     private GetFootballMath run;
+    private DeleteNewCollectRun delRun;
+
+    private int delNumber = 0;
 
 
     Handler myHandler = new Handler() {
@@ -86,6 +89,11 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                     Bundle bundle1 = msg.getData();
                     String result1 = bundle1.getString("result");
                     parseData(result1);
+                    break;
+                case 0x002:
+                    Bundle bundle2 = msg.getData();
+                    String result2 = bundle2.getString("result");
+                    delParseData(result2,msg.arg1);
                     break;
                 default:
                     break;
@@ -132,6 +140,9 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         del_text = ViewUtls.find( this,R.id.del_text );
         botton_view = ViewUtls.find( this,R.id.botton_view );
 
+        del_all.setOnClickListener( this );
+        del_view.setOnClickListener( this );
+
         myRecyclerView = ViewUtls.find(this, R.id.myRecyclerView );
         mLinearLayoutManager = new LinearLayoutManager(this);
         myRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -142,19 +153,81 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
                 NewsBen mNewsBen = mList.get( postion );
 
-                Intent intent02 = new Intent(CollectionActivity.this, NewsDetailsActivity.class);
-                intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
-                startActivity(intent02);
-               overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                if(delType == 0){
+                    Intent intent02 = new Intent(CollectionActivity.this, NewsDetailsActivity.class);
+                    intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
+                    startActivity(intent02);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    int isSelet = mNewsBen.getIsSelet();
+                    if(isSelet == 0){
+                        delNumber++;
+                    }else {
+                        delNumber--;
+                    }
+
+                    setDelView();
+                    mList.get( postion ).setIsSelet( isSelet == 1 ? 0: 1 );
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+
 
             }
         });
+
+        //上拉加载
+        //addOnScrollListener
+        myRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                System.out.println("lastVisibleItem: " + lastVisibleItem);
+                if (newState ==RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 >= mList.size()) {
+
+                    if(isData){
+                        mAdapter.changeMoreStatus(1);
+                        mAdapter.notifyDataSetChanged();
+                        if(!isRun){
+                            getData();
+                        }
+                    }else {
+                        mAdapter.changeMoreStatus(-1);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
+            }
+        });
+
+
+
+
+
         // 设置adapter
         myRecyclerView.setAdapter(mAdapter);
         // 设置Item增加、移除动画
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
         myRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+    }
+
+    private void setDelView() {
+
+        if(delNumber > 0){
+            del_icon.setBackgroundResource( R.mipmap.collect_icon_delete);
+            del_text.setTextColor( ContextCompat.getColor( CollectionActivity.this,R.color.text1 )  );
+        }else {
+            del_icon.setBackgroundResource( R.mipmap.collect_icon_delete_default);
+            del_text.setTextColor( ContextCompat.getColor( CollectionActivity.this,R.color.text6 )  );
+        }
 
     }
 
@@ -170,18 +243,202 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
                 if(delType == 0){
                     delType = 1;
+                    if(mAdapter != null){
+                        mAdapter.setShowType( 1 );
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+
                     activity_text.setText( "取消" );
                     botton_view.setVisibility( View.VISIBLE );
                 }else {
                     delType = 0;
+                    if(mAdapter != null){
+                        mAdapter.setShowType( 0 );
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+
                     activity_text.setText( "编辑" );
                     botton_view.setVisibility( View.GONE );
+                }
+
+                break;
+            case R.id.del_all:
+                DeleteNewCollect(0);
+                break;
+            case R.id.del_view:
+
+                if(delNumber > 0){
+                    DeleteNewCollect(1);
                 }
 
                 break;
 
         }
     }
+
+    private void DeleteNewCollect(int type) {
+
+
+
+        try{
+
+            if (CheckNet.isNetworkConnected( CollectionActivity.this)) {
+
+                setProgressVisibility( View.VISIBLE );
+
+                String ids = getNewIds(type);
+
+                //token=***& pageSize=每页多少条& page=第几页
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("token", UserUtils.getToken( CollectionActivity.this ) );
+                param.put("ids", ids);
+
+                delRun = new DeleteNewCollectRun(param,type);
+                ThreadPoolManager.getsInstance().execute(delRun);
+
+
+            } else {
+
+                Toast.makeText(CollectionActivity.this, "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                setProgressVisibility( View.GONE );
+
+                isRun = false;
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private String getNewIds(int type) {
+
+        StringBuffer buffer = new StringBuffer(  );
+        for(int i = 0; i< mList.size(); i++){
+            NewsBen mNewsBen = mList.get( i );
+            if(type == 0){
+                buffer.append( mNewsBen.getId() + "," );
+            }else {
+                if(mNewsBen.getIsSelet() == 1){
+                    buffer.append( mNewsBen.getId() + "," );
+                }
+            }
+        }
+
+        String ids = buffer.toString();
+        if(ids != null && ids.length() > 0){
+            ids = ids.substring( 0 ,ids.length() - 1 );
+        }
+
+        return ids;
+
+    }
+
+    /**
+     *
+     * */
+    class DeleteNewCollectRun implements Runnable{
+        private HashMap<String, String> param;
+        private int type;
+
+        DeleteNewCollectRun(HashMap<String, String> param,int type){
+            this.param =param;
+            this.type = type;
+        }
+
+        @Override
+        public void run() {
+
+
+
+            HttpUtil.post( CollectionActivity.this,HttpUtil.DELETE_NEW_COLLECT ,param,new HttpUtil.HttpUtilInterface(){
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    message.setData( data );
+                    message.arg1 = type;
+                    message.what = 0x002;
+                    myHandler.sendMessage( message );
+                }
+            });
+
+
+
+        }
+    }
+
+
+
+    private void delParseData(String result,int type) {
+
+        isRun = false;
+
+        if(result == null){
+            setProgressVisibility( View.GONE );
+            return;
+        }
+
+
+        try{
+
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+            if(code == 0) {
+
+                if(type == 0){
+                    mList.clear();
+                    mAdapter.notifyDataSetChanged();
+                }else {
+                    for(int i = 0; i< mList.size() ; i++){
+                        if(mList.get( i ).getIsSelet() == 1){
+                            mList.remove( i );
+                            i--;
+                        }
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+                if(mList.size() > 0){
+                    no_data.setVisibility( View.GONE );
+                }else {
+                    no_data.setVisibility( View.VISIBLE );
+                }
+
+
+
+
+
+            }
+
+            Toast.makeText( CollectionActivity.this,message,Toast.LENGTH_SHORT ).show();
+
+            if(mList.size() > 0){
+                no_data.setVisibility( View.GONE );
+            }else {
+                no_data.setVisibility( View.VISIBLE );
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            setProgressVisibility( View.GONE );
+        }
+
+    }
+
+
 
     private void getData() {
 
