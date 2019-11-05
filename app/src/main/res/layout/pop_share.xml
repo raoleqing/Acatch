@@ -43,15 +43,25 @@
 
         <ImageView
             android:id="@+id/iv_zone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginRight="50dp"
             android:background="@mipmap/ic_zone_share" />
 
         <ImageView
             android:id="@+id/iv_moment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="50dp"
             android:background="@mipmap/ic_moment_share" />
+
+
+        <ImageView
+            android:id="@+id/iv_wiexin"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@mipmap/dl_wx" />
+
+
     </LinearLayout>
 </LinearLayout>

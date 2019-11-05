@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
+import catc.tiandao.com.match.score.ScoreDetailsActivity;
 import catc.tiandao.com.match.utils.DeviceUtils;
 import catc.tiandao.com.match.utils.StringEscapeUtils;
 
@@ -275,6 +276,48 @@ public class MatchApplication extends Application {
 
         if(custom != null ){
 
+            //足球比分或赛事详情页：football#bifen/saishi#25811
+            //篮球比分或赛事详情页：basketball#bifen/saishi#25811
+
+            String[] array = custom.split( "\\/" );
+
+            Intent mIntent = new Intent();
+
+            if(array.length > 0){
+                if(array[0].equals( "football#bifen" )){
+                    if(array.length > 1 ){
+                        String[] idArray = array[1].split( "#" );
+                        mIntent.setClass( getApplicationContext(), ScoreDetailsActivity.class );
+                        mIntent.putExtra( ScoreDetailsActivity.BALL_TYPE,  0);
+                        mIntent.putExtra( ScoreDetailsActivity.BALL_ID,  idArray[1] );
+                        mIntent.putExtra( ScoreDetailsActivity.MATCH_NAME,  "");
+                    }
+
+                }else if(array[0].equals( "basketball#bifen" )){
+
+                    if(array.length > 1){
+                        String[] idArray = array[1].split( "#" );
+                        mIntent.setClass( getApplicationContext(), ScoreDetailsActivity.class );
+                        mIntent.putExtra( ScoreDetailsActivity.BALL_TYPE,  1);
+                        mIntent.putExtra( ScoreDetailsActivity.BALL_ID,  idArray[1] );
+                        mIntent.putExtra( ScoreDetailsActivity.MATCH_NAME,  "");
+                    }
+
+                }else{
+                    mIntent.setClass( getApplicationContext(), MainActivity.class );
+                }
+            }else {
+                mIntent.setClass( getApplicationContext(), MainActivity.class );
+            }
+
+
+
+
+            mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(mIntent);
+
+
+
             try {
 
                 JSONObject body = new JSONObject(custom);
@@ -289,10 +332,7 @@ public class MatchApplication extends Application {
                 String text = StringEscapeUtils.HTMLDecode(body.optString("text"));
                 String url = StringEscapeUtils.HTMLDecode(body.optString("url"));
 
-                Intent mIntent = new Intent();
-                mIntent.setClass( getApplicationContext(), MainActivity.class );
-                mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(mIntent);
+
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -503,6 +503,14 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     popupWindow.dismiss();
                 }
             });
+
+            contentView.findViewById(R.id.iv_wiexin).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN);
+                    popupWindow.dismiss();
+                }
+            });
         }
         popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
         setBackgroundAlpha(0.5f);
@@ -517,11 +525,15 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
     /***分享*/
     private void singleShare(SHARE_MEDIA shareMedia) {
-//        足球：http://www.leisuvip1.com/New/Football?matchid=比赛id
-//        篮球：http://www.leisuvip1.com/New/Basketball?matchid=比赛id
+
+
+        /*新闻网址：http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
+        分享-足球网址：http://www.leisuvip1.com/New/Football? matchId=比赛id
+        分享-篮球网址：http://www.leisuvip1.com/New/ Basketball? matchId=比赛id*/
+
         int logoResId = R.mipmap.app_icon;
 
-        UmengUtil.shareSinglePlatform(this, shareMedia, startUrl,"资讯速递" , logoResId, shareTitle);
+        UmengUtil.shareSinglePlatform(this, shareMedia, urlStr,getString( R.string.app_name ) , logoResId, shareTitle);
     }
 
 

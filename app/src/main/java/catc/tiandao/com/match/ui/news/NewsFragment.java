@@ -325,6 +325,14 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                     popupWindow.dismiss();
                 }
             });
+
+            contentView.findViewById(R.id.iv_wiexin).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN,postiont,newId,shareUrl,shareTitle,shareDescription);
+                    popupWindow.dismiss();
+                }
+            });
         }
         popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
         setBackgroundAlpha(0.5f);

@@ -194,6 +194,16 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
                     popupWindow.dismiss();
                 }
             });
+
+
+
+            contentView.findViewById(R.id.iv_wiexin).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN);
+                    popupWindow.dismiss();
+                }
+            });
         }
         popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
         setBackgroundAlpha(0.5f);
@@ -208,11 +218,22 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
 
     /***分享*/
     private void singleShare(SHARE_MEDIA shareMedia) {
-//        足球：http://www.leisuvip1.com/New/Football?matchid=比赛id
-//        篮球：http://www.leisuvip1.com/New/Basketball?matchid=比赛id
+/*新闻网址：http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
+        分享-足球网址：http://www.leisuvip1.com/New/Football? matchId=比赛id
+        分享-篮球网址：http://www.leisuvip1.com/New/ Basketball? matchId=比赛id*/
+
+        String url;
+        if(BallType == 0){
+            url = "http://www.leisuvip1.com/New/Football?matchId=" + BallId;
+        }else {
+            url = "http://www.leisuvip1.com/New/Football?Basketball=" + BallId;
+        }
+
+        String des = HomeTeamName + "VS" + AwayTeamName;
+
         int logoResId = R.mipmap.app_icon;
 
-        UmengUtil.shareSinglePlatform(this, shareMedia, "http://www.leisuvip1.com/New/Football?matchid=" + BallId, "分享标题", logoResId, "分享描述内容");
+        UmengUtil.shareSinglePlatform(this, shareMedia, url, getString( R.string.app_name ), logoResId, des);
     }
 
 
@@ -312,7 +333,6 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
 
         this.HomeTeamLogoUrl = HomeTeamLogoUrl;
         this.AwayTeamLogoUrl = AwayTeamLogoUrl;
-        this.HomeTeamName = HomeTeamName;
         this.HomeTeamName = HomeTeamName;
         this.AwayTeamName = AwayTeamName;
 
