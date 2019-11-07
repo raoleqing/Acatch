@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
@@ -14,10 +16,12 @@ import android.widget.RemoteViews;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
@@ -35,6 +39,7 @@ import org.json.JSONObject;
 
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
+import catc.tiandao.com.match.my.MySetActivity;
 import catc.tiandao.com.match.score.ScoreDetailsActivity;
 import catc.tiandao.com.match.utils.DeviceUtils;
 import catc.tiandao.com.match.utils.StringEscapeUtils;
@@ -142,83 +147,119 @@ public class MatchApplication extends Application {
              */
             @Override
             public Notification getNotification(Context context, UMessage msg) {
+                try {
 
-                Log.e(TAG,"builder_id: " + msg.builder_id);
-                Log.e(TAG,"getNotification: " + msg.custom);
+                    JSONObject obj = new JSONObject(msg.custom);
 
-                switch (msg.builder_id) {
-                    case 1:
-                        try {
-                            JSONObject obj = new JSONObject(msg.custom);
+                    // 通知栏提示文字
+                    String ticker = StringEscapeUtils.HTMLDecode(obj.optString("ticker"));
+                    // 通知标题
+                    String title = StringEscapeUtils.HTMLDecode(obj.optString("title"));
+                    // 通知文字描述
+                    String text = StringEscapeUtils.HTMLDecode(obj.optString("text"));
+                    // 网络图片，加载优先级最高
+                    String img = StringEscapeUtils.HTMLDecode(obj.optString("img"));
 
-                            // 通知栏提示文字
-                            String ticker = StringEscapeUtils.HTMLDecode(obj.optString("ticker"));
-                            // 通知标题
-                            String title = StringEscapeUtils.HTMLDecode(obj.optString("title"));
-                            // 通知文字描述
-                            String text = StringEscapeUtils.HTMLDecode(obj.optString("text"));
-                            // 网络图片，加载优先级最高
-                            String img = StringEscapeUtils.HTMLDecode(obj.optString("img"));
-
-                            msg.ticker = ticker;
-                            msg.title = title;
-                            msg.text = text;
-                            if (img != null && !img.equals("")) {
-                                msg.img = img;
-                            }
+                    msg.ticker = ticker;
+                    msg.title = title;
+                    msg.text = text;
+                    if (img != null && !img.equals("")) {
+                        msg.img = img;
+                    }
 
 
+                    int shake =  SharedPreferencesUtil.getInt( getApplicationContext(), SharedPreferencesUtil.SHAKE );
+                    int sound  =  SharedPreferencesUtil.getInt( getApplicationContext(),SharedPreferencesUtil.SOUND );
 
-                            if (Build.VERSION.SDK_INT >= 26) {
-                                NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                NotificationChannel channel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH);
-                                if (manager != null) {
-                                    manager.createNotificationChannel(channel);
-                                }
-                                Notification.Builder builder = new Notification.Builder(context, "channel_id");
-
-                                RemoteViews myNotificationView = new RemoteViews(context.getPackageName(), R.layout.notification_view);
-                                myNotificationView.setTextViewText(R.id.notification_title, msg.title);
-                                myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-                                if(img != null && !img.trim().equals( "" )){
-                                    myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
-                                }else {
-                                    myNotificationView.setImageViewResource(R.id.notification_large_icon, R.mipmap.app_icon);
-                                }
-
-                                myNotificationView.setImageViewResource(R.id.notification_small_icon, R.mipmap.app_icon);
-                                builder.setCustomContentView(myNotificationView)
-                                        .setSmallIcon(R.mipmap.app_icon)
-                                        .setTicker(msg.ticker)
-                                        .setAutoCancel(true);
-
-                                return builder.build();
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        NotificationManager manager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+                        NotificationChannel channel = new NotificationChannel( "channel_id", "channel_name", NotificationManager.IMPORTANCE_HIGH );
 
 
-                            } else {
-                                Notification.Builder builder = new Notification.Builder(context);
-                                RemoteViews myNotificationView = new RemoteViews(context.getPackageName(), R.layout.notification_view);
-                                myNotificationView.setTextViewText(R.id.notification_title, msg.title);
-                                myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-                                if(img != null && !img.trim().equals( "" )){
-                                    myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
-                                }else {
-                                    myNotificationView.setImageViewResource(R.id.notification_large_icon, R.mipmap.app_icon);
-                                }
-                                myNotificationView.setImageViewResource(R.id.notification_small_icon, R.mipmap.app_icon);
-                                builder.setContent(myNotificationView)
-                                        .setSmallIcon(R.mipmap.app_icon)
-                                        .setTicker(msg.ticker)
-                                        .setAutoCancel(true);
+                        channel.enableLights( true ); //设置开启指示灯，如果设备有的话
+                        channel.setLightColor( Color.RED ); //设置指示灯颜色
+                        channel.setShowBadge( true ); //设置是否显示角标
+                        channel.setLockscreenVisibility( Notification.VISIBILITY_PRIVATE );//设置是否应在锁定屏幕上显示此频道的通知
+                        channel.setDescription( "" );//设置渠道描述
 
-                                return builder.build();
-                            }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (sound == 1) {
+                            // 自定义声音
+                            Uri uri = Uri.parse( "android.resource://" + getPackageName() + "/raw/qqqq" );
+                            channel.setSound( null, Notification.AUDIO_ATTRIBUTES_DEFAULT );
                         }
-                    default:
-                        //默认为0，若填写的builder_id并不存在，也使用默认。
+                        if (shake == 1) {
+                            // 设置通知出现时的震动（如果 android 设备支持的话）
+                            channel.enableVibration( true );
+                            channel.setVibrationPattern( new long[]{100, 200, 300, 400, 500, 600} );//设置震动频率
+                        }
+                        channel.setBypassDnd( true );//设置是否绕过免打扰模式
+
+                        if (manager != null) {
+                            manager.createNotificationChannel( channel );
+                        }
+
+
+                        Notification.Builder builder = new Notification.Builder( context, "channel_id" );
+                        //Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE
+
+                        if (sound == 1) {
+                            ///使用默认的声音
+                            builder.setDefaults( Notification.DEFAULT_SOUND );
+                        }
+                        if (shake == 1) {
+                            ////使用默认的震动
+                            builder.setDefaults( Notification.DEFAULT_VIBRATE );
+                        }
+
+                        RemoteViews myNotificationView = new RemoteViews( context.getPackageName(), R.layout.notification_view );
+                        myNotificationView.setTextViewText( R.id.notification_title, msg.title );
+                        myNotificationView.setTextViewText( R.id.notification_text, msg.text );
+                        if (img != null && !img.trim().equals( "" )) {
+                            myNotificationView.setImageViewBitmap( R.id.notification_large_icon, getLargeIcon( context, msg ) );
+                        } else {
+                            myNotificationView.setImageViewResource( R.id.notification_large_icon, R.mipmap.app_icon );
+                        }
+
+                        myNotificationView.setImageViewResource( R.id.notification_small_icon, R.mipmap.app_icon );
+                        builder.setCustomContentView( myNotificationView )
+                                .setSmallIcon( R.mipmap.app_icon )
+                                .setTicker( msg.ticker )
+                                .setAutoCancel( true );
+
+                        return builder.build();
+
+                    }else {
+                        Notification.Builder builder = new Notification.Builder(context);
+                        if(sound == 1){
+                            ///使用默认的声音
+                            builder.setDefaults(  Notification.DEFAULT_SOUND);
+                        }
+                        if(shake == 1){
+                            ////使用默认的震动
+                            builder.setDefaults(  Notification.DEFAULT_VIBRATE);
+                        }
+                        RemoteViews myNotificationView = new RemoteViews(context.getPackageName(), R.layout.notification_view);
+                        myNotificationView.setTextViewText(R.id.notification_title, msg.title);
+                        myNotificationView.setTextViewText(R.id.notification_text, msg.text);
+                        if(img != null && !img.trim().equals( "" )){
+                            myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
+                        }else {
+                            myNotificationView.setImageViewResource(R.id.notification_large_icon, R.mipmap.app_icon);
+                        }
+                        myNotificationView.setImageViewResource(R.id.notification_small_icon, R.mipmap.app_icon);
+                        builder.setContent(myNotificationView)
+                                .setSmallIcon(R.mipmap.app_icon)
+                                .setTicker(msg.ticker)
+                                .setAutoCancel(true);
+
+                        return builder.build();
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
                         return super.getNotification(context, msg);
                 }
 
@@ -359,15 +400,23 @@ public class MatchApplication extends Application {
         // 创建DisplayImageOptions对象
         DisplayImageOptions defaulOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true).build();
-        // 创建ImageLoaderConfiguration对象
-        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(
-                context).defaultDisplayImageOptions(defaulOptions)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .memoryCacheExtraOptions(480, 800) // max width, max height
+                .threadPoolSize(3)// 线程池内加载的数量
+                .threadPriority(Thread.NORM_PRIORITY - 2) // 降低线程的优先级保证主UI线程不受太大影响
+                .denyCacheImageMultipleSizesInMemory().memoryCache(new LruMemoryCache(5 * 1024 * 1024)) // 建议内存设在5-10M,可以有比较好的表现
+                .memoryCacheSize(5 * 1024 * 1024)
+                .diskCacheSize(50 * 1024 * 1024)
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder( QueueProcessingType.LIFO).build();
-        // ImageLoader对象的配置
-        ImageLoader.getInstance().init(configuration);
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .diskCacheFileCount(100) // 缓存的文件数量
+                .defaultDisplayImageOptions(defaulOptions)
+                .imageDownloader(new BaseImageDownloader(context, 5 * 1000, 30 * 1000)) // connectTimeout
+                .writeDebugLogs() // Remove for release app
+                .build();
+        ImageLoader.getInstance().init(config);
+
     }
 
 }

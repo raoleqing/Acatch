@@ -13,8 +13,10 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.BallBen;
+import catc.tiandao.com.match.ben.NewsBen;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
+import catc.tiandao.com.match.utils.ViewUtls;
 
 /**
  * Created by Administrator on 2017/12/7 0007.
@@ -23,7 +25,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     private Context mContext;
-    private List<BallBen> mList;
+    private List<NewsBen> mList;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
@@ -44,7 +46,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
 
-    public NoticeAdapter(Context mContext, List<BallBen> mList) {
+    public NoticeAdapter(Context mContext, List<NewsBen> mList) {
         this.mContext = mContext;
         this.mList = mList;
         this.mInflater=LayoutInflater.from(mContext);
@@ -74,8 +76,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if(holder instanceof MyViewHolder) {
+
+            NewsBen mNewsBen = mList.get( position );
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
+            mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
+            mMyViewHolder.item_conent.setText( mNewsBen.getNewDetail() );
+            mMyViewHolder.item_text2.setText( mNewsBen.getDtPublish() );
+            //mMyViewHolder.item_conent.setText( mNewsBen.get );
+
 
 
         }else if(holder instanceof FootViewHolder){
@@ -103,31 +112,36 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
+
         // 最后一个item设置为footerView
-/*        if (position + 1 == getItemCount()) {
+       if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         } else {
             return TYPE_ITEM;
-        }*/
-
-        return TYPE_ITEM;
+        }
 
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-
+        private TextView item_title;
+        private TextView item_conent;
+        private TextView item_text1;
+        private TextView item_text2;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
         public MyViewHolder(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
                 super(view);
-
+            item_title = ViewUtls.find( view,R.id.item_title );
+            item_conent = ViewUtls.find( view,R.id.item_conent );
+            item_text1 = ViewUtls.find( view,R.id.item_text1 );
+            item_text2 = ViewUtls.find( view,R.id.item_text2 );
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
 
@@ -214,7 +228,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     //添加数据
-    public void addItem(List<BallBen> newDatas) {
+    public void addItem(List<NewsBen> newDatas) {
         //mTitles.add(position, data);
         //notifyItemInserted(position);
         newDatas.addAll(mList);
@@ -223,7 +237,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
-    public void addMoreItem(List<BallBen> newDatas) {
+    public void addMoreItem(List<NewsBen> newDatas) {
         mList.addAll(newDatas);
         notifyDataSetChanged();
     }

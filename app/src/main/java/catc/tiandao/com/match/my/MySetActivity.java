@@ -366,12 +366,16 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
                 shake = data.optInt( "shake" );
                 sound = data.optInt( "sound" );
 
+
+                SharedPreferencesUtil.putInt(MySetActivity.this, SharedPreferencesUtil.SHAKE,shake );
+                SharedPreferencesUtil.putInt( MySetActivity.this,SharedPreferencesUtil.SOUND,sound );
+
                 setContent();
 
 
             }
 
-            Toast.makeText( MySetActivity.this,message ,Toast.LENGTH_SHORT).show();
+           // Toast.makeText( MySetActivity.this,message ,Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -711,6 +715,9 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
                     push_but_icon02.setBackgroundResource(R.mipmap.slide_on);
                 }
 
+
+                SharedPreferencesUtil.putInt(MySetActivity.this, SharedPreferencesUtil.SHAKE,shake );
+
             }
 
             Toast.makeText( MySetActivity.this,message ,Toast.LENGTH_SHORT).show();
@@ -820,6 +827,8 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
                 }
 
             }
+
+            SharedPreferencesUtil.putInt( MySetActivity.this,SharedPreferencesUtil.SOUND,sound );
 
             Toast.makeText( MySetActivity.this,message ,Toast.LENGTH_SHORT).show();
 

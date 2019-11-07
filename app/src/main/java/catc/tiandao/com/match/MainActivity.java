@@ -128,6 +128,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     private void getData() {
 
         String userKey = SharedPreferencesUtil.getString( this,SharedPreferencesUtil.USER_KEY );
+
         if(userKey == null || userKey.equals( "" )){
             GetAppLocalToken();
         }else {
@@ -312,9 +313,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
                 String brand = android.os.Build.BRAND;
                 String model = android.os.Build.MODEL;
 
+                String sdk = Build.VERSION.SDK ;
+                String version = android.os.Build.VERSION.RELEASE;
+
                 HashMap<String, String> param = new HashMap<>(  );
-                param.put("phoneType",model );
-                param.put( "systemType", brand);
+                param.put("phoneType",brand + " " + model );
+                param.put( "systemType", version);
 
                 getTetKeyRun = new GetAppLocalTokenRun(param);
                 ThreadPoolManager.getsInstance().execute(getTetKeyRun);

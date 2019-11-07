@@ -20,6 +20,7 @@ public class NewsBen {
     private String titleImageUrl;
     private String titleVideoUrl;
     private String dtPublish;
+    private String newDetail;
     private int isSelet;
 
     public int getId() {
@@ -92,5 +93,13 @@ public class NewsBen {
 
     public void setIsSelet(int isSelet) {
         this.isSelet = isSelet;
+    }
+
+    public String getNewDetail() {
+        return newDetail;
+    }
+
+    public void setNewDetail(String newDetail) {
+        this.newDetail = newDetail;
     }
 }

@@ -26,6 +26,8 @@ public class SharedPreferencesUtil {
     private static final String SHARED_PATH = "User_data";
 	public static final String USER_KEY = "user_key";
 	public static final String DEVICE_TOKEN = "device_token";
+	public static final String SOUND = "sound";
+	public static final String SHAKE = "shake";
 
 	/**
 	 * 拿到SharedPreferences
