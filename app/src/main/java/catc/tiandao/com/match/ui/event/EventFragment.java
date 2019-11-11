@@ -36,6 +36,7 @@ import catc.tiandao.com.match.adapter.EventAdapter;
 import catc.tiandao.com.match.ben.Match;
 import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
 import catc.tiandao.com.match.common.RecyclerItemClickListener;
 import catc.tiandao.com.match.score.ScoreDetailsActivity;
@@ -67,6 +68,7 @@ public class EventFragment extends Fragment {
     private List<Match> mList = new ArrayList<>(  );
     private GetFootballMath run;
     private StickyRecyclerHeadersDecoration headersDecor;
+    private FootballMatchCollectAndCancelRun setRun;
 
 
     // TODO: Rename and change types of parameters
@@ -93,6 +95,11 @@ public class EventFragment extends Fragment {
                     Bundle bundle1 = msg.getData();
                     String result1 = bundle1.getString("result");
                     parseData(result1);
+                    break;
+                case 0x003:
+                    Bundle bundle2 = msg.getData();
+                    String result2 = bundle2.getString("result");
+                    setParseData(result2,msg.arg1);
                     break;
                 default:
                     break;
@@ -220,8 +227,62 @@ public class EventFragment extends Fragment {
 
 
 
+        mAdapter.setOnItemClickListener( new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion, int type) {
 
-        initEvent();
+                Match mMatch = mList.get( postion );
+
+                switch (view.getId()){
+
+
+                    case R.id.item_view:
+                        if(postion + 1 < mList.size()){
+
+                            String matchName;
+                            if(mParam1 == 0){
+                                matchName =  mMatch.getMatchEventName() + " 第"+ mMatch.getMatchRound() + "轮  " + mMatch.getMatchTime();
+                            }else {
+                                matchName = mMatch.getMatchEventName() + " " + mMatch.getMatchTime();
+                            }
+
+                            if(mMatch.getMatchStatusId() > 1){
+                                Intent intent01 = new Intent(getActivity(), ScoreDetailsActivity.class);
+                                intent01.putExtra( ScoreDetailsActivity.BALL_TYPE,  mParam1);
+                                intent01.putExtra( ScoreDetailsActivity.BALL_ID,  mMatch.getMatchId());
+                                intent01.putExtra( ScoreDetailsActivity.MATCH_NAME,  matchName);
+                                startActivity(intent01);
+                                ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                            }else {
+                                //
+                                Intent intent01 = new Intent(getActivity(), MatchDetailsActivity.class);
+                                intent01.putExtra( MatchDetailsActivity.BALL_TYPE,  mParam1);
+                                intent01.putExtra( MatchDetailsActivity.BALL_ID,  mMatch.getMatchId());
+                                startActivity(intent01);
+                                ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                            }
+
+
+                        }
+
+
+                        break;
+                    case R.id.is_collection:
+
+                        if(UserUtils.isLanded( getActivity() )){
+                            FootballMatchCollectAndCancel(mMatch.getMatchId(),postion);
+
+                        }else {
+                            UserUtils.startLongin( getActivity() );
+                        }
+
+                        break;
+
+                }
+            }
+        } );
+
+       // initEvent();
 
     }
 
@@ -231,36 +292,6 @@ public class EventFragment extends Fragment {
         ball_recycler.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-                if(position + 1 < mList.size()){
-                    Match mMatch = mList.get( position );
-
-                    String matchName;
-                    if(mParam1 == 0){
-                        matchName =  mMatch.getMatchEventName() + " 第"+ mMatch.getMatchRound() + "轮  " + mMatch.getMatchTime();
-                    }else {
-                        matchName = mMatch.getMatchEventName() + " " + mMatch.getMatchTime();
-                    }
-
-                    if(mMatch.getMatchStatusId() > 1){
-                        Intent intent01 = new Intent(getActivity(), ScoreDetailsActivity.class);
-                        intent01.putExtra( ScoreDetailsActivity.BALL_TYPE,  mParam1);
-                        intent01.putExtra( ScoreDetailsActivity.BALL_ID,  mMatch.getMatchId());
-                        intent01.putExtra( ScoreDetailsActivity.MATCH_NAME,  matchName);
-                        startActivity(intent01);
-                        ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
-                    }else {
-                        //
-                        Intent intent01 = new Intent(getActivity(), MatchDetailsActivity.class);
-                        intent01.putExtra( MatchDetailsActivity.BALL_TYPE,  mParam1);
-                        intent01.putExtra( MatchDetailsActivity.BALL_ID,  mMatch.getMatchId());
-                        startActivity(intent01);
-                        ((Activity)getActivity()).overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
-                    }
-
-
-                }
-
 
 
             }
@@ -426,6 +457,115 @@ public class EventFragment extends Fragment {
         }
 
     }
+
+
+
+
+
+    private void FootballMatchCollectAndCancel(String matchId,int postion) {
+
+        try{
+            if (CheckNet.isNetworkConnected( getActivity())) {
+
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("token", UserUtils.getToken( getActivity() ) );
+                param.put("matchId", matchId);
+
+                setRun = new FootballMatchCollectAndCancelRun(param,postion);
+                ThreadPoolManager.getsInstance().execute(setRun);
+            } else {
+
+                Toast.makeText(getActivity(), "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     *
+     * */
+    class FootballMatchCollectAndCancelRun implements Runnable{
+        private HashMap<String, String> param;
+        private int poistion;
+
+        FootballMatchCollectAndCancelRun(HashMap<String, String> param,int poistion){
+            this.param =param;
+            this.poistion = poistion;
+        }
+
+        @Override
+        public void run() {
+
+            HttpUtil.post( getActivity(),HttpUtil.FOOTBALL_MATCH_COLLECT_ANDCANCEL ,param,new HttpUtil.HttpUtilInterface(){
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    message.setData( data );
+                    message.what = 0x003;
+                    message.arg1 = poistion;
+                    myHandler.sendMessage( message );
+                }
+            });
+
+
+
+        }
+    }
+
+
+
+    private void setParseData(String result,int poistion) {
+
+        if(result == null){
+            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            return;
+        }
+
+        try{
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+
+            if(code == 0) {
+
+                Match mBallBen = mList.get( poistion );
+                int iCollection = mBallBen.getIsCollection();
+
+                if(iCollection == 0){
+                    mList.get( poistion ).setIsCollection( 1 );
+                }else {
+                    mList.get( poistion ).setIsCollection( 0 );
+
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+
+
+            Toast.makeText( getActivity(),message,Toast.LENGTH_SHORT ).show();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+        }
+
+    }
+
 
 
 

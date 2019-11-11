@@ -306,7 +306,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         mRecyclerView.setNestedScrollingEnabled( false );
         mRecyclerView.setAdapter(mAdapter);
 
-
     }
 
 
@@ -322,9 +321,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.expert:
-                Intent intent02 = new Intent(getActivity(), ExpertActivity.class);
-                startActivity(intent02);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                if(UserUtils.isLanded( getActivity() )){
+                    Intent intent02 = new Intent(getActivity(), ExpertActivity.class);
+                    startActivity(intent02);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                }else {
+                    UserUtils.startLongin( getActivity() );
+                }
+
                 break;
             case R.id.news:
             case R.id.group_more:

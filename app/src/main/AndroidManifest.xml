@@ -49,7 +49,7 @@
 
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="leisuqingbaoapp" />
+                <data android:scheme="leisuvip" />
             </intent-filter>
 
 

@@ -67,7 +67,6 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         int radius = UnitConverterUtils.dip2px(mContext,11 );
 
-        showEndType = 0;
 
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
@@ -104,18 +103,14 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         if(holder instanceof MyViewHolder) {
 
-            if(position == 0){
-                showEndType = 0;
-            }
+
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
 
             BallFragmentBen mBallBen = mList.get( position );
 
             if(showType == 4){
-               int statusId = mBallBen.getMatchStatusId();
-               if(statusId >= 10 && showEndType == 0){
-                   showEndType = 1;
+               if(showEndType == position){
                    mMyViewHolder.end_title.setVisibility( View.VISIBLE );
                }else {
                    mMyViewHolder.end_title.setVisibility( View.GONE );
@@ -346,5 +341,9 @@ public class BasketballAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public void setShowType(int type){
         this.showType = type;
+    }
+
+    public void setShowEndType(int showEndType) {
+        this.showEndType = showEndType;
     }
 }

@@ -1,5 +1,6 @@
 package catc.tiandao.com.match.my;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,30 +16,42 @@ import catc.tiandao.com.match.adapter.NewsAdapter;
 import catc.tiandao.com.match.ben.Match;
 import catc.tiandao.com.match.ben.NewsBen;
 import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.match.common.CommentDialog;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
 import catc.tiandao.com.match.ui.event.EventFragment;
 import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
+import catc.tiandao.com.match.ui.news.NewsFragment;
+import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,7 +62,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CollectionActivity extends BaseActivity implements View.OnClickListener {
+public class CollectionActivity extends BaseActivity implements View.OnClickListener ,CommentDialog.MyDialogInterface{
+
+
+    private RelativeLayout rl_contianer;
+    private PopupWindow popupWindow;
 
 
     private TextView activity_text;
@@ -75,8 +92,13 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     private boolean isData = true;
     private GetFootballMath run;
     private DeleteNewCollectRun delRun;
+    private NewOperationRun setRun;
 
     private int delNumber = 0;
+
+    private CommentDialog mDialog;
+
+    private static final int BOND = 0x004;
 
 
     Handler myHandler = new Handler() {
@@ -95,6 +117,17 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                     String result2 = bundle2.getString("result");
                     delParseData(result2,msg.arg1);
                     break;
+                case 0x003:
+                    Bundle bundle3 = msg.getData();
+                    String result3 = bundle3.getString("result");
+                    String type = bundle3.getString("type");
+                    setParseData(result3,type,msg.arg1);
+                    break;
+                case BOND:
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService( Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    break;
+
                 default:
                     break;
             }
@@ -132,7 +165,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         image.setOnClickListener( this);
         activity_text.setOnClickListener( this);
 
-
+        rl_contianer = ViewUtls.find( this,R.id.rl_contianer );
         no_data = ViewUtls.find( this,R.id.no_data );
         del_all = ViewUtls.find( this,R.id.del_all );
         del_view = ViewUtls.find( this,R.id.del_view );
@@ -153,22 +186,61 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
                 NewsBen mNewsBen = mList.get( postion );
 
-                if(delType == 0){
-                    Intent intent02 = new Intent(CollectionActivity.this, NewsDetailsActivity.class);
-                    intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
-                    startActivity(intent02);
-                    overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
-                }else {
-                    int isSelet = mNewsBen.getIsSelet();
-                    if(isSelet == 0){
-                        delNumber++;
-                    }else {
-                        delNumber--;
-                    }
+                switch (view.getId()){
+                    case R.id.news_item:
+                    case R.id.item_title:
 
-                    setDelView();
-                    mList.get( postion ).setIsSelet( isSelet == 1 ? 0: 1 );
-                    mAdapter.notifyDataSetChanged();
+                        if(delType == 0){
+                            Intent intent02 = new Intent(CollectionActivity.this, NewsDetailsActivity.class);
+                            intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
+                            startActivity(intent02);
+                            overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+                        }else {
+                            int isSelet = mNewsBen.getIsSelet();
+                            if(isSelet == 0){
+                                delNumber++;
+                            }else {
+                                delNumber--;
+                            }
+
+                            setDelView();
+                            mList.get( postion ).setIsSelet( isSelet == 1 ? 0: 1 );
+                            mAdapter.notifyDataSetChanged();
+
+                        }
+                        break;
+
+                    case R.id.zhuanfa:
+
+                        if(UserUtils.isLanded( CollectionActivity.this)){
+                            String shreUrl = "http://www.leisuvip1.com/New/Index/token="+ UserUtils.getToken( CollectionActivity.this )+"&newId=" + mNewsBen.getId();
+                            showShare(postion,mNewsBen.getId(),shreUrl,mNewsBen.getcTitle(),mNewsBen.getcTitle());
+                        }else {
+                            UserUtils.startLongin( CollectionActivity.this);
+                        }
+
+                        break;
+                    case R.id.comment:
+
+                        if(mDialog == null){
+                            mDialog = new CommentDialog( CollectionActivity.this, postion, mNewsBen.getId(), CollectionActivity.this );
+                        }
+                        mDialog.show();
+
+                        myHandler.sendEmptyMessageDelayed(BOND,100);
+
+
+                        break;
+                    case R.id.dianzan_view:
+
+                        if(UserUtils.isLanded( CollectionActivity.this)){
+                            NewOperation("dianZan",postion,mNewsBen.getId(),"");
+                        }else {
+                            UserUtils.startLongin( CollectionActivity.this );
+                        }
+
+
+                        break;
 
                 }
 
@@ -337,6 +409,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         return ids;
 
     }
+
+
 
     /**
      *
@@ -574,6 +648,219 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     }
 
 
+
+    private void showShare(int postiont,int newId,String shareUrl,String shareTitle,String shareDescription) {
+        //分享
+        if (popupWindow == null) {
+            View contentView = LayoutInflater.from(CollectionActivity.this).inflate(R.layout.pop_share, null);
+            popupWindow = new PopupWindow(CollectionActivity.this);
+            popupWindow.setContentView(contentView);
+            popupWindow.setAnimationStyle(R.style.bottomShowAnimStyle);
+            popupWindow.setWidth( LinearLayoutCompat.LayoutParams.MATCH_PARENT);
+            popupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
+
+            popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    setBackgroundAlpha(1f);
+                }
+            });
+
+            contentView.findViewById(R.id.iv_zone).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare( SHARE_MEDIA.QZONE,postiont,newId,shareUrl,shareTitle,shareDescription);
+                    popupWindow.dismiss();
+                }
+            });
+            contentView.findViewById(R.id.iv_moment).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN_CIRCLE,postiont,newId,shareUrl,shareTitle,shareDescription);
+                    popupWindow.dismiss();
+                }
+            });
+
+            contentView.findViewById(R.id.iv_wiexin).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN,postiont,newId,shareUrl,shareTitle,shareDescription);
+                    popupWindow.dismiss();
+                }
+            });
+        }
+        popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
+        setBackgroundAlpha(0.5f);
+    }
+
+
+    /***设置背景透明度*/
+    private void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = alpha;
+        getWindow().setAttributes(lp);
+    }
+
+    /***分享*/
+    private void singleShare(SHARE_MEDIA shareMedia,int postiont,int newId ,String shareUrl,String shareTitle,String shareDescription) {
+
+        int logoResId = R.mipmap.app_icon;
+
+        UmengUtil.shareSinglePlatform(CollectionActivity.this, shareMedia, shareUrl,shareTitle, logoResId, shareDescription);
+
+        NewOperation("zhuanFa",postiont,newId,"");
+    }
+
+
+
+    //dianZan，zhuanFa，pingLun，shouCang
+    private void NewOperation(String type,int postiont,int newId,String pingLun) {
+
+        try{
+            if (CheckNet.isNetworkConnected( CollectionActivity.this)) {
+
+                setProgressVisibility( View.VISIBLE );
+                // type=类型& newId=新闻id& pingLun=评论内容
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("token", UserUtils.getToken( CollectionActivity.this ) );
+                param.put("type",type);
+                param.put("newId", newId + "");
+                param.put("pingLun", "");
+
+                setRun = new NewOperationRun(param,type,postiont);
+                ThreadPoolManager.getsInstance().execute(setRun);
+            } else {
+
+                Toast.makeText(CollectionActivity.this, "没有可用的网络连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+               setProgressVisibility( View.GONE);
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    /**
+     *
+     * */
+    class NewOperationRun implements Runnable{
+        private HashMap<String, String> param;
+        private String type;
+        private int postiont;
+
+        NewOperationRun(HashMap<String, String> param,String type,int postiont){
+            this.param =param;
+            this.type = type;
+            this.postiont = postiont;
+        }
+
+        @Override
+        public void run() {
+
+            HttpUtil.post( CollectionActivity.this,HttpUtil.NEW_OPERATION ,param,new HttpUtil.HttpUtilInterface(){
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    data.putString( "type", type );
+                    message.setData( data );
+                    message.what = 0x003;
+                    message.arg1 = postiont;
+                    myHandler.sendMessage( message );
+                }
+            });
+
+
+
+        }
+    }
+
+
+
+    private void setParseData(String result,String type,int postint) {
+
+        if(result == null){
+           setProgressVisibility( View.GONE );
+            return;
+        }
+
+        try{
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+            if(code == 0) {
+
+                if(type.equals( "dianZan" )){
+
+                    int hasZan =  mList.get( postint ).getHasZan();
+                    if(hasZan == 0){
+                        mList.get( postint ).setiDianZanCount(  mList.get( postint ).getiDianZanCount() + 1 );
+                        mList.get( postint ).setHasZan( 1 );
+                    }else {
+                        mList.get( postint ).setiDianZanCount(  mList.get( postint ).getiDianZanCount() - 1 );
+                        mList.get( postint ).setHasZan( 0 );
+                    }
+
+
+                    mAdapter.notifyDataSetChanged();
+                    Toast.makeText(CollectionActivity.this,message,Toast.LENGTH_SHORT ).show();
+
+                }else if(type.equals( "pingLun" )){
+
+                    mList.get( postint ).setcCommentCount(  mList.get( postint ).getcCommentCount() + 1 );
+                    mAdapter.notifyDataSetChanged();
+
+                    Toast.makeText(CollectionActivity.this,message,Toast.LENGTH_SHORT ).show();
+
+                }else if(type.equals( "zhuanFa" )){
+
+                    mList.get( postint ).setiZhuanFaCount(  mList.get( postint ).getiZhuanFaCount() + 1 );
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+            }else {
+                Toast.makeText(CollectionActivity.this,message,Toast.LENGTH_SHORT ).show();
+            }
+
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            setProgressVisibility( View.GONE );
+        }
+
+    }
+
+
+
+    @Override
+    public void commentButton(Dialog mDialog, int postiont, int newId, String comment) {
+
+
+        if(UserUtils.isLanded( CollectionActivity.this )){
+            NewOperation("pingLun",postiont,newId,comment);
+        }else {
+            UserUtils.startLongin( CollectionActivity.this );
+        }
+
+
+        mDialog.dismiss();
+    }
 
 
 

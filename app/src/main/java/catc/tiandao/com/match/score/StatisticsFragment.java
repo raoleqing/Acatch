@@ -137,6 +137,12 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                     String result3 = bundle3.getString("result");
                     setParseData(result3);
                     break;
+
+                case 0x004:
+                    getStatisticeData();
+                    break;
+
+
                 default:
                     break;
             }
@@ -193,8 +199,10 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.fragment_statistics, container, false );
         infoView(view);
+        getStatisticeData();
         return view;
     }
+
 
 
 
@@ -256,6 +264,22 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         setRecent2();
         setRecent3();
 
+
+
+
+
+    }
+
+    public void upData() {
+
+        getStatisticeData();
+    }
+
+
+
+
+    private void getStatisticeData() {
+
         if(BallType == 0){
             content_layout1.setVisibility( View.GONE );
             content_layout3.setVisibility( View.GONE );
@@ -271,7 +295,10 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         }
 
 
+
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -330,6 +357,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         }
 
     }
+
 
     /**
      *
@@ -531,7 +559,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
         try{
             if (CheckNet.isNetworkConnected( getActivity())) {
-                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                //mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
                 param.put("matchId", BallId);
@@ -587,6 +615,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
 
     private void parseData(String result) {
+
+
+        myHandler.sendEmptyMessageDelayed( 0x004,15000 );
 
         if(result == null){
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
@@ -691,7 +722,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
         try{
             if (CheckNet.isNetworkConnected( getActivity())) {
-                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                //mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
                 //BallId = "3505489";
@@ -749,6 +780,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
     private void basketBallParseData(String result) {
 
+        myHandler.sendEmptyMessageDelayed( 0x004,15000 );
+
         if(result == null){
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
             return;
@@ -772,6 +805,15 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 String teamScore2 = data.optString( "team2Score" );
                 String statusName = data.optString( "statusName" );
 
+                iCollection = data.optInt( "iCollection" );
+
+                if(iCollection == 0){
+                    iv_collection.setImageResource( R.mipmap.navbar_icon_collect_white_default );
+                }else {
+                    iv_collection.setImageResource( R.mipmap.icon_collect );
+                }
+
+
 
                 ImageLoader.getInstance().displayImage( team1Logo, team1_logoUrl1, options );
                 ImageLoader.getInstance().displayImage( team1Logo, team1_logoUrl, options );
@@ -785,8 +827,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 team2_name1.setText( team2Name );
                 blueBall.setText( team2Name );
 
-                team1Score1.setText( teamScore1 );
-                team2Score1.setText( teamScore2 );
+                team1_score.setText( teamScore1 );
+                team2_score.setText( teamScore2 );
                 match_status.setText( statusName );
 
 
@@ -805,6 +847,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 team2Score.setText( data.optString( "team2Score" ) );
 
                 String jiShuTongJiJson = data.optString( "jiShuTongJiJson" );
+
+                list.clear();
 
                 if (jiShuTongJiJson != null && !jiShuTongJiJson.equals( "null" )) {
                     jiShuTongJiJson = jiShuTongJiJson.replace( "\\\"", "" );
@@ -838,6 +882,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                         PlayersData = PlayersData.replace( "\\\"", "" );
                         JSONArray array1 = new JSONArray( PlayersData );
                         if (array1.length() > 0) {
+
+                            mlist1.clear();
+                            mlist2.clear();
 
                             Gson gson = new Gson();
                             Type type = new TypeToken<List<BasketZhenRong>>() {

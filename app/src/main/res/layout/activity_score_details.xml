@@ -65,6 +65,17 @@
                         android:scaleType="center"/>
 
 
+                    <ImageView
+                        android:id="@+id/iv_up"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_background_selector"
+                        android:src="@mipmap/up_icon"
+                        android:layout_toLeftOf="@id/iv_collection"
+                        android:scaleType="center"/>
+
+
+
 
                 </RelativeLayout>
 

@@ -106,13 +106,14 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_news_details );
-        setTitleText( "资讯速递" );
+        setTitleText( "" );
         setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
         setStatusBarMode(true);
 
         //获取新闻详情——你们根据新闻id跳转到http://www.leisuvip1.com/New/Index/token=**&newId=新闻id
         newId = this.getIntent().getIntExtra( NEW_ID,0 );
-        urlStr = "http://www.leisuvip1.com/New/Index/token="+ UserUtils.getToken( this )+"&newId=" + newId;
+        //http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
+        urlStr = "http://www.leisuvip1.com/New/Index?token="+ UserUtils.getToken( this )+"&newId=" + newId;
         viewInfo();
         GetNew();
         setProgressVisibility( View.GONE );
@@ -148,15 +149,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle( view, title );
-                if (title != null && !title.contains( "wpa" ) && !title.contains( "http" ) && !title.contains( "www" )) {
-                    System.out.println( "标题:" + title );
-                    shareTitle = title;
 
-                    if (title.length() > 10) {
-                        title = title.substring( 0, 10 ) + "...";
-                    }
-                    setTitleText( title );
-                }
             }
 
             @Override
@@ -331,7 +324,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
             if(code == 0){
                 JSONObject data  = obj.optJSONObject( "data" );
-                String title = data.optString( "title" );
+                shareTitle = data.optString( "title" );
                 String dt = data.optString( "dt" );
                 String html = data.optString( "html" );
                 iCollection = data.optInt( "iCollect" );
@@ -527,9 +520,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private void singleShare(SHARE_MEDIA shareMedia) {
 
 
-        /*新闻网址：http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
-        分享-足球网址：http://www.leisuvip1.com/New/Football? matchId=比赛id
-        分享-篮球网址：http://www.leisuvip1.com/New/ Basketball? matchId=比赛id*/
+        //新闻网址：http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
 
         int logoResId = R.mipmap.app_icon;
 

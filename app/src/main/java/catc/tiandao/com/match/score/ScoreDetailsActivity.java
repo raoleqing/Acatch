@@ -33,14 +33,15 @@ public class ScoreDetailsActivity extends BaseActivity implements View.OnClickLi
     public static final String MATCH_NAME = "match_name";
 
     private ImageView iv_return;
+    private ImageView iv_up;
     private TextView match_name;
 
     private Button game_type1,game_type2;
     private View game_type1_view,game_type2_view;
 
     private int onPosition = 0;
-    Fragment fragment01;
-    Fragment fragment02;
+    StatisticsFragment fragment01;
+    ImmediateEventByFootBall fragment02;
     private Fragment mContent;
 
     private FragmentManager manager;
@@ -89,6 +90,7 @@ public class ScoreDetailsActivity extends BaseActivity implements View.OnClickLi
                 .build();
 
         iv_return = ViewUtls.find( this,R.id.iv_return );
+        iv_up = ViewUtls.find( this,R.id.iv_up );
         match_name = ViewUtls.find( this,R.id.match_name );
 
 
@@ -97,6 +99,7 @@ public class ScoreDetailsActivity extends BaseActivity implements View.OnClickLi
         game_type1_view = ViewUtls.find( this,R.id.game_type1_view );
         game_type2_view = ViewUtls.find( this,R.id.game_type2_view );
 
+        iv_up.setOnClickListener( this );
         iv_return.setOnClickListener( this );
         game_type1.setOnClickListener( this );
         game_type2.setOnClickListener( this );
@@ -112,6 +115,9 @@ public class ScoreDetailsActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_return:
                 ScoreDetailsActivity.this.onBackPressed();
                 break;
+            case R.id.iv_up:
+                upData();
+                break;
             case R.id.game_type1:
                 if (onPosition != 0) {
                     setContontView( 0 );
@@ -125,6 +131,19 @@ public class ScoreDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
 
         }
+    }
+
+    private void upData() {
+
+        if(fragment01 != null){
+            fragment01.upData();
+        }
+
+        if(fragment02 != null){
+            fragment02.upData();
+        }
+
+
     }
 
 

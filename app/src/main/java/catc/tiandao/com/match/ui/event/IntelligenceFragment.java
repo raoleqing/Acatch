@@ -1,19 +1,25 @@
 package catc.tiandao.com.match.ui.event;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -37,6 +44,7 @@ import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
 import catc.tiandao.com.match.score.StatisticsFragment;
+import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
@@ -50,11 +58,13 @@ import catc.tiandao.com.match.webservice.ThreadPoolManager;
  * Use the {@link IntelligenceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class IntelligenceFragment extends Fragment implements View.OnClickListener{
+public class IntelligenceFragment extends Fragment implements View.OnClickListener,OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private RelativeLayout rl_contianer;
+    private PopupWindow popupWindow;
 
     private Button home_name, away_name;
     private TextView good_content,bad_content;
@@ -68,6 +78,7 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
     private int BallType;
     private String matchId;
     private int iCollection;
+    private String shareTitle;
 
     DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showImageOnLoading(R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
@@ -155,6 +166,8 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
 
 
     private void viewInfo(View view) {
+        ImageView iv_share = ViewUtls.find(getActivity(), R.id.iv_share);
+        rl_contianer = ViewUtls.find(getActivity(), R.id.rl_container);
 
         iv_collection = (ImageView) getActivity().findViewById( R.id.iv_collection );
         match_Name = (TextView) getActivity().findViewById( R.id.match_Name );
@@ -174,6 +187,7 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
         good_content = ViewUtls.find( view,R.id.good_content );
         bad_content = ViewUtls.find( view,R.id.bad_content );
 
+        iv_share.setOnClickListener( this );
         home_name.setOnClickListener( this );
         away_name.setOnClickListener( this );
         iv_collection.setOnClickListener( this );
@@ -185,6 +199,15 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
 
         switch (v.getId()){
+
+            case R.id.iv_share:
+                if(UserUtils.isLanded( getActivity())){
+                    showShare();
+                }else {
+                    UserUtils.startLongin( getActivity());
+                }
+
+                break;
 
             case R.id.home_name:
 
@@ -218,6 +241,82 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
 
     }
 
+    private void showShare() {
+        //分享
+        if (popupWindow == null) {
+            View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_share, null);
+            popupWindow = new PopupWindow(getActivity());
+            popupWindow.setContentView(contentView);
+            popupWindow.setAnimationStyle(R.style.bottomShowAnimStyle);
+            popupWindow.setWidth( LinearLayoutCompat.LayoutParams.MATCH_PARENT);
+            popupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
+
+            popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    setBackgroundAlpha(1f);
+                }
+            });
+
+            contentView.findViewById(R.id.iv_zone).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare( SHARE_MEDIA.QZONE);
+                    popupWindow.dismiss();
+                }
+            });
+            contentView.findViewById(R.id.iv_moment).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN_CIRCLE);
+                    popupWindow.dismiss();
+                }
+            });
+
+
+
+            contentView.findViewById(R.id.iv_wiexin).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleShare(SHARE_MEDIA.WEIXIN);
+                    popupWindow.dismiss();
+                }
+            });
+        }
+        popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
+        setBackgroundAlpha(0.5f);
+    }
+
+    /***设置背景透明度*/
+    private void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = alpha;
+        getActivity().getWindow().setAttributes(lp);
+    }
+
+    /***分享*/
+    private void singleShare(SHARE_MEDIA shareMedia) {
+       /* 新闻网址：http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
+        分享-足球网址：http://www.leisuvip1.com/New/Football? matchId=比赛id
+        分享-篮球网址：http://www.leisuvip1.com/New/ Basketball? matchId=比赛id*/
+
+        String url;
+        if(BallType == 0){
+            url = "http://www.leisuvip1.com/New/Football?matchId=" + matchId;
+        }else {
+            url = "http://www.leisuvip1.com/New/Basketball?matchId=" + matchId;
+        }
+
+
+        int logoResId = R.mipmap.app_icon;
+
+        UmengUtil.shareSinglePlatform(getActivity(), shareMedia, url, shareTitle, logoResId, shareTitle);
+    }
+
+
 
     private void FootballMatchCollectAndCancel() {
 
@@ -241,6 +340,11 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
         }catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 
@@ -419,6 +523,8 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
             if(code == 0) {
 
                 JSONObject data = obj.optJSONObject( "data" );
+
+                shareTitle = data.optString( "shareTitle" );
                 String eventName = data.optString( "eventName" );
 
                 String dt = data.optString( "dt" );

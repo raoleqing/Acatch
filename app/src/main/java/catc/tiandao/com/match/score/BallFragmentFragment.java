@@ -80,10 +80,11 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
 
     private List<DateBen> dateList = new ArrayList(  );
 
-
     private LinearLayoutManager mLinearLayoutManager;
     private BasketballAdapter mAdapter;
     private List<BallFragmentBen> mList = new ArrayList(  );
+    private List<BallFragmentBen> mList1 = new ArrayList(  );
+    private List<BallFragmentBen> mList2 = new ArrayList(  );
 
     //type——going-进行中；todayUnstart-未开始；unstart-赛程；end-赛果；focus-我的关注
     private String types[] = {"going","todayUnstart","unstart","end","focus"};
@@ -96,7 +97,7 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
     private OnFragmentInteractionListener mListener;
 
     private GetFootballScoreRun run;
-    private int pageSize = 10;
+    private int pageSize = 30;
     private int page = 1;
     private int lastVisibleItem;//现在滑动到那个下标
     private boolean isRun;
@@ -204,16 +205,28 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
             layout.setOnClickListener( this );
         }
 
+
         if(mParam2 == 3){
             textArray2[0].setVisibility( View.VISIBLE );
             textArray1[4].setText( "今天" );
             textArray2[4].setVisibility( View.GONE );
 
+            textArray1[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text1 ) );
+            textArray1[0].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+            textArray2[0].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+
         }else {
             textArray2[4].setVisibility( View.VISIBLE );
             textArray1[0].setText( "今天" );
             textArray2[0].setVisibility( View.GONE );
+            textArray1[0].setTextColor( ContextCompat.getColor( getActivity(),R.color.text1 ) );
+            textArray1[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
+            textArray2[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
         }
+
+
+
+
 
 
         // 设置布局管理器
@@ -638,6 +651,8 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
 
                 if(page == 1 && mList.size() > 0){
                     mList.clear();
+                    mList1.clear();
+                    mList2.clear();
                 }
 
 
@@ -647,7 +662,28 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
                     Type type = new TypeToken<List<BallFragmentBen>>(){}.getType();
                     List<BallFragmentBen> list = gson.fromJson(data.toString(),type);
                     if(list.size() > 0){
-                        mList.addAll( list );
+                        if(mParam2 == 4){
+
+                            for(int i = 0; i< list.size(); i++){
+                                BallFragmentBen mBallBen = list.get( i );
+                                if(mBallBen.getMatchStatusId() >= 10){
+                                    mList2.add( mBallBen );
+                                }else {
+                                    mList1.add( mBallBen );
+                                }
+                            }
+
+                            mList.clear();
+
+                            mList.addAll( mList1 );
+                            mList.addAll( mList2 );
+
+
+                            mAdapter.setShowEndType( mList1.size() - 1 );
+
+                        }else {
+                            mList.addAll( list );
+                        }
                     }
 
                     if(list.size() < pageSize || list.size() == 0 ){

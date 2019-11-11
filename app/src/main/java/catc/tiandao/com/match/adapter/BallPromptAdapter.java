@@ -1,12 +1,10 @@
 package catc.tiandao.com.match.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,55 +17,64 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.NewsBen;
+import catc.tiandao.com.match.ben.BallBen;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
-import cn.jzvd.JzvdStd;
 
 /**
  * Created by Administrator on 2017/12/7 0007.
  */
-public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class BallPromptAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
 
     private Context mContext;
-    private List<NewsBen> mList;
+    private List<BallBen> mList;
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
     private int showType = 0;
 
     private static final int TYPE_ITEM =0;  //普通Item View
     private static final int TYPE_FOOTER = 1;  //顶部FootView
-
     private int load_more_status=0;  //上拉加载更多状态-默认为0
     private LayoutInflater mInflater;
 
-    private DisplayImageOptions options;
-
+    DisplayImageOptions options;
 
     //没有数据了
     public  static final int NO_DATA = -1;
     //上拉加载更多
     public static final int  PULLUP_LOAD_MORE=0;
-    //正在加载中
+    //正在加载中showType
     public static final int  LOADING_MORE=1;
 
+    private int showEndType;
 
-    public CollectionAdapter(Context mContext, List<NewsBen> mList) {
+
+
+
+
+    public BallPromptAdapter(Context mContext, List<BallBen> mList) {
         this.mContext = mContext;
         this.mList = mList;
+        this.showType = showType;
         this.mInflater=LayoutInflater.from(mContext);
 
+        showEndType = 0;
+
+        int radius = UnitConverterUtils.dip2px(mContext,11 );
+
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading( R.mipmap.mall_cbg )          // 设置图片下载期间显示的图片
-                .showImageForEmptyUri(R.mipmap.mall_cbg )  // 设置图片Uri为空或是错误的时候显示的图片
-                .showImageOnFail(R.mipmap.mall_cbg )       // 设置图片加载或解码过程中发生错误显示的图片
+                .showImageOnLoading(R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.mipmap.mall_cbg)  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.mipmap.mall_cbg)       // 设置图片加载或解码过程中发生错误显示的图片
                 .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
                 .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
-                .displayer(new RoundedBitmapDisplayer( UnitConverterUtils.dip2px( mContext,6 )))  // 设置成圆角图片
+                .displayer(new RoundedBitmapDisplayer(radius))  // 设置成圆角图片
                 .build();
+
+
     }
 
     @Override
@@ -75,17 +82,14 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         //进行判断显示类型，来创建返回不同的View
         if(viewType==TYPE_ITEM){
-
-            View itemView =mInflater.inflate( R.layout.news_item,parent,false);
+            View itemView =mInflater.inflate( R.layout.ball_promt_item,parent,false);
             MyViewHolder viewHolder = new MyViewHolder(itemView, mItemClickListener, mItemLongClickListener);
             return viewHolder;
-
         }else if(viewType==TYPE_FOOTER){
             View foot_view = mInflater.inflate(R.layout.xlistview_footer,parent,false);
             FootViewHolder footViewHolder=new FootViewHolder(foot_view,mItemClickListener, mItemLongClickListener);
             return footViewHolder;
         }
-
 
         return null;
 
@@ -95,37 +99,20 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if(holder instanceof MyViewHolder) {
+
+            if(position == 0){
+                showEndType = 0;
+            }
             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
-            NewsBen mNewsBen = mList.get( position );
 
-            if(showType == 0){
-                mMyViewHolder.select_type.setVisibility( View.GONE );
-            }else {
-                mMyViewHolder.select_type.setVisibility( View.VISIBLE );
-                if(mNewsBen.getIsSelet() == 0){
-                    mMyViewHolder.select_type.setBackgroundResource( R.mipmap.icon_pay_switch_off_location );
-                }else {
-                    mMyViewHolder.select_type.setBackgroundResource( R.mipmap.icon_pay_switch_on_location );
-                }
+            BallBen mBallBen = mList.get( position );
 
-            }
-
-
-            mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
-
-
-            if(mNewsBen.getHasZan() == 0){
-                mMyViewHolder.dianzan_icon.setBackgroundResource( R.mipmap.video_icon_like_default );
-            }else {
-                mMyViewHolder.dianzan_icon.setBackgroundResource( R.mipmap.video_icon_like);
-            }
-
-            mMyViewHolder.zhuanfa.setText( " " + mNewsBen.getiZhuanFaCount());
-            mMyViewHolder.comment.setText( " " + mNewsBen.getcCommentCount());
-            mMyViewHolder.dianzan.setText( " " + mNewsBen.getiDianZanCount());
-
-            ImageLoader.getInstance().displayImage(mNewsBen.getTitleImageUrl(), mMyViewHolder.item_image,options);
+            mMyViewHolder.time.setText( mBallBen.getMatchBeginTime() );
+            mMyViewHolder.home_name.setText( mBallBen.getHomeTeamName() );
+            mMyViewHolder.away_name.setText( mBallBen.getAwayTeamName() );
+            mMyViewHolder.home_score.setText( mBallBen.getHomeTeamScore() + "");
+            mMyViewHolder.away_score.setText( mBallBen.getAwayTeamScore() + "" );
 
         }else if(holder instanceof FootViewHolder){
             //上拉加载
@@ -152,7 +139,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return mList.size() + 1;
+        return mList == null || mList.size() == 0 ? 0 : mList.size();
     }
 
     @Override
@@ -161,8 +148,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
        if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         } else {
-           return TYPE_ITEM;
-
+            return TYPE_ITEM;
         }
 
 
@@ -171,31 +157,28 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
-        private ImageView select_type;
-        private TextView item_title;
-        private LinearLayout dianzan_view;
-        private TextView zhuanfa,comment,dianzan;
-        private ImageView dianzan_icon;
-        private ImageView item_image;
+        private TextView time;
+        private TextView home_name;
+        private TextView away_name;
+        private TextView home_score;
+        private TextView away_score;
+
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
 
         public MyViewHolder(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
-            this.select_type = ViewUtls.find( view,R.id.select_type);
-            this.item_title = ViewUtls.find( view,R.id.item_title);
-            this.dianzan_view = ViewUtls.find( view,R.id.dianzan_view);
-            this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
-            this.comment = ViewUtls.find( view,R.id.comment);
-            this.dianzan = ViewUtls.find( view,R.id.dianzan);
-            this.dianzan_icon = ViewUtls.find( view,R.id.dianzan_icon);
-            this.item_image = ViewUtls.find( view,R.id.item_image);
+
+            time = ViewUtls.find( view,R.id.time );
+            home_name = ViewUtls.find( view,R.id.home_name );
+            away_name = ViewUtls.find( view,R.id.away_name );
+            home_score = ViewUtls.find( view,R.id.home_score );
+            away_score = ViewUtls.find( view,R.id.away_score );
+
+
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
-            view.setOnClickListener( this );
-            zhuanfa.setOnClickListener( this );
-            comment.setOnClickListener( this );
-            dianzan_view.setOnClickListener( this );
+
 
         }
 
@@ -220,8 +203,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return true;
         }
     }
-
-
 
 
     class FootViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -282,7 +263,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     //添加数据
-    public void addItem(List<NewsBen> newDatas) {
+    public void addItem(List<BallBen> newDatas) {
         //mTitles.add(position, data);
         //notifyItemInserted(position);
         newDatas.addAll(mList);
@@ -291,7 +272,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public void addMoreItem(List<NewsBen> newDatas) {
+    public void addMoreItem(List<BallBen> newDatas) {
         mList.addAll(newDatas);
         notifyDataSetChanged();
     }

@@ -6,7 +6,7 @@ public class Banner {
 
     private String titleImageUrl;
     private String cTitle;
-    private int bannerId;
+    private int id;
 
 
     public String getTitleImageUrl() {
@@ -25,11 +25,11 @@ public class Banner {
         this.cTitle = cTitle;
     }
 
-    public int getBannerId() {
-        return bannerId;
+    public int getId() {
+        return id;
     }
 
-    public void setBannerId(int bannerId) {
-        this.bannerId = bannerId;
+    public void setId(int id) {
+        this.id = id;
     }
 }

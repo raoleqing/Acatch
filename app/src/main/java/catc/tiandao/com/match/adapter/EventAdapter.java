@@ -2,6 +2,10 @@ package catc.tiandao.com.match.adapter;
 
 import android.content.Context;
 import android.media.Image;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +13,33 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.ben.BallBen;
 import catc.tiandao.com.match.ben.Expert;
 import catc.tiandao.com.match.ben.Match;
+import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.MyItemLongClickListener;
+import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.score.BallFragment;
 import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.match.webservice.HttpUtil;
+import catc.tiandao.com.match.webservice.ThreadPoolManager;
 
 /**
  * Created by Administrator on 2017/12/7 0007.
@@ -43,6 +58,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int load_more_status=0;  //上拉加载更多状态-默认为0
     private LayoutInflater mInflater;
 
+    private MyItemClickListener mItemClickListener;
+
 
     //没有数据了
     public  static final int NO_DATA = -1;
@@ -52,9 +69,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static final int  LOADING_MORE=1;
 
 
-        DisplayImageOptions options;
 
-        public EventAdapter(Context mContext, List<Match> dataList,int BallType) {
+    DisplayImageOptions options;
+
+
+    public EventAdapter(Context mContext, List<Match> dataList,int BallType) {
             this.dataList = dataList;
             this.mContext = mContext;
             this.BallType = BallType;
@@ -77,7 +96,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             //进行判断显示类型，来创建返回不同的View
             if (viewType == TYPE_ITEM) {
                 View itemView = mInflater.inflate( R.layout.collection_item, parent, false );
-                MyViewHolder viewHolder = new MyViewHolder( itemView );
+                MyViewHolder viewHolder = new MyViewHolder( itemView,mItemClickListener );
                 return viewHolder;
             } else if (viewType == TYPE_FOOTER) {
                 View foot_view = mInflater.inflate( R.layout.xlistview_footer, parent, false );
@@ -205,7 +224,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
 
-        public class MyViewHolder extends RecyclerView.ViewHolder {
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            public RelativeLayout item_view;
             public TextView match_name;
             public TextView match_status;
             public ImageView is_collection;
@@ -214,8 +234,11 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public TextView team_name;
             public ImageView team_icon;
 
-            public MyViewHolder(View view) {
+            private MyItemClickListener mListener;
+
+            public MyViewHolder(View view,MyItemClickListener listener) {
                 super(view);
+                item_view = (RelativeLayout) view.findViewById(R.id.item_view);
                 match_name = (TextView) view.findViewById(R.id.match_name);
                 match_status = (TextView) view.findViewById(R.id.match_status);
                 is_collection = (ImageView) view.findViewById(R.id.is_collection);
@@ -223,7 +246,25 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 home_team_icon = (ImageView) view.findViewById(R.id.home_team_icon);
                 team_name = (TextView) view.findViewById(R.id.team_name);
                 team_icon = (ImageView) view.findViewById(R.id.team_icon);
+
+                this.mListener = listener;
+                item_view.setOnClickListener( this );
+                is_collection.setOnClickListener( this );
+
+
             }
+
+            /**
+             * 点击监听
+             */
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onItemClick(v, getLayoutPosition(), 0);
+                }
+            }
+
+
         }// item
 
 
@@ -273,4 +314,17 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
 
+
+
+    /**
+     * 设置Item点击监听
+     *
+     * @param listener
+     */
+    public void setOnItemClickListener(MyItemClickListener listener) {
+        this.mItemClickListener = listener;
     }
+
+
+
+}

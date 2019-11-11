@@ -56,8 +56,6 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
     private String HomeTeamLogoUrl = "", AwayTeamLogoUrl = "", HomeTeamName = "", AwayTeamName = "";
 
     private DisplayImageOptions options;
-    private RelativeLayout rl_contianer;
-    private PopupWindow popupWindow;
 
 
     @Override
@@ -86,12 +84,8 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
                 .build();
 
         ImageView iv_return = ViewUtls.find(this, R.id.iv_return);
-        ImageView iv_share = ViewUtls.find(this, R.id.iv_share);
-        rl_contianer = ViewUtls.find(this, R.id.rl_container);
-
 
         iv_return.setOnClickListener(this);
-        iv_share.setOnClickListener(this);
 
         for (int i = 0; i < typeViews.length; i++) {
             types[i] = ViewUtls.find(this, typeViews[i]);
@@ -124,14 +118,7 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 break;
 
-            case R.id.iv_share:
-                if(UserUtils.isLanded( MatchDetailsActivity.this )){
-                    showShare();
-                }else {
-                    UserUtils.startLongin( MatchDetailsActivity.this );
-                }
 
-                break;
 
         }
 
@@ -160,81 +147,6 @@ public class MatchDetailsActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void showShare() {
-        //分享
-        if (popupWindow == null) {
-            View contentView = LayoutInflater.from(this).inflate(R.layout.pop_share, null);
-            popupWindow = new PopupWindow(this);
-            popupWindow.setContentView(contentView);
-            popupWindow.setAnimationStyle(R.style.bottomShowAnimStyle);
-            popupWindow.setWidth(LinearLayoutCompat.LayoutParams.MATCH_PARENT);
-            popupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
-            popupWindow.setOutsideTouchable(true);
-            popupWindow.setFocusable(true);
-
-            popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
-            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    setBackgroundAlpha(1f);
-                }
-            });
-
-            contentView.findViewById(R.id.iv_zone).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    singleShare(SHARE_MEDIA.QZONE);
-                    popupWindow.dismiss();
-                }
-            });
-            contentView.findViewById(R.id.iv_moment).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    singleShare(SHARE_MEDIA.WEIXIN_CIRCLE);
-                    popupWindow.dismiss();
-                }
-            });
-
-
-
-            contentView.findViewById(R.id.iv_wiexin).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    singleShare(SHARE_MEDIA.WEIXIN);
-                    popupWindow.dismiss();
-                }
-            });
-        }
-        popupWindow.showAtLocation(rl_contianer, Gravity.BOTTOM, 0, 0);
-        setBackgroundAlpha(0.5f);
-    }
-
-    /***设置背景透明度*/
-    private void setBackgroundAlpha(float alpha) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = alpha;
-        getWindow().setAttributes(lp);
-    }
-
-    /***分享*/
-    private void singleShare(SHARE_MEDIA shareMedia) {
-/*新闻网址：http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
-        分享-足球网址：http://www.leisuvip1.com/New/Football? matchId=比赛id
-        分享-篮球网址：http://www.leisuvip1.com/New/ Basketball? matchId=比赛id*/
-
-        String url;
-        if(BallType == 0){
-            url = "http://www.leisuvip1.com/New/Football?matchId=" + BallId;
-        }else {
-            url = "http://www.leisuvip1.com/New/Football?Basketball=" + BallId;
-        }
-
-        String des = HomeTeamName + "VS" + AwayTeamName;
-
-        int logoResId = R.mipmap.app_icon;
-
-        UmengUtil.shareSinglePlatform(this, shareMedia, url, getString( R.string.app_name ), logoResId, des);
-    }
 
 
     /*

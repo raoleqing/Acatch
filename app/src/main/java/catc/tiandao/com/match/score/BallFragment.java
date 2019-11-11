@@ -26,7 +26,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.CharBuffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.common.PromptDialog;
 import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
 import catc.tiandao.com.match.ui.expert.ExpertActivity;
 import catc.tiandao.com.match.utils.UserUtils;
@@ -87,6 +90,10 @@ public class BallFragment extends Fragment implements View.OnClickListener{
     private BallAdapter mAdapter;
     private List<BallBen> mList = new ArrayList<>(  );
 
+    private List<BallBen> mList1 = new ArrayList<>(  );
+    private List<BallBen> mList2 = new ArrayList<>(  );
+
+
     //type——going-进行中；todayUnstart-未开始；unstart-赛程；end-赛果；focus-我的关注
     private String types[] = {"going","todayUnstart","unstart","end","focus"};
 
@@ -97,8 +104,9 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
     private OnFragmentInteractionListener mListener;
 
+    private GetFootballScoreRun run1;
     private GetFootballScoreRun run;
-    private int pageSize = 10;
+    private int pageSize = 30;
     private int page = 1;
     private int lastVisibleItem;//现在滑动到那个下标
     private boolean isRun;
@@ -109,6 +117,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
     private CustomDatePicker mDatePicker;
     private FootballMatchCollectAndCancelRun setRun;
 
+    PromptDialog promptDialog;
 
     Handler myHandler = new Handler() {
         @Override
@@ -121,10 +130,25 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                     String result1 = bundle1.getString("result");
                     parseData(result1);
                     break;
-                case 0x003:
+                case 0x002:
                     Bundle bundle2 = msg.getData();
                     String result2 = bundle2.getString("result");
-                    setParseData(result2,msg.arg1);
+                    onParseData(result2);
+                    break;
+                case 0x003:
+                    Bundle bundle3 = msg.getData();
+                    String result3 = bundle3.getString("result");
+                    setParseData(result3,msg.arg1);
+                    break;
+                case 0x004:
+                    getPromtData();
+                    break;
+                case 0x005:
+
+                    if(promptDialog != null){
+                        promptDialog.dismiss();
+                        promptDialog = null;
+                    }
                     break;
                 default:
                     break;
@@ -166,6 +190,12 @@ public class BallFragment extends Fragment implements View.OnClickListener{
         }
         EventBus.getDefault().register(this);
         setData();
+
+        if(mParam2 == 1){
+            myHandler.sendEmptyMessageDelayed( 0x004,15000 );
+        }
+
+
     }
 
 
@@ -178,6 +208,10 @@ public class BallFragment extends Fragment implements View.OnClickListener{
         viewInfo(view);
         initDatePicker();
         getData("");
+        //开启一个定时器
+        if(mParam2 == 0){
+
+        }
         return view;
     }
 
@@ -200,7 +234,6 @@ public class BallFragment extends Fragment implements View.OnClickListener{
             textArray1[i].setText( mDateBen.getShowDate() );
             textArray2[i].setText( mDateBen.getWeek() );
             layout.setOnClickListener( this );
-
         }
 
 
@@ -542,6 +575,30 @@ public class BallFragment extends Fragment implements View.OnClickListener{
     }
 
 
+
+    private void  getPromtData(){
+
+       if (CheckNet.isNetworkConnected( getActivity())) {
+
+
+           HashMap<String, String> param = new HashMap<>(  );
+           param.put("token", UserUtils.getToken( getActivity()) );
+           param.put("type","going");
+           param.put("date","");
+           param.put("pageSize", pageSize + "");
+           param.put("page","1");
+
+           run1 = new GetFootballScoreRun(param,1);
+           ThreadPoolManager.getsInstance().execute(run1);
+
+
+
+       }
+
+   }
+
+
+
     private void getData(String date) {
 
         isRun = true;
@@ -560,7 +617,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                 param.put("pageSize", pageSize + "");
                 param.put("page", page + "");
 
-                run = new GetFootballScoreRun(param);
+                run = new GetFootballScoreRun(param,0);
                 ThreadPoolManager.getsInstance().execute(run);
 
 
@@ -591,9 +648,11 @@ public class BallFragment extends Fragment implements View.OnClickListener{
      * */
     class GetFootballScoreRun implements Runnable {
         private HashMap<String, String> param;
+        private int type;
 
-        GetFootballScoreRun(HashMap<String, String> param) {
+        GetFootballScoreRun(HashMap<String, String> param,int type ) {
             this.param = param;
+            this.type = type;
         }
 
         @Override
@@ -608,7 +667,12 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                     Bundle data = new Bundle();
                     data.putString( "result", result );
                     message.setData( data );
-                    message.what = 0x001;
+                    if(type == 1){
+                        message.what = 0x002;
+                    }else {
+                        message.what = 0x001;
+                    }
+
                     myHandler.sendMessage( message );
                 }
             } );
@@ -639,6 +703,8 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
                 if(page == 1 && mList.size() > 0){
                     mList.clear();
+                    mList1.clear();
+                    mList2.clear();
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
 
@@ -648,7 +714,28 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                     Type type = new TypeToken<List<BallBen>>(){}.getType();
                     List<BallBen> list = gson.fromJson(data.toString(),type);
                     if(list.size() > 0){
-                        mList.addAll( list );
+                        if(mParam2 == 4){
+
+                            for(int i = 0; i< list.size(); i++){
+                                BallBen mBallBen = list.get( i );
+                                if(mBallBen.getMatchStatusId() >= 8){
+                                    mList2.add( mBallBen );
+                                }else {
+                                    mList1.add( mBallBen );
+                                }
+                            }
+
+                            mList.clear();
+
+                            mList.addAll( mList1 );
+                            mList.addAll( mList2 );
+
+                            mAdapter.setShowEndType( mList1.size() - 1 );
+
+                        }else {
+                            mList.addAll( list );
+                        }
+
                     }
 
 
@@ -683,6 +770,76 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
     }
 
+
+
+    private void onParseData(String result) {
+
+        myHandler.sendEmptyMessageDelayed( 0x004,15000 );
+
+
+        if(result == null){
+            return;
+        }
+
+
+        try{
+
+            System.out.println( result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+            if(code == 0) {
+
+                JSONArray data = obj.optJSONArray( "data" );
+                if(data.length() > 0 ){
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<List<BallBen>>(){}.getType();
+                    List<BallBen> list = gson.fromJson(data.toString(),type);
+
+                    List<BallBen> newList = new ArrayList<>(  );
+
+                    for(int i = 0; i< list.size(); i++){
+                        BallBen onBallBen =  list.get( i );
+                        if(i < mList.size()){
+                            BallBen mBallBen =  mList.get( i );
+                            if( mBallBen.getHomeTeamScore() != onBallBen.getHomeTeamScore() || mBallBen.getAwayTeamScore() != onBallBen.getAwayTeamScore()){
+                                mList.set( i, onBallBen);
+                                newList.add( onBallBen );
+                            }
+                        }
+                    }
+
+
+                    if(newList.size() > 0){
+                        mAdapter.notifyDataSetChanged();
+                        showPromptDialog(newList);
+                    }
+
+
+
+
+                }
+
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void showPromptDialog(List<BallBen> newList) {
+
+        if(promptDialog == null){
+            promptDialog = new PromptDialog(getActivity(),newList);
+            promptDialog.show();
+        }
+
+        myHandler.sendEmptyMessageDelayed( 0x005,5000 );
+    }
 
 
     private void setData() {

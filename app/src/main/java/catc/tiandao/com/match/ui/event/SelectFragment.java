@@ -79,6 +79,7 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
     private SelectAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private boolean isSync = false;
 
     Handler myHandler = new Handler() {
         @Override

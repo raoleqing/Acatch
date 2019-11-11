@@ -19,6 +19,7 @@ import java.util.List;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.ben.Banner;
 import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
 import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.widgets.loopswitch.AutoLoopSwitchBaseAdapter;
 
@@ -73,6 +74,14 @@ public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
           Toast.makeText( mContext,"没有可用的网络连接，请检查网络设置",Toast.LENGTH_LONG ).show();
           return;
         }
+
+        Intent intent02 = new Intent(mContext, NewsDetailsActivity.class);
+        intent02.putExtra( NewsDetailsActivity.NEW_ID, mBanner.getId());
+        mContext.startActivity(intent02);
+        mContext.overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+
+
 
 
       }

@@ -370,9 +370,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                 setProgressVisibility( View.VISIBLE );
 
+                String phoneKey  = SharedPreferencesUtil.getString( this,SharedPreferencesUtil.USER_KEY );
+
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("name",name );
                 param.put( "psw", DES.encode(DES.KEY,psw));
+                param.put( "phoneKey",phoneKey);
                 param.put( "ip", DeviceUtils.getIPAddress( LoginActivity.this) );
 
                 run = new LoginOnRun(param);
@@ -606,6 +609,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("loginType",loginType );
                 param.put( "uid", openid);
+                param.put( "phoneKey", phoneKey);
                 param.put( "ip",DeviceUtils.getIPAddress( LoginActivity.this));
 
                 quicklyRun = new QuicklyLoginOnRun(param);

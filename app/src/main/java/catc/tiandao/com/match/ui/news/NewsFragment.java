@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -97,6 +99,8 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
     private OnFragmentInteractionListener mListener;
     private CommentDialog mDialog;
 
+    private static final int BOND = 0x004;
+
 
     Handler myHandler = new Handler() {
         @Override
@@ -115,6 +119,11 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                     String type = bundle2.getString("type");
                     setParseData(result2,type,msg.arg1);
                     break;
+                case BOND:
+                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    break;
+
                 default:
                     break;
             }
@@ -184,6 +193,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
 
                 switch (view.getId()){
                     case R.id.news_item:
+                    case R.id.item_title:
 
                         Intent intent02 = new Intent(getActivity(), NewsDetailsActivity.class);
                         intent02.putExtra( NewsDetailsActivity.NEW_ID, mNewsBen.getId());
@@ -194,7 +204,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                     case R.id.zhuanfa:
 
                         if(UserUtils.isLanded( getActivity())){
-                            String shreUrl = "http://www.leisuvip1.com/New/Index/token="+ UserUtils.getToken( getActivity() )+"&newId=" + mNewsBen.getId();
+                            String shreUrl = "http://www.leisuvip1.com/New/Index?token="+ UserUtils.getToken( getActivity() )+"&newId=" + mNewsBen.getId();
                             showShare(postion,mNewsBen.getId(),shreUrl,mNewsBen.getcTitle(),mNewsBen.getcTitle());
                         }else {
                             UserUtils.startLongin( getActivity());
@@ -208,10 +218,11 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                         }
                         mDialog.show();
 
+                        myHandler.sendEmptyMessageDelayed(BOND,100);
+
 
                         break;
-                    case R.id.dianzan:
-
+                    case R.id.dianzan_view:
 
                         if(UserUtils.isLanded( getActivity())){
                             NewOperation("dianZan",postion,mNewsBen.getId(),"");
@@ -449,9 +460,17 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
 
                 if(type.equals( "dianZan" )){
 
-                    mList.get( postint ).setiDianZanCount(  mList.get( postint ).getiDianZanCount() + 1 );
-                    mAdapter.notifyDataSetChanged();
+                   int hasZan =  mList.get( postint ).getHasZan();
+                   if(hasZan == 0){
+                       mList.get( postint ).setiDianZanCount(  mList.get( postint ).getiDianZanCount() + 1 );
+                       mList.get( postint ).setHasZan( 1 );
+                   }else {
+                       mList.get( postint ).setiDianZanCount(  mList.get( postint ).getiDianZanCount() - 1 );
+                       mList.get( postint ).setHasZan( 0 );
+                   }
 
+
+                    mAdapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT ).show();
 
                 }else if(type.equals( "pingLun" )){
@@ -632,6 +651,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
         }
 
     }
+
 
 
 

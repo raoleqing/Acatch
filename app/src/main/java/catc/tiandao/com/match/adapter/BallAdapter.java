@@ -102,18 +102,15 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
         if(holder instanceof MyViewHolder) {
 
-            if(position == 0){
-                showEndType = 0;
-            }
-            //正常数据
+             //正常数据
             MyViewHolder mMyViewHolder = (MyViewHolder)holder;
 
             BallBen mBallBen = mList.get( position );
 
             if(showType == 4){
                 int statusId = mBallBen.getMatchStatusId();
-                if(statusId >= 8 && showEndType == 0){
-                    showEndType = 1;
+                if(showEndType == position){
+
                     mMyViewHolder.end_title.setVisibility( View.VISIBLE );
                 }else {
                     mMyViewHolder.end_title.setVisibility( View.GONE );
@@ -377,5 +374,9 @@ public class BallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
     public void setShowType(int type){
         this.showType = type;
+    }
+
+    public void setShowEndType(int showEndType) {
+        this.showEndType = showEndType;
     }
 }

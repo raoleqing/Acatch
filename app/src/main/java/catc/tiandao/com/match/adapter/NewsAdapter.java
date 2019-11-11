@@ -76,13 +76,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
         //进行判断显示类型，来创建返回不同的View
         if(viewType==TYPE_ITEM1){
-
             View itemView =mInflater.inflate( R.layout.news_item1,parent,false);
             MyViewHolderByVideo viewHolder = new MyViewHolderByVideo(itemView, mItemClickListener, mItemLongClickListener);
             return viewHolder;
-
         }else if(viewType==TYPE_ITEM2){
-
             View itemView =mInflater.inflate( R.layout.news_item,parent,false);
             MyViewHolder viewHolder = new MyViewHolder(itemView, mItemClickListener, mItemLongClickListener);
             return viewHolder;
@@ -107,9 +104,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
             mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
 
-            mMyViewHolder.zhuanfa.setText( mNewsBen.getiZhuanFaCount() + "" );
-            mMyViewHolder.comment.setText( mNewsBen.getcCommentCount() + "" );
-            mMyViewHolder.dianzan.setText( mNewsBen.getiDianZanCount() + "" );
+            if(mNewsBen.getHasZan() == 0){
+                mMyViewHolder.dianzan_icon.setBackgroundResource( R.mipmap.video_icon_like_default );
+            }else {
+                mMyViewHolder.dianzan_icon.setBackgroundResource( R.mipmap.video_icon_like);
+            }
+
+            mMyViewHolder.zhuanfa.setText( " " + mNewsBen.getiZhuanFaCount());
+            mMyViewHolder.comment.setText( " " + mNewsBen.getcCommentCount());
+            mMyViewHolder.dianzan.setText( " " + mNewsBen.getiDianZanCount());
 
             ImageLoader.getInstance().displayImage(mNewsBen.getTitleImageUrl(), mMyViewHolder.item_image,options);
 
@@ -124,9 +127,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
             mMyViewHolder.item_title.setText( mNewsBen.getcTitle() );
 
-            mMyViewHolder.zhuanfa.setText( mNewsBen.getiZhuanFaCount() + "" );
-            mMyViewHolder.comment.setText( mNewsBen.getcCommentCount() + "" );
-            mMyViewHolder.dianzan.setText( mNewsBen.getiDianZanCount() + "" );
+            if(mNewsBen.getHasZan() == 0){
+                mMyViewHolder.dianzan_icon.setBackgroundResource( R.mipmap.video_icon_like_default );
+            }else {
+                mMyViewHolder.dianzan_icon.setBackgroundResource( R.mipmap.video_icon_like);
+            }
+
+            mMyViewHolder.zhuanfa.setText( " " + mNewsBen.getiZhuanFaCount());
+            mMyViewHolder.comment.setText( " " + mNewsBen.getcCommentCount() );
+            mMyViewHolder.dianzan.setText( " " + mNewsBen.getiDianZanCount() );
 
 
         }else if(holder instanceof FootViewHolder){
@@ -179,7 +188,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
         private LinearLayout news_item;
         private TextView item_title;
+        private LinearLayout dianzan_view;
         private TextView zhuanfa,comment,dianzan;
+        private ImageView dianzan_icon;
         private ImageView item_image;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
@@ -190,14 +201,16 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             this.item_title = ViewUtls.find( view,R.id.item_title);
             this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
             this.comment = ViewUtls.find( view,R.id.comment);
+            this.dianzan_view = ViewUtls.find( view,R.id.dianzan_view);
             this.dianzan = ViewUtls.find( view,R.id.dianzan);
+            this.dianzan_icon = ViewUtls.find( view,R.id.dianzan_icon);
             this.item_image = ViewUtls.find( view,R.id.item_image);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
             news_item.setOnClickListener( this );
             zhuanfa.setOnClickListener( this );
             comment.setOnClickListener( this );
-            dianzan.setOnClickListener( this );
+            dianzan_view.setOnClickListener( this );
 
         }
 
@@ -228,7 +241,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
 
         private TextView item_title;
+        private LinearLayout dianzan_view;
         private TextView zhuanfa,comment,dianzan;
+        private ImageView dianzan_icon;
         private JzvdStd jz_video;
         private MyItemClickListener mListener;
         private MyItemLongClickListener mLongClickListener;
@@ -236,12 +251,18 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         public MyViewHolderByVideo(View view, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(view);
             this.item_title = ViewUtls.find( view,R.id.item_title);
+            this.dianzan_view = ViewUtls.find( view,R.id.dianzan_view);
             this.zhuanfa = ViewUtls.find( view,R.id.zhuanfa);
+            this.dianzan_icon = ViewUtls.find( view,R.id.dianzan_icon);
             this.comment = ViewUtls.find( view,R.id.comment);
             this.dianzan = ViewUtls.find( view,R.id.dianzan);
             this.jz_video = ViewUtls.find( view,R.id.jz_video);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;
+            item_title.setOnClickListener( this );
+            zhuanfa.setOnClickListener( this );
+            comment.setOnClickListener( this );
+            dianzan_view.setOnClickListener( this );
 
         }
 

@@ -185,7 +185,7 @@ public class MatchApplication extends Application {
 
                         if (sound == 1) {
                             // 自定义声音
-                            Uri uri = Uri.parse( "android.resource://" + getPackageName() + "/raw/qqqq" );
+                            Uri uri = Uri.parse( "android.resource://" + getPackageName() + "/raw/qq.wav" );
                             channel.setSound( null, Notification.AUDIO_ATTRIBUTES_DEFAULT );
                         }
                         if (shake == 1) {
@@ -323,32 +323,25 @@ public class MatchApplication extends Application {
             String[] array = custom.split( "\\/" );
 
             Intent mIntent = new Intent();
+            mIntent.setClass( getApplicationContext(), MainActivity.class );
 
             if(array.length > 0){
                 if(array[0].equals( "football#bifen" )){
                     if(array.length > 1 ){
                         String[] idArray = array[1].split( "#" );
-                        mIntent.setClass( getApplicationContext(), ScoreDetailsActivity.class );
-                        mIntent.putExtra( ScoreDetailsActivity.BALL_TYPE,  0);
-                        mIntent.putExtra( ScoreDetailsActivity.BALL_ID,  idArray[1] );
-                        mIntent.putExtra( ScoreDetailsActivity.MATCH_NAME,  "");
+                        mIntent.putExtra( MainActivity.BALL_TYPE,  0);
+                        mIntent.putExtra( MainActivity.BALL_ID,  idArray[1] );
                     }
 
                 }else if(array[0].equals( "basketball#bifen" )){
 
                     if(array.length > 1){
                         String[] idArray = array[1].split( "#" );
-                        mIntent.setClass( getApplicationContext(), ScoreDetailsActivity.class );
-                        mIntent.putExtra( ScoreDetailsActivity.BALL_TYPE,  1);
-                        mIntent.putExtra( ScoreDetailsActivity.BALL_ID,  idArray[1] );
-                        mIntent.putExtra( ScoreDetailsActivity.MATCH_NAME,  "");
+                        mIntent.putExtra( MainActivity.BALL_TYPE,  1);
+                        mIntent.putExtra( MainActivity.BALL_ID,  idArray[1] );
                     }
 
-                }else{
-                    mIntent.setClass( getApplicationContext(), MainActivity.class );
                 }
-            }else {
-                mIntent.setClass( getApplicationContext(), MainActivity.class );
             }
 
 

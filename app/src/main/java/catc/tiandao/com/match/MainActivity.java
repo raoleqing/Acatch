@@ -1,6 +1,7 @@
 package catc.tiandao.com.match;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -35,6 +36,7 @@ import catc.tiandao.com.match.common.OnFragmentInteractionListener;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
 import catc.tiandao.com.match.my.LoginActivity;
 import catc.tiandao.com.match.my.MyFragment;
+import catc.tiandao.com.match.score.ScoreDetailsActivity;
 import catc.tiandao.com.match.score.ScoreFragment;
 import catc.tiandao.com.match.ui.MainFragment;
 import catc.tiandao.com.match.utils.DES;
@@ -48,6 +50,8 @@ import catc.tiandao.com.match.webservice.ThreadPoolManager;
 public class MainActivity extends BaseActivity implements View.OnClickListener , OnFragmentInteractionListener {
 
     private static final int REQUEST_CODE = 123;
+    public static final String BALL_TYPE = "BallType";
+    public static final String BALL_ID = "BallId";
 
     private LinearLayout main_host_layout01,main_host_layout02,main_host_layout03;
     private ImageView main_host_image01,main_host_image02,main_host_image03;
@@ -69,6 +73,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     private  String[] mPermissionList = {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private boolean isGetData;
+    private int BallType;
+    private String BallId;
 
 
     Handler myHandler = new Handler() {
@@ -128,10 +134,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     private void getData() {
 
         String userKey = SharedPreferencesUtil.getString( this,SharedPreferencesUtil.USER_KEY );
-
+        System.out.println( "userKey: " + userKey );
         if(userKey == null || userKey.equals( "" )){
             GetAppLocalToken();
         }else {
+
+            PushAgent mPushAgent = PushAgent.getInstance(this);
+            mPushAgent.addAlias(userKey, "haolikeji", new UTrack.ICallBack() {
+
+                @Override
+
+                public void onMessage(boolean isSuccess, String message) {
+
+                    System.out.println( "Alias:message: " + message );
+
+                }
+
+            });
+
+
+
             if(UserUtils.isLanded( this )){
                 String loginType  = SharedPreferencesUtil.getString(MainActivity.this, UserUtils.LOGIN_TYPE);
                 if(loginType.equals( "phone" )){
@@ -160,6 +182,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
         manager = getSupportFragmentManager();
 
+
+        BallType = this.getIntent().getIntExtra( BALL_TYPE,0 );
+        BallId = this.getIntent().getStringExtra( BALL_ID );
+
         main_host_layout01 = ViewUtls.find( this,R.id.main_host_layout01 );
         main_host_layout02 = ViewUtls.find( this,R.id.main_host_layout02 );
         main_host_layout03 = ViewUtls.find( this,R.id.main_host_layout03 );
@@ -173,6 +199,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         main_host_layout01.setOnClickListener( this );
         main_host_layout02.setOnClickListener( this );
         main_host_layout03.setOnClickListener( this );
+
+        if(BallId != null && BallId.length() > 0){
+            Intent mIntent = new Intent();
+            mIntent.setClass( getApplicationContext(), ScoreDetailsActivity.class );
+            mIntent.putExtra( ScoreDetailsActivity.BALL_TYPE,  BallType);
+            mIntent.putExtra( ScoreDetailsActivity.BALL_ID,  BallId );
+            mIntent.putExtra( ScoreDetailsActivity.MATCH_NAME,  "");
+            startActivity(mIntent);
+
+        }
 
     }
 
@@ -540,13 +576,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
                 //http:// 域名/LSQB/ QuicklyLoginOn?loginType=登录类型（qq/wechat）&uid=唯一编码&ip=ip
 
-                String phoneKey = SharedPreferencesUtil.getString( MainActivity.this,SharedPreferencesUtil.USER_KEY );
+                   String phoneKey = SharedPreferencesUtil.getString( MainActivity.this,SharedPreferencesUtil.USER_KEY );
 
                 setProgressVisibility( View.VISIBLE );
 
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("loginType",loginType );
                 param.put( "uid", openid);
+                param.put( "phoneKey", phoneKey);
                 param.put( "ip",DeviceUtils.getIPAddress( MainActivity.this));
 
                 quicklyRun = new QuicklyLoginOnRun(param);
@@ -609,6 +646,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
             String phone = SharedPreferencesUtil.getString( MainActivity.this, UserUtils.PHONE);
             String psw = SharedPreferencesUtil.getString( MainActivity.this,UserUtils.PASSWORD);
+            String phoneKey  = SharedPreferencesUtil.getString( this,SharedPreferencesUtil.USER_KEY );
 
             if (CheckNet.isNetworkConnected( MainActivity.this)) {
 
@@ -617,6 +655,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("name",phone );
                 param.put( "psw", DES.encode(DES.KEY,psw));
+                param.put( "phoneKey", phoneKey);
                 param.put( "ip", DeviceUtils.getIPAddress(MainActivity.this)  );
 
                 run = new LoginOnRun(param);

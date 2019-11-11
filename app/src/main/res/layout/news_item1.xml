@@ -41,9 +41,10 @@
                 style="@style/activity_text1_type2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:drawableLeft="@mipmap/video_icon_share_default"
                 android:gravity="center_vertical"
-                android:text="1000"/>
+                android:text=" 1000"/>
 
         </LinearLayout>
 
@@ -61,18 +62,27 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center_vertical"
+                android:padding="5dp"
                 android:drawableLeft="@mipmap/video_icon_comment_default"
-                android:text="1000"/>
+                android:text=" 1000"/>
 
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/dianzan_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/dianzan_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/video_icon_like_default"/>
+
             <TextView
                 android:id="@+id/dianzan"
                 style="@style/activity_text1_type2"
@@ -81,8 +91,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:gravity="center_vertical"
-                android:drawableLeft="@mipmap/video_icon_like_default"
-                android:text="1000"/>
+                android:text=" 1000"/>
 
 
         </LinearLayout>

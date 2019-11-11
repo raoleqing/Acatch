@@ -30,7 +30,7 @@ import catc.tiandao.com.match.utils.ViewUtls;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ImmediateEvent#newInstance} factory method to
+
  * create an instance of this fragment.
  */
 public class ImmediateEvent extends Fragment {

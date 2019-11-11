@@ -90,6 +90,11 @@ public class ImmediateEventByFootBall extends Fragment {
                     String result2 = bundle2.getString("result");
                     basketBallParseData(result2);
                     break;
+
+                case 0x004:
+                    getImmediateData();
+                    break;
+
                 default:
                     break;
             }
@@ -135,6 +140,7 @@ public class ImmediateEventByFootBall extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate( R.layout.football_immediate_event, container, false );
         viewInfo(view);
+        getImmediateData();
         return view;
     }
 
@@ -148,16 +154,29 @@ public class ImmediateEventByFootBall extends Fragment {
 
         if(BallType == 0){
             setEventToend1();
-            getData();
         }else {
-           GetBasketball();
             setEventToend2();
         }
 
-
-
-
     }
+
+
+    public void upData() {
+
+        getImmediateData();
+    }
+
+    private void getImmediateData() {
+
+        if(BallType == 0){
+            getData();
+        }else {
+            GetBasketball();
+        }
+    }
+
+
+
 
     private void setEventToend1() {
 
@@ -204,7 +223,7 @@ public class ImmediateEventByFootBall extends Fragment {
 
         try{
             if (CheckNet.isNetworkConnected( getActivity())) {
-                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+               // mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
                 param.put("matchId", BallId);
@@ -225,6 +244,8 @@ public class ImmediateEventByFootBall extends Fragment {
 
 
     }
+
+
 
 
     /**
@@ -261,6 +282,8 @@ public class ImmediateEventByFootBall extends Fragment {
 
 
     private void parseData(String result) {
+
+        myHandler.sendEmptyMessageDelayed( 0x004,15000 );
 
         if(result == null){
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
@@ -320,7 +343,7 @@ public class ImmediateEventByFootBall extends Fragment {
 
         try{
             if (CheckNet.isNetworkConnected( getActivity())) {
-                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                //mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
                 param.put("matchId", BallId);
@@ -377,6 +400,8 @@ public class ImmediateEventByFootBall extends Fragment {
 
     private void basketBallParseData(String result) {
 
+        myHandler.sendEmptyMessageDelayed( 0x004,15000 );
+
         if(result == null){
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
             return;
@@ -391,9 +416,15 @@ public class ImmediateEventByFootBall extends Fragment {
             if(code == 0) {
                JSONObject data = obj.optJSONObject( "data");
                String livel = data.optString( "liveL" );
+
+                mList1.clear();
+
+
                if(livel != null && !livel.equals( "null" ) && livel.length() > 0){
                    livel = livel.replace("\\\"","");
                    JSONArray liveLObj = new JSONArray( livel );
+
+
 
                    if(liveLObj != null && liveLObj.length() > 0){
                        for(int i = 0; i< liveLObj.length(); i++){
