@@ -29,21 +29,19 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.SelectAdapter;
-import catc.tiandao.com.match.adapter.SuggestTypeAdapter;
-import catc.tiandao.com.match.ben.FootballEvent;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.GridSpacingItemDecoration;
 import catc.tiandao.com.match.common.MyGridLayoutManager;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.score.MatchAllFragment;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.SelectAdapter;
+import catc.tiandao.com.matchlibrary.ben.FootballEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +63,6 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
     private TextView Inverse_selection;
     private TextView selection_number;
     private TextView submit;
-    private List<FootballEvent> mList = new ArrayList();
     private GetAllFootballEventRun run;
     private SetUser2EventRun setRun;
 
@@ -81,6 +78,10 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
     private OnFragmentInteractionListener mListener;
     private boolean isSync = false;
 
+    public static  List<FootballEvent> mList = new ArrayList();
+
+
+
     Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -91,6 +92,12 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
                     Bundle bundle1 = msg.getData();
                     String result1 = bundle1.getString("result");
                     parseData(result1);
+                    break;
+                case 0x002:
+                    mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                    break;
+                case 0x003:
+                    mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
                     break;
                 case 0x004:
                     Bundle bundle2 = msg.getData();
@@ -172,6 +179,7 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
         mAdapter.setOnItemClickListener( new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, int type) {
+
                 FootballEvent mFootballEvent = mList.get( postion );
                 if(mFootballEvent.getiUserChoose() == 0){
                     mList.get( postion ).setiUserChoose( 1 );
@@ -180,14 +188,22 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
                     mList.get( postion ).setiUserChoose( 0 );
                     number ++;
                 }
+
                 selection_number.setText( "隐藏了"+ number+"场" );
 
                 mAdapter.notifyDataSetChanged();
 
-                FootballEvent sedFootballEvent =  mList.get( postion );
-                sedFootballEvent.setType(onType);
+                if(onType == 1){
+                    Constant.mList.clear();
+                    Constant.mList.addAll( mList );
+                    Constant.isSelect = true;
+                }else {
+                    FootballEvent sedFootballEvent =  mList.get( postion );
+                    sedFootballEvent.setType(onType);
+                    EventBus.getDefault().post(sedFootballEvent);
 
-                EventBus.getDefault().post(sedFootballEvent);
+                }
+
 
             }
         } );
@@ -223,11 +239,8 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.submit:
 
-                if(onType == 0){
-                    SetUser2Event();
-                }else {
-                    EventBus.getDefault().post( Constant.SUBMIT_SELECT);
-                }
+
+                SetUser2Event();
 
 
                 break;
@@ -241,9 +254,16 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
             if (CheckNet.isNetworkConnected( getActivity())) {
 
-                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+
 
                 String eventIds = getEventIds();
+
+                if( eventIds == null || eventIds.length() == 0){
+                    Toast.makeText( getActivity(),"请至少选择一个",Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
 
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
@@ -379,11 +399,13 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
             FootballEvent mFootballEvent =  mList.get( i );
             mFootballEvent.setiUserChoose( 1 );
-            if(onType == 1){
-                mFootballEvent.setType( onType );
-                EventBus.getDefault().post( mFootballEvent);
-            }
 
+        }
+
+        if(onType == 1){
+            Constant.mList.clear();
+            Constant.mList.addAll( mList );
+            Constant.isSelect = true;
         }
 
         selection_number.setText( "隐藏了"+ number+"场" );
@@ -411,11 +433,13 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
                 number ++;
             }
 
-            if(onType == 1){
-                mFootballEvent.setType( onType );
-                EventBus.getDefault().post( mFootballEvent);
-            }
 
+        }
+
+        if(onType == 1){
+            Constant.mList.clear();
+            Constant.mList.addAll( mList );
+            Constant.isSelect = true;
         }
 
         selection_number.setText( "隐藏了"+ number+"场" );
@@ -558,6 +582,8 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
 
             if(code == 0) {
 
+                mList.clear();
+
                 JSONArray data = obj.optJSONArray( "data" );
                 if(data.length() > 0){
                     Gson gson = new Gson();
@@ -583,6 +609,40 @@ public class SelectFragment extends Fragment implements View.OnClickListener{
         }
 
     }
+
+
+    private void setData() {
+
+        myHandler.sendEmptyMessage( 0x002 );
+
+        for(int i = 0; i< mList.size(); i++){
+            mList.get( i ).setiUserChoose( 0 );
+        }
+
+
+
+        List<FootballEvent> list = Constant.mList;
+        for(int i = 0; i< list.size() ;i ++){
+            FootballEvent mFootballEvent = list.get( i );
+            for(int j = 0; j < mList.size(); j++){
+                FootballEvent jFootballEvent = mList.get( j );
+
+                if(jFootballEvent.getId() == mFootballEvent.getId()){
+                    jFootballEvent.setiUserChoose( mFootballEvent.getiUserChoose() );
+                }
+            }
+
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+        myHandler.sendEmptyMessage( 0x003 );
+
+
+
+    }
+
+
 
     @Subscribe
     public void onEvent(Object event) {

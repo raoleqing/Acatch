@@ -1,31 +1,22 @@
 package catc.tiandao.com.match.ui.event;
 
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.utils.UmengUtil;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 
 
 /**

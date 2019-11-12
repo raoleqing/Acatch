@@ -1,32 +1,25 @@
 package catc.tiandao.com.match.ui.expert;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.ExpertAdapter;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.Expert;
-import catc.tiandao.com.match.ben.SuggestBen;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.my.SuggestActivity;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.ExpertAdapter;
+import catc.tiandao.com.matchlibrary.ben.Expert;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +28,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

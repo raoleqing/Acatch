@@ -1,13 +1,12 @@
 package catc.tiandao.com.match.my;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 

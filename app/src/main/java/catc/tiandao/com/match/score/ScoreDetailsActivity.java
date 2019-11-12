@@ -1,20 +1,5 @@
 package catc.tiandao.com.match.score;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import catc.tiandao.com.match.BaseActivity;
-import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.BallFragmentBen;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
-import catc.tiandao.com.match.ui.event.SelectFragment;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
-import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -23,8 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import catc.tiandao.com.match.BaseActivity;
+import catc.tiandao.com.match.R;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 
 public class ScoreDetailsActivity extends BaseActivity implements View.OnClickListener ,OnFragmentInteractionListener{
 

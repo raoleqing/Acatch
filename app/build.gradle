@@ -26,6 +26,15 @@ android {
 
 
     }
+
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -194,4 +203,8 @@ dependencies {
     //Gif动画
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
     implementation project(path: ':push')
+
+    implementation(name: 'matchlibrary-debug', ext: 'aar')
+
+
 }

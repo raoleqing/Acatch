@@ -32,7 +32,7 @@ public class ExponentBen {
     private String firt9;
 
 
-    public ExponentBen(String name, String firt1, String firt2, String firt3,String firt4, String firt5, String firt6,String firt7, String firt8, String firt9) {
+    public ExponentBen(String name, String firt1, String firt2, String firt3, String firt4, String firt5, String firt6, String firt7, String firt8, String firt9) {
         this.name = name;
         this.firt1 = firt1;
         this.firt2 = firt2;

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,14 +18,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.w3c.dom.Text;
 
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.common.CircleImageView;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 
 /**
  * A simple {@link Fragment} subclass.

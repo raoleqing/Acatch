@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,11 +16,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.Banner;
-import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
-import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.widgets.loopswitch.AutoLoopSwitchBaseAdapter;
+import catc.tiandao.com.matchlibrary.CheckNet;
+import catc.tiandao.com.matchlibrary.ViewUtls;
+import catc.tiandao.com.matchlibrary.ben.Banner;
 
 public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
 

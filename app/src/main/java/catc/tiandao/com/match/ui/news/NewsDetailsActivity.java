@@ -1,24 +1,15 @@
 package catc.tiandao.com.match.ui.news;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.my.CollectionActivity;
-import catc.tiandao.com.match.ui.event.IntelligenceFragment;
-import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
-import cn.jzvd.Jzvd;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -41,15 +32,9 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -182,32 +167,32 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         webView.requestFocusFromTouch();
         webView.requestFocus();
 
-            //https 与 http 混合开发不显示图片：（android 5.0后出现的）
-            if (Build.VERSION.SDK_INT >= 21) {
-                webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-            }
-            webSettings.setJavaScriptEnabled(true); // 支持js
+        //https 与 http 混合开发不显示图片：（android 5.0后出现的）
+        if (Build.VERSION.SDK_INT >= 21) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webSettings.setJavaScriptEnabled(true); // 支持js
 
-            //用于视 频 播放
-            webSettings.setPluginState(WebSettings.PluginState.ON);
-            webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH); // 提高渲染的优先级
-            // 设置自适应屏幕，两者合用
-            webSettings.setUseWideViewPort(true); // 将图片调整到适合webview的大小
-            webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-            webSettings.setSupportZoom(true); // 支持缩放，默认为true。是下面那个的前提。
-            webSettings.setBuiltInZoomControls(true); // 设置内置的缩放控件。
-            // 若上面是false，则该WebView不可缩放，这个不管设置什么都不能缩放。
-            webSettings.setDisplayZoomControls(false); // 隐藏原生的缩放控件
-            //webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN); // 支持内容重新布局
-            webSettings.setAllowFileAccess(true); // 设置可以访问文件
-            webSettings.setNeedInitialFocus(true); // 当webview调用requestFocus时为webview设置节点
-            webSettings.setJavaScriptCanOpenWindowsAutomatically(true); // 支持通过JS打开新窗口
-            webSettings.setLoadsImagesAutomatically(true); // 支持自动加载图片
-            webSettings.setDefaultTextEncodingName("utf-8");// 设置编码格式
-            webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);// 不使用缓存，只从网络获取数据.
-            webSettings.setAppCacheEnabled(true);// 应用可以有缓存
-            webSettings.setDomStorageEnabled(true);// 设置可以使用localStorage
-            webSettings.setAppCacheMaxSize(10 * 1024 * 1024);// 缓存最多可以有10M
+        //用于视 频 播放
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH); // 提高渲染的优先级
+        // 设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); // 将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        webSettings.setSupportZoom(true); // 支持缩放，默认为true。是下面那个的前提。
+        webSettings.setBuiltInZoomControls(true); // 设置内置的缩放控件。
+        // 若上面是false，则该WebView不可缩放，这个不管设置什么都不能缩放。
+        webSettings.setDisplayZoomControls(false); // 隐藏原生的缩放控件
+        //webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN); // 支持内容重新布局
+        webSettings.setAllowFileAccess(true); // 设置可以访问文件
+        webSettings.setNeedInitialFocus(true); // 当webview调用requestFocus时为webview设置节点
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); // 支持通过JS打开新窗口
+        webSettings.setLoadsImagesAutomatically(true); // 支持自动加载图片
+        webSettings.setDefaultTextEncodingName("utf-8");// 设置编码格式
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);// 不使用缓存，只从网络获取数据.
+        webSettings.setAppCacheEnabled(true);// 应用可以有缓存
+        webSettings.setDomStorageEnabled(true);// 设置可以使用localStorage
+        webSettings.setAppCacheMaxSize(10 * 1024 * 1024);// 缓存最多可以有10M
 
         webView.setWebViewClient(new MyWebViewClient());
         webView.setDownloadListener(new MyWebViewDownLoadListener());
@@ -225,12 +210,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_share:
 
-                if(UserUtils.isLanded( NewsDetailsActivity.this )){
-                    showShare();
-                }else {
-                    UserUtils.startLongin( NewsDetailsActivity.this );
-                }
-
+                showShare();
 
                 break;
             case R.id.tv_collection:

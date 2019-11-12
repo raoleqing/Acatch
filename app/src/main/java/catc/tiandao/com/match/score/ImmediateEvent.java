@@ -13,17 +13,11 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.ImmediateAdapter;
-import catc.tiandao.com.match.adapter.StatisticsAdapter1;
-import catc.tiandao.com.match.adapter.StatisticsAdapter2;
-import catc.tiandao.com.match.ben.AreaMatch;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.adapter.ImmediateAdapter;
+import catc.tiandao.com.matchlibrary.ben.AreaMatch;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -4,10 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hgdendi.expandablerecycleradapter.BaseExpandableRecyclerViewAdapter;
 
@@ -15,11 +12,8 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.Match;
 import catc.tiandao.com.match.ben.MatchBen;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.MyItemLongClickListener;
+import catc.tiandao.com.matchlibrary.ben.Match;
 
 /**
  * Created by Administrator on 2017/12/7 0007.
@@ -30,7 +24,7 @@ public class ColletionAdapter extends BaseExpandableRecyclerViewAdapter<MatchBen
     private Context mContext;
     private List<MatchBen> mList;
 
-    public ColletionAdapter(Context mContext,List<MatchBen> list) {
+    public ColletionAdapter(Context mContext, List<MatchBen> list) {
         this.mList = list;
         this.mContext = mContext;
     }

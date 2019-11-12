@@ -33,17 +33,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.ZhenRongAdapter;
-import catc.tiandao.com.match.ben.BasketZhenRong;
-import catc.tiandao.com.match.ben.ZhenRong;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.adapter.ZhenRongAdapter;
+import catc.tiandao.com.matchlibrary.ben.BasketZhenRong;
+import catc.tiandao.com.matchlibrary.CheckNet;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.ben.ZhenRong;
 
 /**
  * A simple {@link Fragment} subclass.

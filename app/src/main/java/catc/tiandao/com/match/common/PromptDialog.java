@@ -1,36 +1,18 @@
 package catc.tiandao.com.match.common;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.BallAdapter;
-import catc.tiandao.com.match.adapter.BallPromptAdapter;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.score.ScoreDetailsActivity;
-import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
-import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
+import catc.tiandao.com.matchlibrary.ben.BallBen;
 
 public class PromptDialog extends Dialog {
 

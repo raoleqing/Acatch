@@ -25,10 +25,8 @@ import java.lang.reflect.Method;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import pl.droidsonroids.gif.GifImageView;
-
-import static com.umeng.socialize.utils.DeviceConfigInternal.context;
 
 
 /**

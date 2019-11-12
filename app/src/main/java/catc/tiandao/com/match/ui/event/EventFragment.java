@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,17 +32,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.EventAdapter;
-import catc.tiandao.com.match.ben.Match;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.common.RecyclerItemClickListener;
 import catc.tiandao.com.match.score.ScoreDetailsActivity;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.ben.Match;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -503,7 +502,14 @@ public class EventFragment extends Fragment {
         @Override
         public void run() {
 
-            HttpUtil.post( getActivity(),HttpUtil.FOOTBALL_MATCH_COLLECT_ANDCANCEL ,param,new HttpUtil.HttpUtilInterface(){
+            String method;
+            if(mParam1 == 0){
+                method = HttpUtil.FOOTBALL_MATCH_COLLECT_ANDCANCEL;
+            }else {
+                method = HttpUtil.BASKETBAL_MATCH_COLLECT_ANDCANCEL;
+            }
+
+            HttpUtil.post( getActivity(),method ,param,new HttpUtil.HttpUtilInterface(){
                 @Override
                 public void onResponse(String result) {
 

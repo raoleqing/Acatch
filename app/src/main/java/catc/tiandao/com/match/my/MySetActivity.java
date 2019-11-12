@@ -1,15 +1,15 @@
 package catc.tiandao.com.match.my;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.ImageUtils;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
 import catc.tiandao.com.match.utils.DataCleanManager;
+import catc.tiandao.com.match.utils.DeviceUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 
@@ -63,6 +63,7 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
     private SetShakeRun setShakeRun;
     private SetSoundRun setSoundRun;
     private SetSellpRun setSleepRun;
+    private AppLoginOnRun getTokenRun;
 
     Handler myHandler = new Handler() {
         @Override
@@ -105,6 +106,12 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
                     Bundle bundle6 = msg.getData();
                     String result6 = bundle6.getString("result");
                     sleepParseData(result6);
+                    break;
+                case 0x007:
+                    Bundle bundle7 = msg.getData();
+                    String result7 = bundle7.getString("result");
+                    getTokenParseData(result7);
+
                     break;
                 default:
                     break;
@@ -499,7 +506,9 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
             if(code == 0) {
 
                 UserUtils.SignOut(MySetActivity.this);
-                MySetActivity.this.onBackPressed();
+                String userKey = SharedPreferencesUtil.getString( this,SharedPreferencesUtil.USER_KEY );
+                AppLoginOn(userKey);
+
 
             }
 
@@ -508,10 +517,110 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            MySetActivity.this.onBackPressed();
             setProgressVisibility( View.GONE );
         }
 
     }
+
+
+    //phonekey=手机key& ip=手机ip
+    private void AppLoginOn(String phonekey) {
+
+        try{
+
+            if (CheckNet.isNetworkConnected( MySetActivity.this)) {
+
+                setProgressVisibility( View.VISIBLE );
+
+                //
+
+                HashMap<String, String> param = new HashMap<>(  );
+                param.put("phonekey",phonekey );
+                param.put( "ip", DeviceUtils.getIPAddress(MySetActivity.this) );
+
+                getTokenRun = new AppLoginOnRun(param);
+                ThreadPoolManager.getsInstance().execute(getTokenRun);
+
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     *
+     * */
+    class AppLoginOnRun implements Runnable{
+        private HashMap<String, String> param;
+
+        AppLoginOnRun(HashMap<String, String> param){
+            this.param =param;
+        }
+
+        @Override
+        public void run() {
+
+            HttpUtil.post( MySetActivity.this,HttpUtil.APP_LOGINON ,param,new HttpUtil.HttpUtilInterface(){
+
+                @Override
+                public void onResponse(String result) {
+
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    data.putString( "result", result );
+                    message.setData( data );
+                    message.what = 0x007;
+                    myHandler.sendMessage( message );
+
+                }
+            });
+
+        }
+    }
+
+
+    private void getTokenParseData(String result) {
+
+        if(result == null){
+            setProgressVisibility( View.GONE );
+            return;
+        }
+
+
+        try{
+
+
+            System.out.println("获取 token: " +  result );
+            JSONObject obj = new JSONObject( result );
+            int code = obj.optInt( "code",0 );
+            String message = obj.optString( "message" );
+
+
+            // {"code":0,"message":"登录成功","data":{"sex":0,"token":"f9d8498a-ee56-4d18-8f69-215dcb0e7168","nickName":null,"iconUrl":null}}
+            if(code == 0) {
+                JSONObject data = obj.optJSONObject( "data" );
+                String token = data.optString( "token" );
+                SharedPreferencesUtil.putString( MySetActivity.this,UserUtils.TOKEN, token);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            setProgressVisibility( View.GONE );
+        }
+
+
+
+    }
+
+
+
+
 
 
 

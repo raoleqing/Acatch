@@ -1,6 +1,5 @@
 package catc.tiandao.com.match.score;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,16 +7,18 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.ui.event.SelectFragment;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,8 @@ public class MatchSelection  extends BaseActivity implements View.OnClickListene
         setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
         setStatusBarMode(true);
         setTitleText( "赛事选择" );
+
+        Constant.isSelect = false;
 
         areaId = this.getIntent().getIntExtra( AREA_ID,0 );
 
@@ -166,10 +169,16 @@ public class MatchSelection  extends BaseActivity implements View.OnClickListene
         public void onPageSelected(int arg0) {
             // TODO Auto-generated method stub
             // 修改标题栏
+            if(arg0 == 0){
+                EventBus.getDefault().post( Constant.SELECT_UP);
+            }
             setContontView(arg0);
+
         }
 
     }
+
+
 
 
 

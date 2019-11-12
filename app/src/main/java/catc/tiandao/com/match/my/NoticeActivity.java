@@ -7,24 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.NewsAdapter;
-import catc.tiandao.com.match.adapter.NoticeAdapter;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.NewsBen;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.CommentDialog;
+
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
-import catc.tiandao.com.match.ui.news.NewsFragment;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.NoticeAdapter;
+import catc.tiandao.com.matchlibrary.ben.NewsBen;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

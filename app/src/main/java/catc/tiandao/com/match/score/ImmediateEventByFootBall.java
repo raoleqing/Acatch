@@ -13,11 +13,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -29,21 +27,18 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.ImmediateAdapter;
-import catc.tiandao.com.match.adapter.ImmediateByFootballAdapter;
-import catc.tiandao.com.match.ben.AreaMatch;
-import catc.tiandao.com.match.ben.BasketJiShuTongJi;
-import catc.tiandao.com.match.ben.JiShiBasket;
-import catc.tiandao.com.match.ben.JiShiShiJian;
-import catc.tiandao.com.match.ben.JiShiShiJianByBasket;
-import catc.tiandao.com.match.ben.JiShuTongJi;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.CheckNet;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.ImmediateAdapter;
+import catc.tiandao.com.matchlibrary.adapter.ImmediateByFootballAdapter;
+import catc.tiandao.com.matchlibrary.ben.JiShiBasket;
+import catc.tiandao.com.matchlibrary.ben.JiShiShiJian;
+import catc.tiandao.com.matchlibrary.ben.JiShiShiJianByBasket;
 
 /**
  *即时事件
@@ -223,7 +218,7 @@ public class ImmediateEventByFootBall extends Fragment {
 
         try{
             if (CheckNet.isNetworkConnected( getActivity())) {
-               // mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
                 param.put("matchId", BallId);

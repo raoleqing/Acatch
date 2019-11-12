@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+       <TextView
+           android:id="@+id/end_title"
+           style="@style/activity_text8_type2"
+           android:layout_width="match_parent"
+           android:layout_height="40dp"
+           android:background="@color/bg1"
+           android:gravity="center"
+           android:visibility="gone"
+           android:text="已结束"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/match_event_name"
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2NBA常规赛 09:30"/>
+
+
+                <TextView
+                    android:id="@+id/match_status"
+                    style="@style/activity_text6_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="未开始"/>
+
+
+                <ImageView
+                    android:id="@+id/is_collection"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/icon_collect_default"
+                    android:scaleType="center"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+
+
+                <RelativeLayout
+                    android:id="@+id/content_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:minWidth="90dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_score1"
+                        style="@style/activity_text8_type3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_centerInParent="true"
+                        android:text="VS"/>
+
+                    <TextView
+                        android:id="@+id/tv_score2"
+                        style="@style/activity_text8_type3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        android:text="100 - 100"/>
+                </RelativeLayout>
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/content_layout"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:id="@+id/home_team_logoUrl"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/home_team_name"
+                        style="@style/activity_text8_type1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/home_team_logoUrl"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:text=""/>
+
+
+
+
+
+
+                </RelativeLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/content_layout"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/away_team_logoUrl"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:id="@+id/away_teamName"
+                        style="@style/activity_text8_type1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:text="火箭"/>
+
+
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

@@ -6,7 +6,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -14,7 +13,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -39,7 +37,6 @@ import org.json.JSONObject;
 
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
-import catc.tiandao.com.match.my.MySetActivity;
 import catc.tiandao.com.match.score.ScoreDetailsActivity;
 import catc.tiandao.com.match.utils.DeviceUtils;
 import catc.tiandao.com.match.utils.StringEscapeUtils;

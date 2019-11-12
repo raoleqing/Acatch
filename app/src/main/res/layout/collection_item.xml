@@ -29,11 +29,11 @@
 
     <ImageView
         android:id="@+id/is_collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:padding="5dp"
-        android:layout_marginRight="15dp" />
+        android:src="@mipmap/icon_collect_default"
+        android:scaleType="center" />
 
 
 
@@ -57,6 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="6dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="火箭"/>
 
 
@@ -101,6 +103,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="火箭"/>
 
 

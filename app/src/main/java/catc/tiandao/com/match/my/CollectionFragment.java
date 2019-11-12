@@ -19,10 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.ColletionAdapter;
-import catc.tiandao.com.match.ben.Match;
 import catc.tiandao.com.match.ben.MatchBen;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.ViewUtls;
+import catc.tiandao.com.matchlibrary.ben.Match;
 
 /**
  * A simple {@link Fragment} subclass.

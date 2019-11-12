@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.TeamGoa;
 
 public class CommentDialog extends Dialog {
 

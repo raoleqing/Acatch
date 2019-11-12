@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,27 +34,23 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.NewsAdapter;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.NewsBen;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.CommentDialog;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.score.BallFragment;
-import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.NewsAdapter;
+import catc.tiandao.com.matchlibrary.ben.NewsBen;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -203,13 +198,8 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
 
                     case R.id.zhuanfa:
 
-                        if(UserUtils.isLanded( getActivity())){
-                            String shreUrl = "http://www.leisuvip1.com/New/Index?token="+ UserUtils.getToken( getActivity() )+"&newId=" + mNewsBen.getId();
-                            showShare(postion,mNewsBen.getId(),shreUrl,mNewsBen.getcTitle(),mNewsBen.getcTitle());
-                        }else {
-                            UserUtils.startLongin( getActivity());
-                        }
-
+                        String shreUrl = "http://www.leisuvip1.com/New/Index?token="+ UserUtils.getToken( getActivity() )+"&newId=" + mNewsBen.getId();
+                        showShare(postion,mNewsBen.getId(),shreUrl,mNewsBen.getcTitle(),mNewsBen.getcTitle());
                         break;
                     case R.id.comment:
 
@@ -224,12 +214,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                         break;
                     case R.id.dianzan_view:
 
-                        if(UserUtils.isLanded( getActivity())){
-                            NewOperation("dianZan",postion,mNewsBen.getId(),"");
-                        }else {
-                            UserUtils.startLongin( getActivity() );
-                        }
-
+                        NewOperation("dianZan",postion,mNewsBen.getId(),"");
 
                         break;
 
@@ -287,14 +272,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
     public void commentButton(Dialog mDialog, int postiont,int newId, String comment) {
 
 
-
-        if(UserUtils.isLanded( getActivity() )){
-            NewOperation("pingLun",postiont,newId,comment);
-        }else {
-            UserUtils.startLongin( getActivity() );
-        }
-
-
+        NewOperation("pingLun",postiont,newId,comment);
         mDialog.dismiss();
 
 
@@ -470,20 +448,20 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                    }
 
 
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyItemChanged( postint );
                     Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT ).show();
 
                 }else if(type.equals( "pingLun" )){
 
                     mList.get( postint ).setcCommentCount(  mList.get( postint ).getcCommentCount() + 1 );
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyItemChanged( postint );
 
                     Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT ).show();
 
                 }else if(type.equals( "zhuanFa" )){
 
                     mList.get( postint ).setiZhuanFaCount(  mList.get( postint ).getiZhuanFaCount() + 1 );
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyItemChanged( postint );
 
                 }
 

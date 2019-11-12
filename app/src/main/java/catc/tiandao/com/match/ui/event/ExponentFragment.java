@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bin.david.form.core.SmartTable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,23 +27,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.ExpertAdapter;
-import catc.tiandao.com.match.adapter.ZhiShuAdapter;
-import catc.tiandao.com.match.ben.Expert;
-import catc.tiandao.com.match.ben.ExponentBen;
-import catc.tiandao.com.match.ben.ZhiShu;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.ui.expert.ExpertActivity;
+import catc.tiandao.com.matchlibrary.CheckNet;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.ZhiShuAdapter;
+import catc.tiandao.com.matchlibrary.ben.ZhiShu;
 
 /**
  * A simple {@link Fragment} subclass.

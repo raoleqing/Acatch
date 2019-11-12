@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.UserBen;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
 import catc.tiandao.com.match.my.LoginActivity;
+import catc.tiandao.com.matchlibrary.ben.UserBen;
 
 public class UserUtils {
 

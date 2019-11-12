@@ -4,24 +4,19 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.SelectAdapter;
-import catc.tiandao.com.match.adapter.SelectAvatarAdapter;
-import catc.tiandao.com.match.ben.Avatart;
-import catc.tiandao.com.match.ben.FootballEvent;
-import catc.tiandao.com.match.ben.NewsBen;
-import catc.tiandao.com.match.ben.UserBen;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.GridSpacingItemDecoration;
 import catc.tiandao.com.match.common.MyGridLayoutManager;
-import catc.tiandao.com.match.common.MyItemClickListener;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.SelectAvatarAdapter;
+import catc.tiandao.com.matchlibrary.ben.Avatart;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +28,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

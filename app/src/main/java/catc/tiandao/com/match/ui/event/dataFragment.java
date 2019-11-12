@@ -1,8 +1,6 @@
 package catc.tiandao.com.match.ui.event;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -26,7 +24,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,25 +35,20 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.InjuredAdapter;
-import catc.tiandao.com.match.adapter.JiFenAdapter;
-import catc.tiandao.com.match.adapter.RecordAdapter;
-import catc.tiandao.com.match.adapter.SampleAdapter;
-import catc.tiandao.com.match.ben.AreaMatch;
-import catc.tiandao.com.match.ben.History;
-import catc.tiandao.com.match.ben.Injured;
-import catc.tiandao.com.match.ben.JiFen;
-import catc.tiandao.com.match.ben.TeamGoa;
-import catc.tiandao.com.match.ben.ZhenRong;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.ui.expert.ExpertActivity;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.InjuredAdapter;
+import catc.tiandao.com.matchlibrary.adapter.JiFenAdapter;
+import catc.tiandao.com.matchlibrary.adapter.RecordAdapter;
+import catc.tiandao.com.matchlibrary.ben.History;
+import catc.tiandao.com.matchlibrary.ben.Injured;
+import catc.tiandao.com.matchlibrary.ben.JiFen;
+import catc.tiandao.com.matchlibrary.ben.TeamGoa;
 
 /**
  * A simple {@link Fragment} subclass.

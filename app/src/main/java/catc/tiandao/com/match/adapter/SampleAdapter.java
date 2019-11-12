@@ -18,16 +18,16 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.AreaMatch;
-import catc.tiandao.com.match.ben.MatchNew;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.MyItemLongClickListener;
 import catc.tiandao.com.match.score.ScoreDetailsActivity;
 import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.MyItemLongClickListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.ViewUtls;
+import catc.tiandao.com.matchlibrary.ben.AreaMatch;
+import catc.tiandao.com.matchlibrary.ben.MatchNew;
 
-public class SampleAdapter  extends RecyclerView.Adapter<SampleAdapter.MyViewHolder>  {
+public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.MyViewHolder>  {
 
 
     private Context mContext;
@@ -59,7 +59,7 @@ public class SampleAdapter  extends RecyclerView.Adapter<SampleAdapter.MyViewHol
     }
 
     @Override
-    public SampleAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         //进行判断显示类型，来创建返回不同的View
         View itemView =mInflater.inflate( R.layout.listitem_group,parent,false);

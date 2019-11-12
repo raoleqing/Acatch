@@ -16,14 +16,10 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import catc.tiandao.com.match.MainActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.my.MyFragment;
-import catc.tiandao.com.match.ui.MainFragment;
-import catc.tiandao.com.match.ui.event.PopularActivity;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.ui.event.SelectActivity;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 
 /**
  * A simple {@link Fragment} subclass.

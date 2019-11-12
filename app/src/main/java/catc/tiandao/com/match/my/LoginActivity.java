@@ -2,18 +2,18 @@ package catc.tiandao.com.match.my;
 
 import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
-import catc.tiandao.com.match.MainActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.UserBen;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.SharedPreferencesUtil;
 import catc.tiandao.com.match.utils.DES;
 import catc.tiandao.com.match.utils.DeviceUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.ben.UserBen;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,14 +23,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -573,7 +571,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             int code = obj.optInt( "code",0 );
             String message = obj.optString( "message" );
             //loginType=登录类型（qq/wechat）&uid
-            if(code == 0) {
+            if(code == 0 || code == 3) {
 
                 SharedPreferencesUtil.putString( LoginActivity.this,UserUtils.LOGIN_TYPE,loginType );
                 SharedPreferencesUtil.putString( LoginActivity.this,UserUtils.U_ID,openid);
@@ -581,9 +579,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                 QuicklyLoginOn(loginType,openid);
 
+            }else {
+                Toast.makeText( LoginActivity.this,message ,Toast.LENGTH_SHORT).show();
             }
 
-            Toast.makeText( LoginActivity.this,message ,Toast.LENGTH_SHORT).show();
+
 
 
         }catch (Exception e){

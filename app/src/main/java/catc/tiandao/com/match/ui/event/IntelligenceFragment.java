@@ -23,30 +23,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.JiShuTongJi;
-import catc.tiandao.com.match.ben.Match;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.score.StatisticsFragment;
 import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 
@@ -201,11 +194,7 @@ public class IntelligenceFragment extends Fragment implements View.OnClickListen
         switch (v.getId()){
 
             case R.id.iv_share:
-                if(UserUtils.isLanded( getActivity())){
-                    showShare();
-                }else {
-                    UserUtils.startLongin( getActivity());
-                }
+                showShare();
 
                 break;
 

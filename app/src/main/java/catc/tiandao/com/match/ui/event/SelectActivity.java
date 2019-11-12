@@ -1,21 +1,26 @@
 package catc.tiandao.com.match.ui.event;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.my.CollectionFragment;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectActivity extends BaseActivity implements View.OnClickListener,OnFragmentInteractionListener {
 
@@ -28,9 +33,14 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
     private Fragment mContent;
 
 
+    private ViewPager mViewPager;
+
+    private List<Fragment> list = null;
     private FragmentManager manager;
-    private FragmentTransaction transaction;
-    private int onPosition = 0;
+    private MyAdapter adapter;
+
+    private int onPosition;
+
 
     private int areaId;
 
@@ -44,14 +54,14 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
         setTitleText( "赛事选择" );
         areaId = this.getIntent().getIntExtra( AREA_ID,0 );
 
+        Constant.isSelect = false;
+        Constant.mList.clear();
+
         viewInfo();
-        ContentInfo();
         setProgressVisibility( View.GONE );
     }
 
     private void viewInfo() {
-        manager = getSupportFragmentManager();
-
         ImageView image = ViewUtls.find( this,R.id.activity_return );
         image.setOnClickListener( this);
 
@@ -63,6 +73,23 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
 
         game_type1.setOnClickListener( this );
         game_type2.setOnClickListener( this );
+
+
+
+        list = new ArrayList<Fragment>();
+        list.add( SelectFragment1.newInstance(areaId,1,0));
+        list.add( SelectFragment.newInstance(areaId,1,1));
+
+
+        manager = getSupportFragmentManager();
+        mViewPager = ViewUtls.find( this,R.id.ball_viewpager );
+        adapter = new MyAdapter(manager);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(3);
+
+        ViewPageListerner vl = new ViewPageListerner();
+        mViewPager.addOnPageChangeListener(vl);
+
 
     }
 
@@ -93,9 +120,9 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
      * 修改中间的内容 *
      */
     private void setContontView(int i) {
+
         onPosition = i;
-        // TODO Auto-generated method stub
-        transaction = manager.beginTransaction();
+        mViewPager.setCurrentItem( i );
 
         int color01 = ContextCompat.getColor( this,R.color.text1);
         int color02 = ContextCompat.getColor(this,R.color.text4);
@@ -109,10 +136,6 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
                 game_type1_view.setVisibility( View.VISIBLE );
                 game_type2_view.setVisibility( View.GONE );
 
-                if (fragment01 == null) {
-                    fragment01 = SelectFragment.newInstance(areaId,1,0);
-                }
-                switchContent(fragment01, "fragment01");
                 break;
             case 1:
                 game_type1.setTextColor( color02 );
@@ -120,10 +143,6 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
                 game_type1_view.setVisibility( View.GONE );
                 game_type2_view.setVisibility( View.VISIBLE );
 
-                if (fragment02 == null) {
-                    fragment02 =  SelectFragment.newInstance(areaId,1,1);
-                }
-                switchContent(fragment02, "fragment02");
                 break;
 
             default:
@@ -133,29 +152,64 @@ public class SelectActivity extends BaseActivity implements View.OnClickListener
 
 
 
+    /**
+     * 没动加载 FragmentPagerAdapter
+     *
+     */
+    public class MyAdapter extends FragmentStatePagerAdapter {
 
-    private void ContentInfo() {
-        if(fragment01 == null)
-            fragment01 = SelectFragment.newInstance(0,1,0);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.select_content, fragment01,"fragment01").show(fragment01);
-        mContent = fragment01;
-        transaction.commit();
-    }
-
-    /** 修改显示的内容 不会重新加载 **/
-    public void switchContent(Fragment to, String tag) {
-        if (mContent != to) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            if (!to.isAdded()) {
-                transaction.hide(mContent).add(R.id.select_content, to, tag).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else {
-                transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-            mContent = to;
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+            // TODO Auto-generated constructor stub
         }
+
+        @Override
+        public Fragment getItem(int position) {
+            // TODO Auto-generated method stub
+            return list.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return list.size();
+        }
+
     }
+
+
+
+    /**
+     * viewPage滑动事件
+     */
+    class ViewPageListerner implements ViewPager.OnPageChangeListener {
+
+        // 当滑动状态改变时调用
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+            // TODO Auto-generated method stub
+        }
+
+        // 当当前页面被滑动时调用
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+            // TODO Auto-generated method stub;
+        }
+
+        // 当新的页面被选中时调用
+        @Override
+        public void onPageSelected(int arg0) {
+            // TODO Auto-generated method stub
+            // 修改标题栏
+            if(arg0 == 0){
+                EventBus.getDefault().post( Constant.SELECT_UP);
+            }
+            setContontView(arg0);
+
+        }
+
+    }
+
 
 
 

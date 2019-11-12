@@ -1,2 +1,2 @@
-include ':app', ':push'
+include ':app', ':push', ':matchlibrary'
 rootProject.name='Match'

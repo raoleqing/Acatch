@@ -1,11 +1,6 @@
 package catc.tiandao.com.match.adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,33 +8,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.Expert;
-import catc.tiandao.com.match.ben.Match;
-import catc.tiandao.com.match.common.CheckNet;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.MyItemLongClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.score.BallFragment;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
-import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
-import catc.tiandao.com.match.webservice.HttpUtil;
-import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.ben.Match;
 
 /**
  * Created by Administrator on 2017/12/7 0007.
@@ -73,7 +52,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     DisplayImageOptions options;
 
 
-    public EventAdapter(Context mContext, List<Match> dataList,int BallType) {
+    public EventAdapter(Context mContext, List<Match> dataList, int BallType) {
             this.dataList = dataList;
             this.mContext = mContext;
             this.BallType = BallType;
@@ -132,9 +111,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 myViewHolder.match_status.setText( mMatch.getMatchStatus() );
 
                 if(mMatch.getIsCollection() == 0){
-                    myViewHolder.is_collection.setBackgroundResource( R.mipmap.icon_collect_default );
+                    myViewHolder.is_collection.setImageResource( R.mipmap.icon_collect_default );
                 }else {
-                    myViewHolder.is_collection.setBackgroundResource( R.mipmap.icon_collect );
+                    myViewHolder.is_collection.setImageResource( R.mipmap.icon_collect );
                 }
 
                 myViewHolder.home_team_name.setText( mMatch.getHomeTeamName() );

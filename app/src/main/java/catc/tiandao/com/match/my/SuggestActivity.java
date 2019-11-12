@@ -1,26 +1,21 @@
 package catc.tiandao.com.match.my;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.NoticeAdapter;
-import catc.tiandao.com.match.adapter.SuggestTypeAdapter;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.SuggestBen;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.GridSpacingItemDecoration;
 import catc.tiandao.com.match.common.MyGridLayoutManager;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.SuggestTypeAdapter;
+import catc.tiandao.com.matchlibrary.ben.SuggestBen;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +24,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;

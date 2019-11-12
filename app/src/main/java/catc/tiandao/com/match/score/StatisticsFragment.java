@@ -1,7 +1,6 @@
 package catc.tiandao.com.match.score;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -36,31 +35,23 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.RecordAdapter;
-import catc.tiandao.com.match.adapter.StatisticsAdapter1;
-import catc.tiandao.com.match.adapter.StatisticsAdapter2;
-import catc.tiandao.com.match.ben.AreaMatch;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.BasketJiShuTongJi;
-import catc.tiandao.com.match.ben.BasketZhenRong;
-import catc.tiandao.com.match.ben.JiShuTongJi;
-import catc.tiandao.com.match.ben.Match;
-import catc.tiandao.com.match.common.CheckNet;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.ui.event.EventFragment;
-import catc.tiandao.com.match.ui.event.PopularActivity;
-import catc.tiandao.com.match.ui.event.SelectActivity;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.CheckNet;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.ViewUtls;
+import catc.tiandao.com.matchlibrary.adapter.StatisticsAdapter1;
+import catc.tiandao.com.matchlibrary.adapter.StatisticsAdapter2;
+import catc.tiandao.com.matchlibrary.ben.BasketJiShuTongJi;
+import catc.tiandao.com.matchlibrary.ben.BasketZhenRong;
+import catc.tiandao.com.matchlibrary.ben.JiShuTongJi;
 
 /**
  * 技术统计
@@ -184,8 +175,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         int radius = UnitConverterUtils.dip2px(getContext(),11 );
 
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
-                .showImageForEmptyUri(R.mipmap.mall_cbg)  // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnLoading( R.mipmap.mall_cbg)          // 设置图片下载期间显示的图片
+                .showImageForEmptyUri( R.mipmap.mall_cbg)  // 设置图片Uri为空或是错误的时候显示的图片
                 .showImageOnFail(R.mipmap.mall_cbg)       // 设置图片加载或解码过程中发生错误显示的图片
                 .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
                 .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中

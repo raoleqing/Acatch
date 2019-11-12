@@ -2,37 +2,28 @@ package catc.tiandao.com.match.my;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.CollectionAdapter;
-import catc.tiandao.com.match.adapter.NewsAdapter;
-import catc.tiandao.com.match.ben.Match;
-import catc.tiandao.com.match.ben.NewsBen;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.CommentDialog;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.ui.event.EventFragment;
 import catc.tiandao.com.match.ui.news.NewsDetailsActivity;
-import catc.tiandao.com.match.ui.news.NewsFragment;
 import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.CollectionAdapter;
+import catc.tiandao.com.matchlibrary.ben.NewsBen;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,7 +32,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -55,7 +45,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -212,12 +201,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
                     case R.id.zhuanfa:
 
-                        if(UserUtils.isLanded( CollectionActivity.this)){
-                            String shreUrl = "http://www.leisuvip1.com/New/Index/token="+ UserUtils.getToken( CollectionActivity.this )+"&newId=" + mNewsBen.getId();
-                            showShare(postion,mNewsBen.getId(),shreUrl,mNewsBen.getcTitle(),mNewsBen.getcTitle());
-                        }else {
-                            UserUtils.startLongin( CollectionActivity.this);
-                        }
+                        String shreUrl = "http://www.leisuvip1.com/New/Index/token="+ UserUtils.getToken( CollectionActivity.this )+"&newId=" + mNewsBen.getId();
+                        showShare(postion,mNewsBen.getId(),shreUrl,mNewsBen.getcTitle(),mNewsBen.getcTitle());
 
                         break;
                     case R.id.comment:
@@ -233,11 +218,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                         break;
                     case R.id.dianzan_view:
 
-                        if(UserUtils.isLanded( CollectionActivity.this)){
-                            NewOperation("dianZan",postion,mNewsBen.getId(),"");
-                        }else {
-                            UserUtils.startLongin( CollectionActivity.this );
-                        }
+                        NewOperation("dianZan",postion,mNewsBen.getId(),"");
 
 
                         break;

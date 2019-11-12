@@ -38,22 +38,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.BallAdapter;
-import catc.tiandao.com.match.adapter.BasketballAdapter;
-import catc.tiandao.com.match.ben.BallBen;
-import catc.tiandao.com.match.ben.BallFragmentBen;
-import catc.tiandao.com.match.ben.DateBen;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
 import catc.tiandao.com.match.ui.event.MatchDetailsActivity;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
 import catc.tiandao.com.match.widgets.datepicker.CustomDatePicker;
 import catc.tiandao.com.match.widgets.datepicker.DateFormatUtils;
+import catc.tiandao.com.matchlibrary.adapter.BasketballAdapter;
+import catc.tiandao.com.matchlibrary.ben.BallFragmentBen;
+import catc.tiandao.com.matchlibrary.ben.DateBen;
 
 /**
  *
@@ -75,7 +73,6 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
     private int[] textIdArray2 = {R.id.tab_bar1_text2,R.id.tab_bar2_text2,R.id.tab_bar3_text2,R.id.tab_bar4_text2,R.id.tab_bar5_text2};
     private TextView[] textArray1 = new TextView[5];
     private TextView[] textArray2 = new TextView[5];
-
 
 
     private List<DateBen> dateList = new ArrayList(  );
@@ -530,6 +527,11 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
                     }
                 }
 
+
+                //刷新
+                Constant.SenType = mParam2;
+                EventBus.getDefault().post( Constant.UP_BASEKET_BALL_1);
+
                 mAdapter.notifyDataSetChanged();
 
             }
@@ -679,7 +681,7 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
                             mList.addAll( mList2 );
 
 
-                            mAdapter.setShowEndType( mList1.size() - 1 );
+                           // mAdapter.setShowEndType( mList1.size());
 
                         }else {
                             mList.addAll( list );
@@ -808,6 +810,9 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
     @Subscribe
     public void onEvent(Object event) {
         if (Constant.UP_SCORE.equals(event) || Constant.UP_BASEKET_BALL.equals( event )) {
+            page = 1;
+            getData(onDate);
+        }else if(Constant.UP_BASEKET_BALL_1.equals( event )){
             page = 1;
             getData(onDate);
         }

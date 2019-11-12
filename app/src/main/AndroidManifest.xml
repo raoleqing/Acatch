@@ -21,7 +21,7 @@
         <activity android:name=".my.ForgetPassword" />
         <activity android:name=".my.SetPassword" />
         <activity android:name=".my.RegisteredActivity" />
-        <activity android:name=".score.ScoreDetailsActivity" />
+        <activity android:name="catc.tiandao.com.match.score.ScoreDetailsActivity" />
         <activity android:name=".ui.event.MatchDetailsActivity" />
         <activity android:name=".ui.news.NewsActivity" />
         <activity android:name=".ui.expert.ExpertActivity" />

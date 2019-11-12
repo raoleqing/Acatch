@@ -27,25 +27,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
-import catc.tiandao.com.match.adapter.MatchAllAdapter;
-import catc.tiandao.com.match.adapter.SelectAdapter;
-import catc.tiandao.com.match.ben.FootballEvent;
-import catc.tiandao.com.match.ben.FootballEventAll;
-import catc.tiandao.com.match.common.CheckNet;
+import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.GridSpacingItemDecoration;
 import catc.tiandao.com.match.common.MyGridLayoutManager;
-import catc.tiandao.com.match.common.MyItemClickListener;
-import catc.tiandao.com.match.common.OnFragmentInteractionListener;
-import catc.tiandao.com.match.utils.UnitConverterUtils;
+import catc.tiandao.com.matchlibrary.MyItemClickListener;
+import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
+import catc.tiandao.com.matchlibrary.UnitConverterUtils;
 import catc.tiandao.com.match.utils.UserUtils;
-import catc.tiandao.com.match.utils.ViewUtls;
+import catc.tiandao.com.matchlibrary.ViewUtls;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
+import catc.tiandao.com.matchlibrary.adapter.MatchAllAdapter;
+import catc.tiandao.com.matchlibrary.ben.FootballEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -153,6 +149,18 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+
+
+
+    }
+
+
+
     private void ViewInfo(View view) {
 
         select_recycler = ViewUtls.find( view ,R.id.select_recycler );
@@ -204,6 +212,37 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void setData() {
+
+        myHandler.sendEmptyMessage( 0x002 );
+
+        for(int i = 0; i< mList.size(); i++){
+            mList.get( i ).setiUserChoose( 0 );
+        }
+
+        List<FootballEvent> list = Constant.mList;
+        for(int i = 0; i< list.size() ;i ++){
+            FootballEvent mFootballEvent = list.get( i );
+            for(int j = 0; j < mList.size(); j++){
+                FootballEvent jFootballEvent = mList.get( j );
+
+                if(jFootballEvent.getId() == mFootballEvent.getId()){
+                    jFootballEvent.setiUserChoose( mFootballEvent.getiUserChoose() );
+                }
+            }
+
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+        myHandler.sendEmptyMessage( 0x003 );
+
+
+
+    }
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -219,8 +258,6 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
                 EventBus.getDefault().post( Constant.SELECT_INVERSE0);
                 break;
             case R.id.submit:
-
-                //url：http:// 域名/LSQB/ SetUser2Event? token=***& areaId=区域id&eventIds=赛事id
                 SetUser2Event();
 
                 break;
@@ -234,9 +271,13 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
 
             if (CheckNet.isNetworkConnected( getActivity())) {
 
-                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
-
                 String eventIds = getEventIds();
+
+                if( eventIds == null || eventIds.length() == 0){
+                    Toast.makeText( getActivity(),"请至少选择一个",Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_SHOW));
 
                 HashMap<String, String> param = new HashMap<>(  );
                 param.put("token", UserUtils.getToken( getActivity() ) );
@@ -572,19 +613,20 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
         if(event instanceof FootballEvent){
             FootballEvent mFootballEvent = (FootballEvent)event;
             if(mFootballEvent.getType() == 1){
-
                 upList(mFootballEvent);
             }
-
         }else if(event instanceof String){
 
             if(event.equals( Constant.SUBMIT_SELECT )){
-
                 SetUser2Event();
             }else if(event.equals( Constant.SELECT_ALL1 ) ){
                 selectAll();
             }else if(event.equals( Constant.SELECT_INVERSE1 )){
                 InverseSselection();
+            }else if(event.equals( Constant.SELECT_UP )){
+                if(Constant.isSelect){
+                    setData();
+                }
             }
         }
     }
