@@ -6,6 +6,10 @@ import catc.tiandao.com.matchlibrary.ben.FootballEvent;
 
 public class Constant {
 
+    public static final int STATUS_FORCE_KILLED = -1;//应用在后台被强杀了
+    public static final int STATUS_NORMAL = 2; //APP正常态
+    public static final String START_LAUNCH_ACTION = "start_launch_action";
+
 
     //登录发生改变
     public static final String LOGIN_SUCCESS = "app.login.success";
@@ -41,4 +45,7 @@ public class Constant {
 
     public static  List<FootballEvent> mList = new ArrayList();
     public static boolean isSelect = false;
+
+
+
 }

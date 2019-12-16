@@ -112,11 +112,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
             fragment02 = getSupportFragmentManager().findFragmentByTag( "fragment02" );
             fragment03 = getSupportFragmentManager().findFragmentByTag( "fragment03" );
         }
-
-
-
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
+
+        MatchApplication app = (MatchApplication) getApplication();
+        app.setName("Developer Phil");
+
+
         setTitleVisibility( View.GONE );
 
 
@@ -139,28 +141,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         getData();
     }
 
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        int action = intent.getIntExtra(AppStatusConstant.KEY_HOME_ACTION, AppStatusConstant.ACTION_BACK_TO_HOME);
-        switch (action) {
-            case AppStatusConstant.ACTION_RESTART_APP:
-                protectApp();
-                break;
-            case AppStatusConstant.ACTION_BACK_TO_HOME:
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    protected void protectApp() {
-        /*跳转引导页，重启APP*/
-        startActivity(new Intent(this, SplashActivity.class));
-        finish();
-    }
 
 
 

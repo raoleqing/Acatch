@@ -99,7 +99,7 @@ public class SharedPreferencesUtil {
 
 	//保存序列化对象
 	public static void saveBean(Object object,String key) {
-		SharedPreferences mSharedPreferences = MatchApplication.getInstance()
+		SharedPreferences mSharedPreferences = MatchApplication.getApplication()
 				.getSharedPreferences("base64",
 						Context.MODE_PRIVATE);
 		ObjectOutputStream oos = null;
@@ -134,7 +134,7 @@ public class SharedPreferencesUtil {
 		ObjectInputStream ois = null;
 		ByteArrayInputStream bais = null;
 		try {
-			SharedPreferences mSharedPreferences = MatchApplication.getInstance()
+			SharedPreferences mSharedPreferences = MatchApplication.getApplication()
 					.getSharedPreferences("base64",
 							Context.MODE_PRIVATE);
 			String personBase64 = mSharedPreferences.getString(key, "");

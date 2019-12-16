@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.matchlibrary.ViewUtls;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -59,25 +60,15 @@ public class BaseActivity extends FragmentActivity {
 		backgroundColor = ContextCompat.getColor( this,R.color.colorPrimary );
 		infoView();
 
-		int mAppStatus  = AppStatusManager.getInstance().getAppStatus();
-		switch (mAppStatus) {
-			case AppStatusConstant.STATUS_FORCE_KILLED:
-				Log.e(TAG, "STATUS_FORCE_KILLED");
-				//*处理APP被强杀*//*
-				protectApp();
+		switch (AppUtils.getInstance().getAppStatus()) {
+			case Constant.STATUS_FORCE_KILLED:
+				restartApp();
 				break;
-			case AppStatusConstant.STATUS_KICK_OUT:
-				//*处理APP被退出登录*//*
-				Log.e(TAG, "STATUS_KICK_OUT");
+			case Constant.STATUS_NORMAL:
 				break;
-			case AppStatusConstant.STATUS_NORMAL:
-				//*APP正常状态*//*
-				Log.e(TAG, "STATUS_NORMAL");
-
+			default:
 				break;
 		}
-
-
 
 	}
 
@@ -416,11 +407,15 @@ public class BaseActivity extends FragmentActivity {
 	/**
 	 * 处理APP被强杀
 	 */
-	protected void protectApp() {
+	protected void restartApp() {
+
+		System.out.println( "处理APP被强杀-----------------" );
 		/*跳转主界面处理*/
-		Intent intent = new Intent(this, MainActivity.class);
-		intent.putExtra(AppStatusConstant.KEY_HOME_ACTION, AppStatusConstant.ACTION_RESTART_APP);
+		Intent intent = new Intent(this, SplashActivity.class);
+		intent.putExtra(Constant.START_LAUNCH_ACTION,Constant.STATUS_FORCE_KILLED);
 		startActivity(intent);
+
+
 	}
 
 

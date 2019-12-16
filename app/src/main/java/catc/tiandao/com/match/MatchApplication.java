@@ -46,6 +46,35 @@ public class MatchApplication extends Application {
     private static MatchApplication instance;
     private String TAG = "Match";
 
+
+    String name;
+
+    public String getName() {
+        return name;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+
+    public static MatchApplication getApplication(){
+
+        if (instance == null) {
+            synchronized (MatchApplication.class) {
+                if (instance == null) {
+                    return instance = new MatchApplication();
+                }
+            }
+        }
+        return instance;
+
+    }
+
+
+
+
+
     /**
      * Called when the application is starting, before any activity, service, or
      * receiver objects (excluding content providers) have been created.
@@ -56,9 +85,6 @@ public class MatchApplication extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-
-        AppStatusManager.init(this);
-
 
         // 缓存图片的配置，一般通用的配置
         initImageLoader(getApplicationContext());
@@ -381,13 +407,6 @@ public class MatchApplication extends Application {
 
     }
 
-
-
-    public static MatchApplication getInstance() {
-        if ( instance == null )
-            instance = new MatchApplication();
-        return instance;
-    }
 
     private void initImageLoader(Context context) {
         // TODO Auto-generated method stub

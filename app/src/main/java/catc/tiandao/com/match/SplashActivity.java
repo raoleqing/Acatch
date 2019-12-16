@@ -12,9 +12,11 @@ import android.view.Window;
 
 import java.lang.ref.WeakReference;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import catc.tiandao.com.match.common.Constant;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     private MyHandler mHandler = new MyHandler(this);
 
@@ -25,13 +27,14 @@ public class SplashActivity extends Activity {
         requestWindowFeature( Window.FEATURE_NO_TITLE);
         setContentView( R.layout.activity_splash );
 
-
-        //设置默认状态
-        AppStatusManager.getInstance().setAppStatus(AppStatusConstant.STATUS_NORMAL);
+        //这里设置为app正常态
+        AppUtils.getInstance().setAppStatus( Constant.STATUS_NORMAL);
 
         if (mHandler != null) {
             mHandler.sendEmptyMessageDelayed(0, 2000);
         }
+
+       // setProgressVisibility( View.GONE );
 
     }
 
