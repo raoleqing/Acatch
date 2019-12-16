@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.matchlibrary.MyItemClickListener;
@@ -220,10 +221,6 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
             textArray1[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
             textArray2[4].setTextColor( ContextCompat.getColor( getActivity(),R.color.text2 ) );
         }
-
-
-
-
 
 
         // 设置布局管理器
@@ -706,14 +703,25 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
                 }
 
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData(onDate);
+                    }
+                } );
             }
 
-        mSwipeRefreshLayout.setRefreshing(false);
+
+            mSwipeRefreshLayout.setRefreshing(false);
 
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            if(mListener != null){
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
         }
 
     }

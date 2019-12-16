@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.matchlibrary.MyItemClickListener;
@@ -282,6 +284,14 @@ public class ExpertActivity extends BaseActivity implements  View.OnClickListene
                 }
 
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( ExpertActivity.this);
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        GetExpert();
+                    }
+                } );
             }
 
 

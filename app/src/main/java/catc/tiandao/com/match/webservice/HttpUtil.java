@@ -1,7 +1,15 @@
 package catc.tiandao.com.match.webservice;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Xml;
+import android.view.View;
+
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +18,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
+import androidx.core.content.ContextCompat;
+import catc.tiandao.com.match.MainActivity;
+import catc.tiandao.com.match.common.SharedPreferencesUtil;
+import catc.tiandao.com.match.utils.DES;
+import catc.tiandao.com.match.utils.DeviceUtils;
+import catc.tiandao.com.match.utils.UserUtils;
+import catc.tiandao.com.matchlibrary.CheckNet;
+import catc.tiandao.com.matchlibrary.ben.UserBen;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Cookie;
@@ -127,6 +143,8 @@ public class HttpUtil {
     public static final String DELETE_NEW_COLLECT = "New/DeleteNewCollect";
     public static final String NEW_OPERATION = "LSQB/NewOperation";
     public static final String GETNEW = "LSQB/GetNew";
+
+
 
 
     public static void getDatasync(final Context mContext, String method , final HttpUtilInterface mInterface){
@@ -350,6 +368,9 @@ public class HttpUtil {
             }
         });
     }
+
+
+
 
 
 

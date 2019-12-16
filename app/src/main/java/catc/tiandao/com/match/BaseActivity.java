@@ -1,11 +1,13 @@
 package catc.tiandao.com.match;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +36,8 @@ import pl.droidsonroids.gif.GifImageView;
  **/
 public class BaseActivity extends FragmentActivity {
 
+	private String TAG = "Match";
+
 	private LinearLayout parentLinearLayout;// 把父类activity和子类activity的view都add到这里
 	private RelativeLayout base_title_layout;// 标题布局
 	private TextView activity_title;// 标题布局
@@ -50,10 +54,31 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 		requestWindowFeature( Window.FEATURE_NO_TITLE);
 		initContentView(R.layout.base_activity);
-		PushAgent.getInstance(this).onAppStart();
 
+		PushAgent.getInstance(this).onAppStart();
 		backgroundColor = ContextCompat.getColor( this,R.color.colorPrimary );
 		infoView();
+
+		int mAppStatus  = AppStatusManager.getInstance().getAppStatus();
+		switch (mAppStatus) {
+			case AppStatusConstant.STATUS_FORCE_KILLED:
+				Log.e(TAG, "STATUS_FORCE_KILLED");
+				//*处理APP被强杀*//*
+				protectApp();
+				break;
+			case AppStatusConstant.STATUS_KICK_OUT:
+				//*处理APP被退出登录*//*
+				Log.e(TAG, "STATUS_KICK_OUT");
+				break;
+			case AppStatusConstant.STATUS_NORMAL:
+				//*APP正常状态*//*
+				Log.e(TAG, "STATUS_NORMAL");
+
+				break;
+		}
+
+
+
 	}
 
 
@@ -81,7 +106,6 @@ public class BaseActivity extends FragmentActivity {
 		progress = LayoutInflater.from(this).inflate(R.layout.progress, null);
 		//progress.setPadding(0, getStatusBarHeight(this), 0, 0);
 		iv_image = ViewUtls.find( progress,R.id.iv_image );
-		iv_image.setImageResource( R.mipmap.loading );
 
 		viewGroup.addView(progress);
 
@@ -387,6 +411,19 @@ public class BaseActivity extends FragmentActivity {
 		res.updateConfiguration(config,res.getDisplayMetrics() );
 		return res;
 	}
+
+
+	/**
+	 * 处理APP被强杀
+	 */
+	protected void protectApp() {
+		/*跳转主界面处理*/
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra(AppStatusConstant.KEY_HOME_ACTION, AppStatusConstant.ACTION_RESTART_APP);
+		startActivity(intent);
+	}
+
+
 
 
 

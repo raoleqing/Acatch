@@ -4,6 +4,8 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.utils.UmengUtil;
 import catc.tiandao.com.match.utils.UserUtils;
@@ -319,6 +321,14 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 }
 
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( NewsDetailsActivity.this);
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        GetNew();
+                    }
+                } );
             }
 
             Toast.makeText(NewsDetailsActivity.this,message,Toast.LENGTH_SHORT ).show();

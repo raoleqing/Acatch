@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.EventAdapter;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.matchlibrary.MyItemClickListener;
@@ -439,6 +440,14 @@ public class EventFragment extends Fragment {
 
                 mAdapter.notifyDataSetChanged();
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData();
+                    }
+                } );
             }
 
             if(mList.size() > 0){
@@ -452,7 +461,9 @@ public class EventFragment extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            if(mListener != null){
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
         }
 
     }

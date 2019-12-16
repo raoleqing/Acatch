@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.match.utils.UserUtils;
 import catc.tiandao.com.match.webservice.HttpUtil;
 import catc.tiandao.com.match.webservice.ThreadPoolManager;
@@ -682,6 +683,14 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                     }
 
                     mAdapter.notifyDataSetChanged();
+                }else if(code == Constant.CODE){
+                    GetTokenUtils utils = new GetTokenUtils( getActivity());
+                    utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                        @Override
+                        public void onResponse() {
+                            getData();
+                        }
+                    } );
                 }else {
                     not_data.setVisibility( View.VISIBLE );
                 }
@@ -903,7 +912,15 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                         not_data1.setVisibility( View.VISIBLE );
                         not_data2.setVisibility( View.VISIBLE );
                     }
-                }
+                }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        GetBasketball();
+                    }
+                } );
+            }
 
         }catch (Exception e){
             e.printStackTrace();

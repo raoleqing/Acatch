@@ -40,6 +40,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.my.NoticeActivity;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.matchlibrary.MyItemClickListener;
@@ -184,7 +186,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
         EventBus.getDefault().register(this);
         setData();
 
-        if(mParam2 == 1){
+        if(mParam2 == 0){
             myHandler.sendEmptyMessageDelayed( 0x004,15000 );
         }
 
@@ -691,7 +693,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
         try{
 
-            System.out.println( result );
+            System.out.println(types[mParam2] + ":" + result );
             JSONObject obj = new JSONObject( result );
             int code = obj.optInt( "code",0 );
             String message = obj.optString( "message" );
@@ -757,13 +759,24 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                 }
 
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData(onDate);
+                    }
+                } );
             }
 
 
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            if(mListener != null){
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
+
         }
 
     }

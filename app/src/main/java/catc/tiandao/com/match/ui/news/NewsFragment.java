@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.CommentDialog;
 import catc.tiandao.com.match.common.Constant;
@@ -475,7 +476,9 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            if(mListener != null){
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
         }
 
     }
@@ -619,6 +622,14 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                 }
 
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData();
+                    }
+                } );
             }
 
 

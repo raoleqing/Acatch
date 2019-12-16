@@ -56,6 +56,10 @@ public class MatchApplication extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
+
+        AppStatusManager.init(this);
+
+
         // 缓存图片的配置，一般通用的配置
         initImageLoader(getApplicationContext());
 

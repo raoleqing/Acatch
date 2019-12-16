@@ -29,6 +29,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.common.GridSpacingItemDecoration;
@@ -576,6 +577,14 @@ public class MatchAllFragment extends Fragment implements View.OnClickListener {
 
                 getNumber();
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData();
+                    }
+                } );
             }
 
 

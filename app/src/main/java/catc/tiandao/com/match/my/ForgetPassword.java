@@ -3,6 +3,8 @@ package catc.tiandao.com.match.my;
 import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.utils.DES;
 import catc.tiandao.com.matchlibrary.ViewUtls;
@@ -440,6 +442,14 @@ public class ForgetPassword extends BaseActivity implements View.OnClickListener
             //{"code":1,"message":"验证码错误","data":null}
             if(code == 0) {
                 ForgetPassword.this.finish();
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils(ForgetPassword.this);
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        Toast.makeText( ForgetPassword.this,message ,Toast.LENGTH_SHORT).show();
+                    }
+                } );
             }else {
                 Toast.makeText( ForgetPassword.this,message ,Toast.LENGTH_SHORT).show();
             }

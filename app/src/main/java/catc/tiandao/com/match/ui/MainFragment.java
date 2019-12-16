@@ -543,7 +543,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }finally {
             mSwipeRefreshLayout.setRefreshing(false);
-            mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+
+            if(mListener != null){
+                mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
+            }
+
         }
 
     }

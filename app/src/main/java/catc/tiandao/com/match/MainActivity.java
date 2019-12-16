@@ -106,15 +106,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (savedInstanceState!=null){
+            fragment01 = getSupportFragmentManager().findFragmentByTag( "fragment01" );
+            fragment02 = getSupportFragmentManager().findFragmentByTag( "fragment02" );
+            fragment03 = getSupportFragmentManager().findFragmentByTag( "fragment03" );
+        }
+
+
+
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
         setTitleVisibility( View.GONE );
-        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
-        setStatusBarMode(true);
+
 
         //通过可以设置alias，alias_type为haolikeji
 
         viewInfo();
+
+
         ContentInfo();
 
         boolean isOPen = SharedPreferencesUtil.getBoolean( this,SharedPreferencesUtil.OPEN_PERMISSIONS,false );
@@ -128,6 +138,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
 
         getData();
     }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int action = intent.getIntExtra(AppStatusConstant.KEY_HOME_ACTION, AppStatusConstant.ACTION_BACK_TO_HOME);
+        switch (action) {
+            case AppStatusConstant.ACTION_RESTART_APP:
+                protectApp();
+                break;
+            case AppStatusConstant.ACTION_BACK_TO_HOME:
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void protectApp() {
+        /*跳转引导页，重启APP*/
+        startActivity(new Intent(this, SplashActivity.class));
+        finish();
+    }
+
+
+
 
     private void getData() {
 
@@ -149,6 +185,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
                 }
 
             });
+
 
 
 
@@ -803,6 +840,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     }
 
 
+
+    /**
+     * 按下home 保存数据
+     * **/
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String tempData="save data";
+        outState.putString("data_key",tempData);
+
+    }
 
 
 

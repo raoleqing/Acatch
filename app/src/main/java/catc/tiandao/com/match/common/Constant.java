@@ -28,6 +28,7 @@ public class Constant {
     public static final String UMENG_MESSAGE_SECRET = "db583178c20574471e7cbbe92f684910";
 
     public static int SenType = 0;
+    public static int  CODE = 4;//失败的token 反回值
 
 
     public static boolean isData(String str) {

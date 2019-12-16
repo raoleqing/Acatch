@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.adapter.ZhenRongAdapter;
 import catc.tiandao.com.matchlibrary.ben.BasketZhenRong;
 import catc.tiandao.com.matchlibrary.CheckNet;
@@ -559,6 +561,14 @@ public class BattleFragment extends Fragment implements View.OnClickListener {
 
                 }
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData(BallId);
+                    }
+                } );
             }
 
 
@@ -632,6 +642,14 @@ public class BattleFragment extends Fragment implements View.OnClickListener {
                 }
 
 
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData(BallId);
+                    }
+                } );
             }
 
 

@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.Constant;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.matchlibrary.MyItemClickListener;
 import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
@@ -312,6 +314,14 @@ public class ImmediateEventByFootBall extends Fragment {
                     }
 
 
+                }else if(code == Constant.CODE){
+                    GetTokenUtils utils = new GetTokenUtils( getActivity());
+                    utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                        @Override
+                        public void onResponse() {
+                            getData();
+                        }
+                    } );
                 }else {
 
                     no_data.setVisibility( View.VISIBLE );

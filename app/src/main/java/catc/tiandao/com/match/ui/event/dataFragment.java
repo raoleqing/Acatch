@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.matchlibrary.OnFragmentInteractionListener;
@@ -380,19 +381,11 @@ public class dataFragment extends Fragment {
         }
 
         try{
-            System.out.println( result );
+            System.out.println( "数据：" + result );
             JSONObject obj = new JSONObject( result );
             int code = obj.optInt( "code",0 );
             String message = obj.optString( "message" );
-
-
-
-
-            // {"code":0,"message":"成功","data":{"team1GoalJson":null,"team2GoalJson":null,"teamLianSaiJiFen":null,"teamInjuredJson":null,"teamHistoryVsJson":null,
-            // "teamHistoryVsDes":null,"team1LastJson":null,"team1LastDes":null,"team2LastJson":null,"team2LastDes":null}}
-
-            // private LinearLayout content_layout1,content_layout2,Injured_content,content_layout4,content_layout5;
-            //    private TextView no_data1,no_data2,no_data3,no_data4,no_data5,no_data6;
+            ;
 
             if(code == 0) {
 
@@ -484,11 +477,14 @@ public class dataFragment extends Fragment {
                 }
 
 
-
-
-
-
-
+            }else if(code == Constant.CODE){
+                GetTokenUtils utils = new GetTokenUtils( getActivity());
+                utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
+                    @Override
+                    public void onResponse() {
+                        getData(matchId);
+                    }
+                } );
             }
 
 
