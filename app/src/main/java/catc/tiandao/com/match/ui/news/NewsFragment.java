@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -38,7 +39,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.CommItemDecoration;
+import catc.tiandao.com.match.my.NoticeActivity;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.CommentDialog;
@@ -70,6 +74,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
     private RelativeLayout rl_contianer;
     private PopupWindow popupWindow;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView ball_recycler;
     private TextView no_data;
 
@@ -173,6 +178,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
     private void viewInfo(View view) {
 
         rl_contianer = ViewUtls.find( view,R.id.rl_contianer );
+        mSwipeRefreshLayout = ViewUtls.find( view,R.id.swipeRefreshLayout );
         ball_recycler = ViewUtls.find( view,R.id.ball_recycler );
         no_data = ViewUtls.find( view,R.id.no_data );
 
@@ -227,12 +233,32 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
 
             }
         });
+
+        /*setOnRefreshListener(OnRefreshListener):添加下拉刷新监听器
+        setRefreshing(boolean):显示或者隐藏刷新进度条
+        isRefreshing():检查是否处于刷新状态
+        setColorSchemeResources():设置进度条的颜色主题，最多设置四种，以前的setColorScheme()方法已经弃用了
+        */
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!isRun){
+                    page = 1;
+                    getData();
+                }
+            }
+        });
+
+
+
         // 设置adapter
         ball_recycler.setAdapter(mAdapter);
         // 设置Item增加、移除动画
         ball_recycler.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
-        ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        int color = ContextCompat.getColor( getActivity(),R.color.line_01 );
+        ball_recycler.addItemDecoration( CommItemDecoration.createVertical(getActivity(), color,1));
 
 
 
@@ -243,7 +269,11 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 System.out.println("lastVisibleItem: " + lastVisibleItem);
-                if (newState ==RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 >= mList.size()) {
+                System.out.println("getItemCount(): " + mAdapter.getItemCount());
+                System.out.println("newState: " + newState);
+                System.out.println("isData: " + isData);
+
+                if (newState ==RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 >=  mAdapter.getItemCount()) {
 
                     if(isData){
                         mAdapter.changeMoreStatus(1);
@@ -264,6 +294,13 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                 lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+
+
+
+
+
+
+
 
 
     }
@@ -363,7 +400,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                 param.put("token", UserUtils.getToken( getActivity() ) );
                 param.put("type",type);
                 param.put("newId", newId + "");
-                param.put("pingLun", "");
+                param.put("pingLun", pingLun);
 
                 setRun = new NewOperationRun(param,type,postiont);
                 ThreadPoolManager.getsInstance().execute(setRun);
@@ -569,6 +606,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
         isRun = false;
 
         if(result == null){
+            mSwipeRefreshLayout.setRefreshing(false);
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
             return;
         }
@@ -603,6 +641,7 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
                             isData = false;
                             mAdapter.changeMoreStatus( -1 );
                         }else {
+                            isData = true;
                             page ++ ;
                         }
 
@@ -636,6 +675,8 @@ public class NewsFragment extends Fragment implements CommentDialog.MyDialogInte
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+
+            mSwipeRefreshLayout.setRefreshing(false);
             mListener.onFragmentInteraction(Uri.parse(OnFragmentInteractionListener.PROGRESS_HIDE));
         }
 

@@ -115,6 +115,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
+
+        setStatusBarColor( ContextCompat.getColor(this, R.color.white ));
+        setStatusBarMode(true);
+
         MatchApplication app = (MatchApplication) getApplication();
         app.setName("Developer Phil");
 

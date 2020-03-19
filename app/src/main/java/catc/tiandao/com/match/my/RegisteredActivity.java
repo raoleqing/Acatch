@@ -3,6 +3,7 @@ package catc.tiandao.com.match.my;
 import androidx.core.content.ContextCompat;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.WebViewActivity;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.utils.DES;
 import catc.tiandao.com.matchlibrary.ViewUtls;
@@ -181,6 +182,13 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.activity_return:
                 RegisteredActivity.this.onBackPressed();
+                break;
+            case R.id.protocol:
+
+                Intent intent01 = new Intent(RegisteredActivity.this, WebViewActivity.class);
+                intent01.putExtra(  WebViewActivity.URL_STR,"http://www.leisuvip1.com/new/yhxy");
+                startFoActivity( intent01 );
+
                 break;
 
             case R.id.get_code:

@@ -68,13 +68,13 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             name = "未设置";
         }
 
-        user_name.setText( name );
+        user_name.setText( name + " ");
         user_phone.setText( muUserBen.getPhone() );
         String sex = muUserBen.getSex();
         if(sex.equals( "1" )){
-            user_sex.setText( "男" );
+            user_sex.setText( "男 " );
         }else {
-            user_sex.setText( "女" );
+            user_sex.setText( "女 " );
         }
 
         String Appavatar = UserUtils.getUserAvatar(MyDataActivity.this);

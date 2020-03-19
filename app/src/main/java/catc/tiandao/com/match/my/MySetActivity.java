@@ -215,7 +215,7 @@ public class MySetActivity extends BaseActivity implements View.OnClickListener 
                 int res2 = sound == 0 ? 1 : 0;
                 SetSound(res2);
 
-
+                break;
             case R.id.push_but_layout04:
 
                 int res3 = sleep == 0 ? 1 : 0;

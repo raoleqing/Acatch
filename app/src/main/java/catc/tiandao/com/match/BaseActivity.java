@@ -419,6 +419,44 @@ public class BaseActivity extends FragmentActivity {
 	}
 
 
+	public void startFoActivity(Class<?> cls){
+
+		Intent intent1 = new Intent( this,cls);
+		startActivity(intent1);
+		overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+
+	}
+
+	public void startFoActivity(Class<?> cls,int enterAnim, int exitAnim){
+
+		Intent intent = new Intent( this,cls);
+		startActivity(intent);
+		overridePendingTransition(enterAnim, exitAnim);
+
+
+	}
+
+	public void startFoActivity(Intent intent){
+
+		startActivity(intent);
+		overridePendingTransition(R.anim.push_left_in, R.anim.day_push_left_out);
+
+
+	}
+
+
+	public void startFoActivity(Intent intent,int enterAnim, int exitAnim){
+
+		startActivity(intent);
+		overridePendingTransition(enterAnim, exitAnim);
+
+
+	}
+
+
+
+
 
 
 

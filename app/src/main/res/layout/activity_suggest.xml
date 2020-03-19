@@ -61,11 +61,12 @@
             android:minHeight="160dp"
             android:background="@color/exit01"
             android:hint="请描述你要投诉的内容，我们会仔细聆听"
-            android:gravity="top"
-            android:singleLine="true"/>
+            android:maxLength="240"
+            android:gravity="top" />
 
 
         <TextView
+            android:id="@+id/text_leng"
             style="@style/activity_text6_type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

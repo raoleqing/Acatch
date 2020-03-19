@@ -28,7 +28,7 @@
             android:layout_height="34dp"
             android:gravity="center"
             android:background="@mipmap/away_name_bg"
-            android:text="殴赔"/>
+            android:text="欧赔"/>
 
 
 

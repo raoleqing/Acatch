@@ -58,9 +58,8 @@ public class MainAutoSwitchAdapter extends AutoLoopSwitchBaseAdapter {
     ImageView banner_img = ViewUtls.find( view,R.id.banner_img );
     TextView banner_title = ViewUtls.find( view,R.id.banner_title );
 
-    banner_img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+    banner_img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
     ImageLoader.getInstance().displayImage(mBanner.getTitleImageUrl(), banner_img, options);
-    //ImageLoader.getInstance().displayImage("drawable://" + mBanner.getTitleImageUrl(), imageView);
 
     banner_title.setText( mBanner.getcTitle() );
 

@@ -53,7 +53,7 @@ public class MemberInformation extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GetFootballMatchDetail run;
 
-    private WebView mWebView;
+    private TextView mWebView;
     private TextView no_data;
 
     Handler myHandler = new Handler() {
@@ -126,7 +126,7 @@ public class MemberInformation extends Fragment {
 
     private void setWebView() {
 
-       /* // 能够的调用JavaScript代码
+     /*  *//* // 能够的调用JavaScript代码
         //        // product_picture_html = new WebView(ProductDetails.this);
         //        mWebView.getSettings().setDefaultTextEncodingName("utf-8");
         //        // 加载HTML字符串进行显示
@@ -137,7 +137,7 @@ public class MemberInformation extends Fragment {
         //        mWebView.setSaveEnabled(true);
         //        mWebView.getSettings().setRenderPriority( WebSettings.RenderPriority.HIGH);
         //        mWebView.getSettings().setSupportZoom(false);// 支持缩放
-        //        //mWebView.loadData(urlStr, "text/html; charset=UTF-8", null);// 这种写法可以正确解码*/
+        //        //mWebView.loadData(urlStr, "text/html; charset=UTF-8", null);// 这种写法可以正确解码*//*
 
 
         WebSettings webSettings = mWebView.getSettings();
@@ -175,7 +175,7 @@ public class MemberInformation extends Fragment {
         mWebView.requestFocus();
 
         // 用于视 频 播放
-        mWebView.getSettings().setPluginState( WebSettings.PluginState.ON);
+        mWebView.getSettings().setPluginState( WebSettings.PluginState.ON);*/
 
 
 
@@ -264,7 +264,7 @@ public class MemberInformation extends Fragment {
         }
 
         try{
-            System.out.println( result );
+            System.out.println("情报：" +  result );
             JSONObject obj = new JSONObject( result );
             int code = obj.optInt( "code",0 );
             String message = obj.optString( "message" );
@@ -275,7 +275,7 @@ public class MemberInformation extends Fragment {
 
                 String data = obj.optString( "data" );
                 if(Constant.isData( data )){
-                    mWebView.loadUrl(data);
+                    mWebView.setText(data);
 
                 }else {
                     no_data.setVisibility( View.VISIBLE );

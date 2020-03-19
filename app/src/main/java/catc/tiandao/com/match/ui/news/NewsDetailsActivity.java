@@ -101,9 +101,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         newId = this.getIntent().getIntExtra( NEW_ID,0 );
         //http://www.leisuvip1.com/New/Index? token=**&newId=新闻id
         urlStr = "http://www.leisuvip1.com/New/Index?token="+ UserUtils.getToken( this )+"&newId=" + newId;
+
+        System.out.println( urlStr );
         viewInfo();
         GetNew();
-        setProgressVisibility( View.GONE );
+        //setProgressVisibility( View.GONE );
     }
 
 
@@ -320,7 +322,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     tv_collection.setImageResource( R.mipmap.icon_collect );
                 }
 
-
             }else if(code == Constant.CODE){
                 GetTokenUtils utils = new GetTokenUtils( NewsDetailsActivity.this);
                 utils.getToken( new GetTokenUtils.GetTokenUtilInterface() {
@@ -329,9 +330,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         GetNew();
                     }
                 } );
+            }else {
+                Toast.makeText(NewsDetailsActivity.this,message,Toast.LENGTH_SHORT ).show();
             }
 
-            Toast.makeText(NewsDetailsActivity.this,message,Toast.LENGTH_SHORT ).show();
+
 
 
         }catch (Exception e){

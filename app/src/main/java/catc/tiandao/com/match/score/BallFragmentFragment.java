@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.CommItemDecoration;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
@@ -272,7 +273,9 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
         // 设置Item增加、移除动画
         ball_recycler.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
-        ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        int color = ContextCompat.getColor( getActivity(),R.color.line_01 );
+        ball_recycler.addItemDecoration( CommItemDecoration.createVertical(getActivity(), color,1));
 
          /*setOnRefreshListener(OnRefreshListener):添加下拉刷新监听器
         setRefreshing(boolean):显示或者隐藏刷新进度条
@@ -689,6 +692,7 @@ public class BallFragmentFragment extends Fragment implements View.OnClickListen
                         isData = false;
                         mAdapter.changeMoreStatus( -1 );
                     }else {
+                        isData = true;
                         page ++ ;
                     }
 

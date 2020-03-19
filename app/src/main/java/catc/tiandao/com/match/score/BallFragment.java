@@ -40,6 +40,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.CommItemDecoration;
 import catc.tiandao.com.match.my.NoticeActivity;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
@@ -316,7 +317,9 @@ public class BallFragment extends Fragment implements View.OnClickListener{
         // 设置Item增加、移除动画
         ball_recycler.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
-        ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        int color = ContextCompat.getColor( getActivity(),R.color.line_01 );
+        ball_recycler.addItemDecoration( CommItemDecoration.createVertical(getActivity(), color,1));
 
 
         if(mParam2 == 2 || mParam2 == 3){
@@ -744,6 +747,7 @@ public class BallFragment extends Fragment implements View.OnClickListener{
                         isData = false;
                         mAdapter.changeMoreStatus( -1 );
                     }else {
+                        isData = true;
                         page ++ ;
                     }
 
@@ -813,13 +817,22 @@ public class BallFragment extends Fragment implements View.OnClickListener{
 
                     for(int i = 0; i< list.size(); i++){
                         BallBen onBallBen =  list.get( i );
-                        if(i < mList.size()){
-                            BallBen mBallBen =  mList.get( i );
-                            if( mBallBen.getHomeTeamScore() != onBallBen.getHomeTeamScore() || mBallBen.getAwayTeamScore() != onBallBen.getAwayTeamScore()){
-                                mList.set( i, onBallBen);
-                                newList.add( onBallBen );
-                            }
-                        }
+                       if(onBallBen.getHomeTeamScore() > 0 || onBallBen.getAwayTeamScore() > 0){
+                           if(i < mList.size()){
+                               for(int j = 0; j< mList.size(); j++){
+                                   BallBen mBallBen =  mList.get( j );
+                                   if(onBallBen.getMatchId() == mBallBen.getMatchId()){
+                                       if( mBallBen.getHomeTeamScore() != onBallBen.getHomeTeamScore() || mBallBen.getAwayTeamScore() != onBallBen.getAwayTeamScore()){
+                                           mList.set( i, onBallBen);
+                                           newList.add( onBallBen );
+                                       }
+                                   }
+                               }
+
+
+                           }
+                       }
+
                     }
 
 

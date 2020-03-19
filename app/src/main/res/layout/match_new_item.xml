@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <View
@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -27,9 +29,9 @@
                 style="@style/activity_text1_type3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingMultiplier="1.3"
-                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.2"
                 android:maxLines="2"
+                android:minLines="2"
                 android:text="巴西国际vs桑托斯首发：XXX先发领衔三"/>
 
 

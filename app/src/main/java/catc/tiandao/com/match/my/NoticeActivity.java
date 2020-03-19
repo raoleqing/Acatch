@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
 
+import catc.tiandao.com.match.common.CommItemDecoration;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
@@ -111,8 +112,9 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         // 设置Item增加、移除动画
         notice_recycler.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
-        notice_recycler.addItemDecoration(new DividerItemDecoration(NoticeActivity.this, DividerItemDecoration.VERTICAL));
-
+        //notice_recycler.addItemDecoration(new DividerItemDecoration(NoticeActivity.this, DividerItemDecoration.VERTICAL));
+        int color = ContextCompat.getColor( NoticeActivity.this,R.color.line_01 );
+        notice_recycler.addItemDecoration( CommItemDecoration.createVertical(NoticeActivity.this, color,1));
 
 
         //上拉加载

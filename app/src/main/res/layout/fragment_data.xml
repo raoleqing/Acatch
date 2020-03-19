@@ -528,23 +528,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:background="@color/bg2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="32dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="日期"/>
+                    android:text="日期" />
 
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -553,7 +552,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -561,7 +560,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -570,7 +569,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -579,7 +578,7 @@
                 <TextView
                     android:id="@+id/title_item1"
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -591,8 +590,6 @@
                 android:id="@+id/history_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:background="@color/white">
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -688,23 +685,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:background="@color/bg2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="32dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="日期"/>
 
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -713,7 +709,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -721,7 +717,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -730,7 +726,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -739,7 +735,7 @@
                 <TextView
                     android:id="@+id/title_item2"
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -752,9 +748,7 @@
                 android:id="@+id/recent_recyclerview1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:background="@color/white" />
 
             <TextView
                 android:id="@+id/team1last_text"
@@ -799,23 +793,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:background="@color/bg2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="32dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="日期"/>
 
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -824,7 +817,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -832,7 +825,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -841,7 +834,7 @@
 
                 <TextView
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -850,7 +843,7 @@
                 <TextView
                     android:id="@+id/title_item3"
                     style="@style/activity_text6_type1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -862,8 +855,6 @@
                 android:id="@+id/recent_recyclerview2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:background="@color/white">
             </androidx.recyclerview.widget.RecyclerView>
 

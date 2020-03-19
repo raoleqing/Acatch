@@ -74,8 +74,6 @@ public class PopularActivity extends BaseActivity implements View.OnClickListene
     private void viewInfo() {
         manager = getSupportFragmentManager();
 
-
-
         ImageView image = ViewUtls.find( this,R.id.tv_return );
         tv_switch = ViewUtls.find( this,R.id.tv_switch );
         title_layout = ViewUtls.find( this,R.id.title_layout );

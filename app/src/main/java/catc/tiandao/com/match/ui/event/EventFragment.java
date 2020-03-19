@@ -25,6 +25,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import catc.tiandao.com.match.R;
 import catc.tiandao.com.match.adapter.EventAdapter;
+import catc.tiandao.com.match.common.CommItemDecoration;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
 import catc.tiandao.com.match.common.Constant;
@@ -175,7 +178,10 @@ public class EventFragment extends Fragment {
         headersDecor = new StickyRecyclerHeadersDecoration(mAdapter); //设置recyclerView需要的Decoration
         ball_recycler.addItemDecoration(headersDecor);
         //添加Android自带的分割线
-        ball_recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        int color = ContextCompat.getColor( getActivity(),R.color.line_01 );
+        ball_recycler.addItemDecoration( CommItemDecoration.createVertical(getActivity(), color,1));
+
+
         mSwipeRefreshLayout = ViewUtls.find( view,R.id.swipeRefreshLayout );
 
         /*setOnRefreshListener(OnRefreshListener):添加下拉刷新监听器
@@ -237,7 +243,7 @@ public class EventFragment extends Fragment {
 
 
                     case R.id.item_view:
-                        if(postion + 1 < mList.size()){
+                        if(postion + 1 <= mList.size()){
 
                             String matchName;
                             if(mParam1 == 0){

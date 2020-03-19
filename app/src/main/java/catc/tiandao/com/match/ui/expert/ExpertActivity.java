@@ -1,11 +1,13 @@
 package catc.tiandao.com.match.ui.expert;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.CommItemDecoration;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
@@ -134,9 +136,10 @@ public class ExpertActivity extends BaseActivity implements  View.OnClickListene
         // 设置Item增加、移除动画
         ball_recycler.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
-        ball_recycler.addItemDecoration(new DividerItemDecoration(ExpertActivity.this, DividerItemDecoration.VERTICAL));
+       // ball_recycler.addItemDecoration(new DividerItemDecoration(ExpertActivity.this, DividerItemDecoration.VERTICAL));
 
-
+        int color = ContextCompat.getColor( ExpertActivity.this,R.color.line_01 );
+        ball_recycler.addItemDecoration( CommItemDecoration.createVertical(ExpertActivity.this, color,1));
 
         //上拉加载
         //addOnScrollListener
@@ -315,7 +318,7 @@ public class ExpertActivity extends BaseActivity implements  View.OnClickListene
         expert_name.setText( "扫一扫，添加" + mExpert.getSpecialName() );
         expert_qq.setText( "QQ号: " + mExpert.getQq() );
         expert_wx.setText( "QQ号: " + mExpert.getWechat() );
-        ImageLoader.getInstance().displayImage(mExpert.getIcon(), code_image,options);
+        ImageLoader.getInstance().displayImage(mExpert.getWechatQRcodeUrl(), code_image,options);
 
 
 

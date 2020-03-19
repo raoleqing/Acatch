@@ -20,10 +20,13 @@ import catc.tiandao.com.matchlibrary.ben.SuggestBen;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -42,6 +45,7 @@ public class SuggestActivity extends BaseActivity implements View.OnClickListene
 
     private RecyclerView notice_recycler;
     private EditText input_text;
+    private TextView text_leng;
     private Button submit;
 
     private LinearLayoutManager mLinearLayoutManager;
@@ -100,6 +104,7 @@ public class SuggestActivity extends BaseActivity implements View.OnClickListene
         notice_recycler = ViewUtls.find( this,R.id.type_recycler );
         submit = ViewUtls.find( this,R.id.submit );
         input_text = ViewUtls.find( this,R.id.input_text );
+        text_leng = ViewUtls.find( this,R.id.text_leng );
 
         RecyclerView.LayoutManager mLayoutManager = new MyGridLayoutManager(this, 3);
         notice_recycler.setLayoutManager(mLayoutManager);
@@ -119,6 +124,25 @@ public class SuggestActivity extends BaseActivity implements View.OnClickListene
         } );
         int space = UnitConverterUtils.dip2px(this, 15);
         notice_recycler.addItemDecoration(new GridSpacingItemDecoration(3,space,false));
+
+
+        input_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                text_leng.setText( s.length() + "/240" );
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         submit.setOnClickListener( this );
 

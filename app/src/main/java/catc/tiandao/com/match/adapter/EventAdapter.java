@@ -166,9 +166,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
 
-
-
-    //必须重写  不然item会错乱
+        //必须重写  不然item会错乱
         @Override
         public long getItemId(int position) {
             return position;
@@ -192,8 +190,9 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         @Override
         public long getHeaderId(int position) {
-            if (position + 1 == getItemCount()) {
-                return 0;
+
+            if (position + 1 >= getItemCount()) {
+                return -1;
             } else {
                 //得到headId 唯一性
                 long headName = Math.abs( dataList.get(position).getMatchDate().hashCode() );

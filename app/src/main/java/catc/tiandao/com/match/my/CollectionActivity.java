@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import catc.tiandao.com.match.BaseActivity;
 import catc.tiandao.com.match.R;
+import catc.tiandao.com.match.common.CommItemDecoration;
 import catc.tiandao.com.match.common.Constant;
 import catc.tiandao.com.match.utils.GetTokenUtils;
 import catc.tiandao.com.matchlibrary.CheckNet;
@@ -270,7 +271,10 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         // 设置Item增加、移除动画
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加Android自带的分割线
-        myRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        int color = ContextCompat.getColor( CollectionActivity.this,R.color.line_01 );
+        myRecyclerView.addItemDecoration( CommItemDecoration.createVertical(CollectionActivity.this, color,1));
+       // myRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
     }
 
@@ -625,8 +629,10 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             }
 
             if(mList.size() > 0){
+                activity_text.setVisibility( View.VISIBLE );
                 no_data.setVisibility( View.GONE );
             }else {
+                activity_text.setVisibility( View.GONE );
                 no_data.setVisibility( View.VISIBLE );
             }
 

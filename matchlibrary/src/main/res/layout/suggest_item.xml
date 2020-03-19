@@ -8,11 +8,12 @@
         android:id="@+id/item_text"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:paddingLeft="18dp"
-        android:paddingRight="18dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:background="@drawable/bg_search_normal12"
         android:gravity="center"
         android:textSize="13sp"
         android:textColor="@color/white"
+        android:singleLine="true"
         android:text="优化建议"/>
 </LinearLayout>
